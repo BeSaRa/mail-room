@@ -14,9 +14,9 @@ module.exports = function (app) {
         var moment = momentProvider.$get();
 
         versionServiceProvider
-            .setVersionNumber('1.4.0')
-            .setBuildNumber('T#148')
-            .setPrivateBuildNumber('T#148');
+            .setVersionNumber('1.4.1')
+            .setBuildNumber('')
+            .setPrivateBuildNumber('');
 
 
         $urlRouterProvider.otherwise('/404');

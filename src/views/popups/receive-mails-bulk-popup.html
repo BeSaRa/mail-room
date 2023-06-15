@@ -1,0 +1,171 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_receive}}">
+    <popup-toolbar-directive header-text="{{lang.lbl_receive}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div class="md-dialog-content mr-dialog-content">
+            <form name="receiverSelectorsForm" autocomplete="off">
+                <div layout="column">
+
+                    <div layout="row">
+                        <!-- Receiver For All-->
+                        <md-input-container flex>
+                            <label for="receiverNameAll">{{lang.lbl_receiver}}</label>
+                            <input name="receiverNameAll" id="receiverNameAll"
+                                   maxlength="100"
+                                   ng-model="ctrl.receiverName"
+                                   ng-change="ctrl.setReceiveBulk('receiverName')"
+                                   ng-disabled="ctrl.isMobileReceive">
+                            <div ng-messages="receiverSelectorsForm.receiverNameAll.$error">
+                                <div ng-message="maxlength">{{lang.error_max_length.change({length: 100})}}</div>
+                            </div>
+                        </md-input-container>
+                        <!-- Received Date For ALl-->
+                        <md-input-container flex>
+                            <label for="receivedDateAll">{{lang.lbl_date}}</label>
+                            <md-datepicker ng-model="ctrl.receivedDate"
+                                           name="receivedDate" id="receivedDateAll"
+                                           md-open-on-focus
+                                           ng-change="ctrl.setReceiveBulk('receivedDate')"></md-datepicker>
+                        </md-input-container>
+                    </div>
+                    <div layout="row">
+                        <!-- Receiver Notes For All-->
+                        <md-input-container flex>
+                            <label for="receiverNotesAll">{{lang.lbl_notes}}</label>
+                            <input name="receiverNotesAll" id="receiverNotesAll"
+                                   md-maxlength="500"
+                                   ng-model="ctrl.receiverNotes"
+                                   ng-change="ctrl.setReceiveBulk('receiverNotes')">
+                            <div ng-messages="receiverSelectorsForm.receiverNotesAll.$error">
+                                <div ng-message="md-maxlength">{{lang.error_max_length.change({length: 500})}}</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout="column" flex>
+                    <!--  Grid -->
+                    <md-card md-whiteframe="3" layout="column" class="card-overlay">
+                        <md-table-container>
+                            <div flex scroll-directive>
+                                <table md-table ng-model="ctrl.grid.selectedRecords">
+                                    <!--md-row-select multiple-->
+                                    <thead md-head>
+                                    <tr md-row>
+                                        <th md-column
+                                            md-order="">
+                                            <span>{{lang[ctrl.grid.columns.referenceNo.langKey]}}</span>
+                                        </th>
+                                        <th md-column
+                                            md-order-by="">
+                                            <span>{{lang[ctrl.grid.columns.receiver.langKey]}}</span>
+                                        </th>
+                                        <th md-column
+                                            md-order-by="">
+                                            <span>{{lang[ctrl.grid.columns.receivedDate.langKey]}}</span>
+                                        </th>
+                                        <th md-column
+                                            md-order-by="">
+                                            <span>{{lang[ctrl.grid.columns.receiverNotes.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions, true)"
+                                            md-column>
+                                            <span>{{lang[ctrl.grid.columns.gridActions.langKey]}}</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody md-body>
+                                    <tr md-row
+                                        ng-repeat="mail in (ctrl.mails | limitTo: ctrl.grid.limit: ((ctrl.grid.page - 1) * ctrl.grid.limit)) track by $index"
+                                        md-select="item">
+                                        <td md-cell>
+                                            <span>{{mail.referenceNo}}</span>
+                                        </td>
+                                        <td md-cell>
+                                            <!-- Receiver -->
+                                            <md-input-container flex>
+                                                <label for="receiverName">{{lang.lbl_receiver}}</label>
+                                                <input name="receiverName" id="receiverName"
+                                                       required maxlength="100"
+                                                       ng-model="mail.receiverName"
+                                                       ng-disabled="ctrl.isMobileReceive">
+                                                <div ng-messages="receiverSelectorsForm.receiverName.$error">
+                                                    <div ng-message="required">{{lang.error_field_required}}</div>
+                                                    <div ng-message="maxlength">
+                                                        {{lang.error_max_length.change({length: 100})}}
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </td>
+                                        <td md-cell>
+                                            <!-- Received Date -->
+                                            <md-input-container flex>
+                                                <label for="receivedDate">{{lang.lbl_date}}</label>
+                                                <md-datepicker ng-model="mail.receivedDate"
+                                                               required
+                                                               md-min-date="mail.sentDate"
+                                                               name="receivedDate" id="receivedDate"
+                                                               md-open-on-focus></md-datepicker>
+                                                <div ng-messages="receiverSelectorsForm.receivedDate.$error">
+                                                    <div ng-message="required">{{lang.error_field_required}}</div>
+                                                </div>
+                                            </md-input-container>
+                                        </td>
+                                        <td md-cell>
+                                            <!-- Receiver Notes -->
+                                            <md-input-container flex>
+                                                <label for="receiverName">{{lang.lbl_notes}}</label>
+                                                <input name="receiverName" id="receiverNotes"
+                                                       md-maxlength="500"
+                                                       ng-model="mail.receiverNotes">
+                                                <div ng-messages="receiverSelectorsForm.receiverNotes.$error">
+                                                    <div ng-message="md-maxlength">
+                                                        {{lang.error_max_length.change({length: 500})}}
+                                                    </div>
+                                                </div>
+                                            </md-input-container>
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions)">
+                                            <div flex layout="row" layout-align="start center">
+                                                <md-button class="md-icon-button" title="{{lang.btn_skip_mail}}"
+                                                           ng-click="ctrl.skipSelectedMail(mail, $event)">
+                                                    <md-icon md-svg-icon="window-close"></md-icon>
+                                                </md-button>
+                                            </div>
+                                    </tr>
+                                    <tr md-row ng-if="!ctrl.mails.length">
+                                        <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                            class="red-text text-center">
+                                            {{lang.msg_no_items_found}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <md-table-pagination
+                                    md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                                    md-limit-options="ctrl.grid.limitOptions"
+                                    md-limit="ctrl.grid.limit"
+                                    md-page="ctrl.grid.page"
+                                    md-total="{{ctrl.mails.length}}" md-page-select>
+                            </md-table-pagination>
+                        </md-table-container>
+                    </md-card>
+
+                </div>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised"
+                   ng-disabled="receiverSelectorsForm.$invalid || !ctrl.mails.length"
+                   ng-click="ctrl.receive($event)">
+            {{lang.btn_receive}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closePopup($event)">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

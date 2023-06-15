@@ -1,0 +1,375 @@
+<form form-directive="ctrl.formControl" name="mailForm" autocomplete="off">
+    <div layout="row">
+        <!-- Integrated System -->
+        <md-input-container flex>
+            <label for="integratedSystemId">{{lang.lbl_integrated_system}}</label>
+            <md-select id="integratedSystemId" name="integratedSystemId"
+                       required
+                       ng-disabled="ctrl.formDisabled() || ctrl.mail.isExpectedMailStatus() || ctrl.editMode"
+                       ng-model="ctrl.mail.integratedSystemId"
+                       ng-change="ctrl.handleChangeIntegratedSystem($event)"
+                       tabindex="1"
+                       md-auto-focus>
+                <md-option ng-repeat="option in ctrl.integratedSystemList track by $index"
+                           ng-value="option.id">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+            <div ng-messages="mailForm.entryType.$error">
+                <div ng-message="required">{{lang.error_field_required}}</div>
+            </div>
+        </md-input-container>
+        <!-- Post Type -->
+        <md-input-container flex>
+            <label for="postType">{{lang.lbl_post_type}}</label>
+            <md-select id="postType" name="postType"
+                       required
+                       ng-disabled="ctrl.formDisabled()"
+                       ng-model="ctrl.mail.postType"
+                       tabindex="2">
+                <md-option ng-repeat="option in ctrl.postTypes track by $index"
+                           ng-value="option.typeId">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+            <div ng-messages="mailForm.postType.$error">
+                <div ng-message="required">{{lang.error_field_required}}</div>
+            </div>
+        </md-input-container>
+    </div>
+
+    <div id="sender" layout="row" ng-if="!ctrl.mail.isInternalMail()">
+        <!-- Sender Entity -->
+        <div flex>
+            <md-autocomplete flex required md-require-match="true"
+                             md-input-id="senderEntity" md-input-name="senderEntity"
+                             ng-disabled="ctrl.isSenderEntityDisabled()"
+                             md-clear-button="!ctrl.isSenderEntityDisabled()"
+                             md-autoselect="false"
+                             md-no-cache="true"
+                             md-selected-item="ctrl.mail.senderEntity"
+                             md-search-text="ctrl.searchTextSenderEntity"
+                             md-items="item in ctrl.querySearchSenderEntity(ctrl.searchTextSenderEntity)"
+                             md-item-text="item.getTranslatedName()"
+                             md-selected-item-change="ctrl.getSenderDepartments(false, $event)"
+                             md-min-length="0"
+                             placeholder="{{lang.lbl_sender_entity}}"
+                             md-floating-label="{{lang.lbl_sender_entity}}">
+                <span>{{ item.getTranslatedName() }}</span>
+                <md-not-found>
+                    {{lang.msg_no_items_found_matching_search}}
+                </md-not-found>
+                <div ng-messages="mailForm.senderEntity.$error">
+                    <div ng-message="required">{{lang.error_field_required}}</div>
+                    <div ng-message="md-require-match">{{lang.error_field_required}}</div>
+                </div>
+            </md-autocomplete>
+        </div>
+        <!-- Sender Department -->
+        <md-input-container flex>
+            <label for="senderDep">{{lang.lbl_sender_department}}</label>
+            <md-select id="senderDep" name="senderDep"
+                       required ng-model-options="{trackBy: '$value.id'}"
+                       ng-disabled="!ctrl.mail.senderEntity || ctrl.formDisabled() || ctrl.mail.isExpectedMailStatus()"
+                       ng-model="ctrl.mail.senderDep"
+                       tabindex="4"> <!--ng-model-options="{trackBy: '$value.id'}"-->
+                <md-option ng-repeat="option in ctrl.senderDepartments track by $index"
+                           ng-if="ctrl.isNotReceiverDepartment(option) && option.isActive()"
+                           ng-value="option">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+            <div ng-messages="mailForm.senderDep.$error">
+                <div ng-message="required">{{lang.error_field_required}}</div>
+            </div>
+        </md-input-container>
+    </div>
+
+    <div id="receiver" layout="row" ng-if="!ctrl.mail.isInternalMail()">
+        <!-- Receiver Entity -->
+        <div flex>
+            <md-autocomplete flex required md-require-match="true"
+                             md-input-id="receiverEntity" md-input-name="receiverEntity"
+                             ng-disabled="ctrl.isReceiverEntityDisabled()"
+                             md-clear-button="!ctrl.isReceiverEntityDisabled()"
+                             md-autoselect="false"
+                             md-no-cache="true"
+                             md-selected-item="ctrl.mail.receiverEntity"
+                             md-search-text="ctrl.searchTextReceiverEntity"
+                             md-items="item in ctrl.querySearchReceiverEntity(ctrl.searchTextReceiverEntity)"
+                             md-item-text="item.getTranslatedName()"
+                             md-selected-item-change="ctrl.getReceiverDepartments(false, $event)"
+                             md-min-length="0"
+                             placeholder="{{lang.lbl_receiver_entity}}"
+                             md-floating-label="{{lang.lbl_receiver_entity}}">
+                <span>
+                <grid-indicator-directive
+                        indicator-type="entityUseSystem"
+                        record="item"></grid-indicator-directive>
+                {{item.getTranslatedName()}}</span>
+                <md-not-found>
+                    {{lang.msg_no_items_found_matching_search}}
+                </md-not-found>
+                <div ng-messages="mailForm.receiverEntity.$error">
+                    <div ng-message="required">{{lang.error_field_required}}</div>
+                    <div ng-message="md-require-match">{{lang.error_field_required}}</div>
+                </div>
+            </md-autocomplete>
+        </div>
+
+        <!-- Receiver Department -->
+        <md-input-container flex>
+            <label for="receiverDep">{{lang.lbl_receiver_department}}</label>
+            <md-select id="receiverDep" name="receiverDep"
+                       required ng-model-options="{trackBy: '$value.id'}"
+                       ng-disabled="!ctrl.mail.receiverEntity || ctrl.formDisabled() || ctrl.mail.isExpectedMailStatus()"
+                       ng-model="ctrl.mail.receiverDep"
+                       tabindex="6"><!-- ng-model-options="{trackBy: '$value.id'}"-->
+                <md-option ng-repeat="option in ctrl.receiverDepartments track by $index"
+                           ng-if="ctrl.isNotSenderDepartment(option) && option.isActive()"
+                           ng-value="option">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+            <div ng-messages="mailForm.receiverDep.$error">
+                <div ng-message="required">{{lang.error_field_required}}</div>
+            </div>
+        </md-input-container>
+    </div>
+
+    <div layout="row" ng-if="ctrl.mail.isInternalMail()">
+        <!-- Sender Department -->
+        <md-input-container flex>
+            <label for="senderDepInternal">{{lang.lbl_sender_department}}</label>
+            <md-select id="senderDepInternal" name="senderDepInternal"
+                       required ng-model-options="{trackBy: '$value.id'}"
+                       ng-disabled="!ctrl.mail.senderEntity || ctrl.formDisabled() || ctrl.mail.isExpectedMailStatus()"
+                       ng-model="ctrl.mail.senderDep"
+                       tabindex="7"> <!--ng-model-options="{trackBy: '$value.id'}"-->
+                <md-option ng-repeat="option in ctrl.senderDepartments track by $index"
+                           ng-if="ctrl.isNotReceiverDepartment(option) && option.isActive()"
+                           ng-value="option">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+            <div ng-messages="mailForm.senderDepInternal.$error">
+                <div ng-message="required">{{lang.error_field_required}}</div>
+            </div>
+        </md-input-container>
+        <!-- Swap Departments -->
+        <md-button class="md-icon-button" ng-if="ctrl.mail.isInternalMail()"
+                   aria-label="{{lang.lbl_swap}}"
+                   tooltip="{{lang.lbl_swap}}"
+                   ng-click="ctrl.swapDepartments($event)"
+                   ng-disabled="ctrl.formDisabled()"
+                   tabindex="8">
+            <md-icon md-svg-icon="swap-horizontal"></md-icon>
+        </md-button>
+        <!-- Receiver Department -->
+        <md-input-container flex>
+            <label for="receiverDepInternal">{{lang.lbl_receiver_department}}</label>
+            <md-select id="receiverDepInternal" name="receiverDepInternal"
+                       required ng-model-options="{trackBy: '$value.id'}"
+                       ng-disabled="!ctrl.mail.receiverEntity || ctrl.formDisabled() || ctrl.mail.isExpectedMailStatus()"
+                       ng-model="ctrl.mail.receiverDep"
+                       tabindex="9"><!-- ng-model-options="{trackBy: '$value.id'}"-->
+                <md-option ng-repeat="option in ctrl.receiverDepartments track by $index"
+                           ng-if="ctrl.isNotSenderDepartment(option) && option.isActive()"
+                           ng-value="option">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+            <div ng-messages="mailForm.receiverDepInternal.$error">
+                <div ng-message="required">{{lang.error_field_required}}</div>
+            </div>
+        </md-input-container>
+    </div>
+
+    <div layout="row">
+        <!-- Register Date -->
+        <md-input-container>
+            <label for="registerDate">{{lang.lbl_register_date}}</label>
+            <md-datepicker ng-model="ctrl.mail.registerDate"
+                           required md-max-date="ctrl.now"
+                           ng-disabled="ctrl.formDisabled() || ctrl.mail.isExpectedMailStatus()"
+                           name="registerDate" id="registerDate"
+                           md-open-on-focus
+                           tabindex="10"></md-datepicker>
+            <div ng-messages="mailForm.registerDate.$error">
+                <div ng-message="required">{{lang.error_field_required}}</div>
+            </div>
+        </md-input-container>
+        <!-- Priority -->
+        <md-input-container flex>
+            <label for="priority">{{lang.lbl_priority}}</label>
+            <md-select id="priority" name="priority"
+                       required
+                       ng-disabled="ctrl.formDisabled()"
+                       ng-model="ctrl.mail.priority"
+                       tabindex="11">
+                <md-option ng-repeat="option in ctrl.priorityTypes track by $index"
+                           ng-value="option.typeId">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+            <div ng-messages="mailForm.priority.$error">
+                <div ng-message="required">{{lang.error_field_required}}</div>
+            </div>
+        </md-input-container>
+        <!-- Attachment No -->
+        <md-input-container flex>
+            <label for="attachmentNo">{{lang.lbl_attachment_no}}</label>
+            <input ng-model="ctrl.mail.attachmentNo" required
+                   id="attachmentNo" name="attachmentNo"
+                   ng-disabled="ctrl.formDisabled()"
+                   custom-validate-directive="number"
+                   tabindex="12">
+            <div ng-messages="mailForm.attachmentNo.$error">
+                <div ng-message="required">{{lang.error_field_required}}</div>
+                <div ng-message="number">{{lang.error_number_only}}</div>
+            </div>
+        </md-input-container>
+    </div>
+
+    <div layout="row" ng-if="!ctrl.mail.isNewRecord() && ctrl.mail.isSentMailStatus()">
+        <!-- Sender -->
+        <md-input-container flex>
+            <label for="senderEmployee">{{lang.lbl_sender}}</label>
+            <md-select id="senderEmployee" name="senderEmployee"
+                       required
+                       ng-disabled="ctrl.formDisabled()"
+                       ng-model="ctrl.mail.senderEmployee"
+                       tabindex="13">
+                <md-option ng-repeat="option in ctrl.senders track by $index"
+                           ng-value="option.getEmployeeId()">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+            <div ng-messages="mailForm.senderEmployee.$error">
+                <div ng-message="required">{{lang.error_field_required}}</div>
+            </div>
+        </md-input-container>
+        <!-- Sent Date -->
+        <md-input-container flex>
+            <label for="sentDate">{{lang.lbl_date}}</label>
+            <md-datepicker ng-model="ctrl.mail.sentDate"
+                           required
+                           ng-disabled="ctrl.formDisabled()"
+                           name="sentDate" id="sentDate"
+                           md-open-on-focus
+                           tabindex="14"></md-datepicker>
+            <div ng-messages="mailForm.sentDate.$error">
+                <div ng-message="required">{{lang.error_field_required}}</div>
+            </div>
+        </md-input-container>
+    </div>
+
+    <div ng-if="!ctrl.mail.isNewRecord() && ctrl.mail.isReceivedMailStatus()">
+        <div layout="row">
+            <!-- Receiver -->
+            <md-input-container flex>
+                <label for="receiverName">{{lang.lbl_receiver}}</label>
+                <input name="receiverName" id="receiverName"
+                       required maxlength="100"
+                       ng-model="ctrl.mail.receiverName"
+                       ng-disabled="ctrl.formDisabled()"
+                       tabindex="15">
+                <div ng-messages="mailForm.receiverName.$error">
+                    <div ng-message="required">{{lang.error_field_required}}</div>
+                    <div ng-message="maxlength">{{lang.error_max_length.change({length: 100})}}</div>
+                </div>
+            </md-input-container>
+            <!-- Received Date -->
+            <md-input-container flex>
+                <label for="receivedDate">{{lang.lbl_date}}</label>
+                <md-datepicker ng-model="ctrl.mail.receivedDate"
+                               required
+                               name="receivedDate" id="receivedDate"
+                               ng-disabled="ctrl.formDisabled()"
+                               md-open-on-focus
+                               tabindex="16"></md-datepicker>
+                <div ng-messages="mailForm.receivedDate.$error">
+                    <div ng-message="required">{{lang.error_field_required}}</div>
+                </div>
+            </md-input-container>
+        </div>
+        <div layout="row">
+            <!-- Receiver Notes -->
+            <md-input-container flex>
+                <label for="receiverName">{{lang.lbl_receiver_notes}}</label>
+                <input name="receiverName" id="receiverNotes"
+                       md-maxlength="500"
+                       ng-model="ctrl.mail.receiverNotes"
+                       ng-disabled="ctrl.formDisabled()"
+                       tabindex="17">
+                <div ng-messages="mailForm.receiverNotes.$error">
+                    <div ng-message="md-maxlength">{{lang.error_max_length.change({length: 500})}}</div>
+                </div>
+            </md-input-container>
+        </div>
+    </div>
+
+    <div layout="row">
+        <!-- E-mail -->
+        <md-input-container flex>
+            <label for="email">{{lang.lbl_email}}</label>
+            <input ng-model="ctrl.mail.email"
+                   id="email" name="email"
+                   ng-disabled="ctrl.formDisabled()"
+                   custom-validate-directive="email"
+                   tabindex="18">
+            <div ng-messages="mailForm.email.$error">
+                <div ng-message="email">{{lang.error_email}}</div>
+            </div>
+        </md-input-container>
+        <!-- Mobile Number-->
+        <md-input-container flex>
+            <label for="mobile">{{lang.lbl_mobile_number}}</label>
+            <input name="mobile" id="mobile" maxlength="12"
+                   placeholder="{{lang.lbl_mobile_placehoder}}"
+                   ng-model="ctrl.mail.mobile"
+                   ng-disabled="ctrl.formDisabled()"
+                   custom-validate-directive="phone_mobile"
+                   tabindex="19">
+            <div ng-messages="mailForm.mobile.$error">
+                <div ng-message="phone_mobile">{{lang.error_mobile_number}}</div>
+            </div>
+        </md-input-container>
+    </div>
+
+    <div layout="row">
+        <!-- Notes -->
+        <md-input-container flex>
+            <label for="notes">{{lang.lbl_notes}}</label>
+            <input ng-model="ctrl.mail.notes" id="notes" name="notes"
+                   ng-disabled="ctrl.formDisabled()"
+                   md-maxlength="ctrl.notesMaxLength"
+                   tabindex="20">
+            <div ng-messages="mailForm.notes.$error">
+                <div ng-message="md-maxlength">{{lang.error_max_length.change({length: ctrl.notesMaxLength})}}</div>
+            </div>
+        </md-input-container>
+    </div>
+
+    <div layout="row" ng-if="(ctrl.mail.idCopy || ctrl.mail.signature) && ctrl.mail.isReceivedMailStatus()">
+        <div layout="column" ng-if="ctrl.mail.idCopy">
+            <span>{{lang.lbl_idCopy}}</span>
+            <!--<iframe class="iframe-picture"
+                    ng-src="{{ctrl.mail.idCopy}}"
+                    frameborder="0" flex></iframe>-->
+            <div layout="row">
+                <img ng-src="{{ctrl.mail.idCopy}}" width="200" height="200">
+                <md-button ng-click="ctrl.mail.downloadIdCopy($event)" class="md-icon-button"
+                           tooltip="{{lang.lbl_download}}">
+                    <md-icon class="" md-svg-icon="download"></md-icon>
+                </md-button>
+            </div>
+        </div>
+        <span flex ng-if="ctrl.mail.idCopy || ctrl.mail.signature"></span>
+        <div layout="column" ng-if="ctrl.mail.signature">
+            <span>{{lang.lbl_signature}}</span>
+            <!--<iframe class="iframe-picture"
+                    ng-src="{{ctrl.mail.signature}}"
+                    frameborder="0" flex></iframe>-->
+            <div layout="row">
+                <img ng-src="{{ctrl.mail.signature}}" width="200" height="200">
+                <md-button ng-click="ctrl.mail.downloadSignature($event)" class="md-icon-button"
+                           tooltip="{{lang.lbl_download}}">
+                    <md-icon class="" md-svg-icon="download"></md-icon>
+                </md-button>
+            </div>
+        </div>
+    </div>
+</form>

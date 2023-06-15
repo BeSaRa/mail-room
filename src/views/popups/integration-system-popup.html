@@ -1,0 +1,35 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.header_integration_system_dialog}}">
+    <popup-toolbar-directive header-text="{{lang.header_integration_system_dialog}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div class="md-dialog-content mr-dialog-content">
+            <form form-directive="ctrl.integrationForm" name="integrationForm" autocomplete="off">
+                <!-- barcode -->
+                <div layout="row">
+                    <md-input-container flex>
+                        <label for="referenceNumber">{{lang.lbl_reference_number}}</label>
+                        <input name="referenceNumber" id="referenceNumber"
+                               required maxlength="100"
+                               ng-model="ctrl.referenceNumber">
+                        <div ng-messages="integrationForm.referenceNumber.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                            <div ng-message="maxlength">{{lang.error_max_length.change({length:100})}}</div>
+                        </div>
+                </div>
+                </md-input-container>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised"
+                   ng-disabled="ctrl.integrationForm.$invalid"
+                   ng-click="ctrl.loadItemByReferenceNumber($event)">
+            {{lang.btn_search}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closePopup($event)">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

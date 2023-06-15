@@ -1,0 +1,161 @@
+<div background-directive="tall" class="page-content" flex="">
+    <div layout="column" class="content">
+        <!-- page-header start -->
+        <div layout="row" layout-align="start center" class="page-header padding-header small">
+            <span>{{lang.menu_item_admin_employees}}</span>
+            <md-button ng-click="ctrl.openAddEmployeeDialog($event)" class="md-icon-button"
+                       tooltip="{{lang.lbl_add}}">
+                <md-icon md-svg-icon="plus"></md-icon>
+            </md-button>
+            <md-button ng-click="ctrl.grid.reload(ctrl.grid.page, $event)" class="md-icon-button"
+                       tooltip="{{lang.lbl_reload}}">
+                <md-icon md-svg-icon="refresh"></md-icon>
+            </md-button>
+            <span flex></span>
+            <grid-search-directive grid="ctrl.grid"></grid-search-directive>
+        </div>
+        <!-- end page-header -->
+        <div layout="column" flex>
+            <div scroll-directive>
+                <div class="page-padding">
+                    <md-card md-whiteframe="3" layout="column" class="card-overlay">
+                        <md-table-container>
+                            <div flex scroll-directive>
+                                <table md-table ng-model="ctrl.grid.selectedRecords"
+                                       md-progress="ctrl.grid.progress"><!--md-row-select multiple-->
+                                    <thead md-head md-order="ctrl.grid.order"
+                                           md-on-reorder="ctrl.grid.sortCallback">
+                                    <tr md-row>
+                                        <th colspan="{{ctrl.grid.colSpan()}}" ng-if="ctrl.grid.selectedRecords.length"
+                                            md-column>
+                                            <div layout="row" layout-align="start center">
+                                                <span>{{ctrl.grid.selectedRecords.length}} {{lang.lbl_items_selected}} </span>
+                                                <span flex></span>
+                                                <!--<table-status-directive
+                                                        when-close="ctrl.changeBulkEmployeesStatus"></table-status-directive>
+                                                <md-button class="md-icon-button" tooltip="{{lang.btn_delete}}"
+                                                           ng-click="ctrl.removeBulkEmployees($event)">
+                                                    <md-icon md-svg-icon="delete"></md-icon>
+                                                </md-button>-->
+                                            </div>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.arabicName, true)"
+                                            md-column
+                                            md-order-by="{{ctrl.grid.columns.arabicName.sortKey()}}">
+                                            <span>{{lang[ctrl.grid.columns.arabicName.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.englishName, true)"
+                                            md-column
+                                            md-order-by="{{ctrl.grid.columns.englishName.sortKey()}}">
+                                            <span>{{lang[ctrl.grid.columns.englishName.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.userName, true)"
+                                            md-column
+                                            md-order-by="{{ctrl.grid.columns.userName.sortKey()}}">
+                                            <span>{{lang[ctrl.grid.columns.userName.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.status, true)"
+                                            md-column
+                                            md-order-by="{{ctrl.grid.columns.status.sortKey()}}">
+                                            <span>{{lang[ctrl.grid.columns.status.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.mobileNumber, true)"
+                                            md-column
+                                            md-order-by="{{ctrl.grid.columns.mobileNumber.sortKey()}}">
+                                            <span>{{lang[ctrl.grid.columns.mobileNumber.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.permissions, true)"
+                                            md-column
+                                            md-order-by="">
+                                            <span>{{lang[ctrl.grid.columns.permissions.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions, true)"
+                                            md-column>
+                                            <span>{{lang[ctrl.grid.columns.gridActions.langKey]}}</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody md-body>
+                                    <tr md-row
+                                        ng-repeat="item in (ctrl.employees | limitTo: ctrl.grid.limit: ((ctrl.grid.page - 1) * ctrl.grid.limit)) track by $index"
+                                        md-select="item">
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.arabicName)"
+                                            md-highlight-text="ctrl.grid.searchText" md-highlight-flags="i">
+                                            {{item.employee.arName}}
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.englishName)"
+                                            md-highlight-text="ctrl.grid.searchText" md-highlight-flags="i">
+                                            {{item.employee.enName}}
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.userName)"
+                                            md-highlight-text="ctrl.grid.searchText" md-highlight-flags="i">
+                                            {{item.employee.userName}}
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.status)">
+                                            <md-switch aria-label="{{lang.lbl_status}}"
+                                                       title="{{item.employee.getTranslatedStatus()}}"
+                                                       ng-change="ctrl.changeEmployeeStatus(item, $event)"
+                                                       ng-model="item.employee.active"
+                                                       ng-disabled="ctrl.isCurrentEmployee(item.employee)">
+                                            </md-switch>
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.mobileNumber)"
+                                            md-highlight-text="ctrl.grid.searchText" md-highlight-flags="i">
+                                            {{item.employee.mobileNumber}}
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.permissions)">
+                                            <md-button
+                                                    tooltip="{{(!item.permissions.length ) ? lang.msg_no_permissions : (item.permissions.length + ' ' + lang.lbl_permissions)}}"
+                                                    ng-click="ctrl.openPermissionsDialog(item, $event )"
+                                                    aria-label="{{lang.lbl_view_permissions}}"
+                                                    class="md-icon-button"
+                                                    ng-class="{'md-raised':item.permissions.length}">
+                                                <md-icon md-svg-icon="coins"></md-icon>
+                                            </md-button>
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions)">
+                                            <div flex layout="row" layout-align="start center">
+                                                <md-button class="md-icon-button" title="{{lang.btn_delete}}"
+                                                           ng-click="ctrl.removeEmployee(item, $event)">
+                                                    <md-icon md-svg-icon="delete"></md-icon>
+                                                </md-button>
+                                                <md-button class="md-icon-button" title="{{lang.btn_edit}}"
+                                                           ng-click="ctrl.openEditEmployeeDialog(item, $event)">
+                                                    <md-icon md-svg-icon="pencil"></md-icon>
+                                                </md-button>
+                                                <md-button class="md-icon-button" title="{{lang.lbl_change_password}}"
+                                                           ng-click="ctrl.changePassword(item ,$event)">
+                                                    <div layout="row">
+                                                        <md-icon md-svg-icon="lock-reset"></md-icon>
+                                                    </div>
+                                                </md-button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr md-row ng-if="!ctrl.employeesCopy.length">
+                                        <td md-cell colspan="{{ctrl.grid.colSpan()}}" class="red-text text-center">
+                                            {{lang.msg_no_items_found}}
+                                        </td>
+                                    </tr>
+                                    <tr md-row
+                                        ng-if="ctrl.employeesCopy.length && !ctrl.employees.length">
+                                        <td md-cell colspan="{{ctrl.grid.colSpan()}}" class="red-text text-center">
+                                            {{lang.msg_no_items_found_matching_search}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <md-table-pagination
+                                    md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                                    md-limit-options="ctrl.grid.limitOptions"
+                                    md-limit="ctrl.grid.limit" md-page="ctrl.grid.page"
+                                    md-total="{{ctrl.employees.length}}" md-page-select>
+                            </md-table-pagination>
+                        </md-table-container>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

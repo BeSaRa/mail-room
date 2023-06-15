@@ -1,0 +1,81 @@
+<div background-directive="tall" class="page-content" flex="">
+    <div layout="column" class="content">
+        <!-- page-header start -->
+        <div layout="row" layout-align="start center" class="page-header padding-header small">
+            <span>{{lang.menu_item_tracking}}</span>
+            <!--<md-button ng-if="ctrl.isTabSelected(ctrl.tabsToShow.result)"
+                       ng-click="ctrl.grid.reload(ctrl.grid.page, $event)" class="md-icon-button"
+                       tooltip="{{lang.lbl_reload}}">
+                <md-icon md-svg-icon="refresh"></md-icon>
+            </md-button>-->
+        </div>
+        <!-- end page-header -->
+
+        <div layout="column" flex>
+            <div scroll-directive>
+                <div class="page-padding">
+                    <md-card md-whiteframe="3" layout="column" class="card-overlay">
+                        <md-tabs md-dynamic-height md-selected="ctrl.selectedTabIndex">
+                            <md-tab label="{{lang[ctrl.tabsToShow.search.key]}}"
+                                    md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.search, $event)">
+                                <md-content class="white-bg">
+                                    <form class="white-bg" name="trackingForm" id="trackingForm"
+                                          autocomplete="off" enter-submit-directive="btn_search">
+                                        <div layout="row" layout-padding>
+                                            <md-input-container flex>
+                                                <label for="referenceNo">{{lang.lbl_reference_number}}</label>
+                                                <input ng-model="ctrl.referenceNo" required flex
+                                                       id="referenceNo" name="referenceNo">
+                                            </md-input-container>
+                                        </div>
+                                    </form>
+                                </md-content>
+                            </md-tab>
+                            <md-tab label="{{lang[ctrl.tabsToShow.result.key]}}"
+                                    md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.result, $event)"
+                                    ng-disabled="!ctrl.timelineRecords">
+                                <md-content class="white-bg">
+                                    <div ng-if="!ctrl.timelineRecords.length" layout="row" layout-padding layout-align="start center">{{lang.msg_no_items_found_matching_search}}</div>
+                                    <div ng-if="ctrl.timelineRecords.length">
+                                        <timeline-directive mail="ctrl.mail"
+                                                            timeline-records="ctrl.timelineRecords"></timeline-directive>
+                                    </div>
+                                </md-content>
+                            </md-tab>
+                        </md-tabs>
+                    </md-card>
+
+                    <div layout="row"
+                         ng-if="ctrl.isTabSelected(ctrl.tabsToShow.search)">
+                        <md-button id="btn_search"
+                                   class="md-raised"
+                                   ng-click="ctrl.search($event)"
+                                   ng-disabled="trackingForm.$invalid">
+                            {{lang.btn_search}}
+                        </md-button>
+                        <md-button class="md-raised"
+                                   ng-click="ctrl.resetForm($event)">
+                            {{ lang.btn_reset }}
+                        </md-button>
+                    </div>
+                    <div layout="row"
+                         ng-if="ctrl.isTabSelected(ctrl.tabsToShow.result)">
+                        <md-button id="btn_Print"
+                                   class="md-raised"
+                                   ng-click="ctrl.print($event)"
+                                   ng-disabled="!ctrl.timelineRecords.length"
+                                   tabindex="14">
+                            {{lang.btn_print}}
+                        </md-button>
+                        <md-button class="md-raised"
+                                   ng-click="ctrl.resetForm($event)"
+                                   tabindex="15">
+                            {{ lang.btn_reset }}
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

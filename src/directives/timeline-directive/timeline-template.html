@@ -1,0 +1,17 @@
+<div class="timeline_container">
+    <div class="timeline">
+        <div id="timeline_group" class="timeline_group">
+            <span class="timeline_reference text-ltr">{{ctrl.mail.getMailReferenceNo()}}</span>
+            <div ng-repeat="timeline in ctrl.timelineRecords"
+                 class="timeline_box {{timeline.getTimelineStatusColor()}}">
+                <div class="timeline_header {{timeline.getTimelineStatusColor()}}">
+                    <span class="timeline_header_content">{{timeline.actionLogType.getTranslatedName()}}</span>
+                </div>
+                <div layout="column" flex class="timeline_body p10_0 {{timeline.getTimelineStatusColor()}}">
+                    <span><md-icon md-svg-icon="calendar-range" tooltip="{{lang.header_action_date}}"></md-icon> {{timeline.actionDateFormatted}}</span>
+                    <span><md-icon md-svg-icon="account" tooltip="{{lang.lbl_employee}}"></md-icon> {{timeline.user.getTranslatedName()}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

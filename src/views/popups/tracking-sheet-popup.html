@@ -1,0 +1,90 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_tracking}}">
+    <popup-toolbar-directive header-text="{{lang.lbl_tracking}} - {{ctrl.mail.getMailReferenceNo()}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div class="md-dialog-content mr-dialog-content">
+            <md-card md-whiteframe="3" class="card-overlay">
+                <md-table-container>
+                    <div flex scroll-directive>
+                        <table md-table>
+                            <thead md-head>
+                            <tr md-row>
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.sequence, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.sequence.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.sequence.langKey]}}</span>
+                                </th>
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.userName, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.userName.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.userName.langKey]}}</span>
+                                </th>
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.actionDate, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.actionDate.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.actionDate.langKey]}}</span>
+                                </th>
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.actionType, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.actionType.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.actionType.langKey]}}</span>
+                                </th>
+
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.mailType, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.mailType.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.mailType.langKey]}}</span>
+                                </th>
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.entryType, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.entryType.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.entryType.langKey]}}</span>
+                                </th>
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.receiverEntity, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.receiverEntity.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.receiverEntity.langKey]}}</span>
+                                </th>
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.senderEntity, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.senderEntity.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.senderEntity.langKey]}}</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row
+                                ng-repeat="trackingSheet in (ctrl.trackingRecords | limitTo: ctrl.grid.limit: ((ctrl.grid.page - 1) * ctrl.grid.limit)) track by $index ">
+                                <td md-cell>{{$index + 1}}</td>
+                                <td md-cell>{{trackingSheet.user.getTranslatedName()}}</td>
+                                <td md-cell>{{trackingSheet.actionDateFormatted}}</td>
+                                <td md-cell>{{trackingSheet.actionLogType.getTranslatedName()}}</td>
+                                <td md-cell>{{trackingSheet.mailType.getTranslatedName()}}</td>
+                                <td md-cell>{{trackingSheet.entryType.getTranslatedName()}}</td>
+                                <td md-cell>{{trackingSheet.receiverEntity.getTranslatedName()}}</td>
+                                <td md-cell>{{trackingSheet.senderEntity.getTranslatedName()}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <md-table-pagination
+                            md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                            md-limit-options="ctrl.grid.limitOptions"
+                            md-limit="ctrl.grid.limit" md-page="ctrl.grid.page"
+                            md-total="{{ctrl.trackingRecords.length}}" md-page-select>
+                    </md-table-pagination>
+                </md-table-container>
+            </md-card>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised" ng-click="ctrl.print($event)">
+            {{lang.btn_print}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closeDialog($event)">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

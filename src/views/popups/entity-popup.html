@@ -1,0 +1,534 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_entities}}">
+    <popup-toolbar-directive ng-if="ctrl.model.isNewRecord()"
+                             header-text="{{!ctrl.parentEntity ? lang.lbl_add_entity : lang.lbl_add_department}}"></popup-toolbar-directive>
+    <popup-toolbar-directive ng-if="!ctrl.model.isNewRecord()"
+                             header-text="{{lang.lbl_edit}} - {{ctrl.model.getTranslatedName()}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div>
+            <md-tabs md-dynamic-height md-selected="ctrl.selectedTabIndex">
+                <!-- Basic Info -->
+                <md-tab ng-if="ctrl.showTab(ctrl.tabsToShow.basicInfo)" label="{{lang[ctrl.tabsToShow.basicInfo.key]}}"
+                        md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.basicInfo, $event)">
+                    <md-content layout-padding>
+                        <form form-directive="ctrl.entityForm" name="entityForm" autocomplete="off">
+                            <div layout="row">
+                                <!-- Integrated System -->
+                                <md-input-container flex>
+                                    <label for="integratedSystem">{{lang.lbl_integrated_system}}</label>
+                                    <input name="integratedSystem" id="integratedSystem"
+                                           ng-readonly="true" ng-disabled="true"
+                                           ng-value="ctrl.integratedSystem.getTranslatedName()">
+                                    <div ng-messages="entityForm.integratedSystem.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <!-- Arabic Name-->
+                                <md-input-container flex>
+                                    <label for="arName">{{lang.lbl_arabic_name}}</label>
+                                    <input name="arName" id="arName" required
+                                           ng-model="ctrl.entity.arName"
+                                           custom-validate-directive="A1NS">
+                                    <div ng-messages="entityForm.arName.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                        <div ng-message="A1NS">{{lang.error_at_least_one_arabic_number}}</div>
+                                    </div>
+                                </md-input-container>
+                                <!-- English Name -->
+                                <md-input-container flex>
+                                    <label for="enName">{{lang.lbl_english_name}}</label>
+                                    <input name="enName" id="enName" required
+                                           ng-model="ctrl.entity.enName"
+                                           custom-validate-directive="E1NS">
+                                    <div ng-messages="entityForm.enName.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                        <div ng-message="E1NS">{{lang.error_at_least_one_english_number}}</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <!-- Responsible Name-->
+                                <md-input-container flex>
+                                    <label for="responsibleName">{{lang.lbl_responsible_name}}</label>
+                                    <input name="responsibleName" id="responsibleName" required
+                                           ng-model="ctrl.entity.responsibleName">
+                                    <div ng-messages="entityForm.responsibleName.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                    </div>
+                                </md-input-container>
+                                <!-- Responsible Email -->
+                                <md-input-container flex>
+                                    <label for="responsibleEmail">{{lang.lbl_responsible_email}}</label>
+                                    <input name="responsibleEmail" id="responsibleEmail" required
+                                           ng-model="ctrl.entity.responsibleEmail"
+                                           custom-validate-directive="email"
+                                           no-space-directive>
+                                    <div ng-messages="entityForm.responsibleEmail.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                        <div ng-message="email">{{lang.error_email}}</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <!-- Entity Type -->
+                                <md-input-container flex ng-if="!ctrl.parentEntity">
+                                    <label for="entityTypeId">{{lang.lbl_entity_type}}</label>
+                                    <md-select id="entityTypeId" name="entityTypeId" required
+                                               ng-disabled="ctrl.parentEntity"
+                                               ng-model="ctrl.entity.entityTypeId">
+                                        <md-option ng-value="entityType.id"
+                                                   ng-repeat="entityType in ctrl.entityTypes track by $index">
+                                            {{entityType.getTranslatedName()}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="entityForm.entityTypeId.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                    </div>
+                                </md-input-container>
+                                <!-- code -->
+                                <md-input-container flex>
+                                    <label for="code">{{lang.lbl_code}}</label>
+                                    <input name="code" id="code" required
+                                           ng-model="ctrl.entity.entityCode"
+                                           maxlength="3"
+                                           custom-validate-directive="EN_"
+                                           ng-disabled="ctrl.editMode"
+                                           no-space-directive>
+                                    <div ng-messages="entityForm.entityCode.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                        <div ng-message="maxlength">{{lang.error_max_length.change({length: 3})}}</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="row" ng-if="!ctrl.parentEntity">
+                                <!-- Status -->
+                                <div flex>
+                                    <md-switch ng-model="ctrl.entity.active"
+                                               ng-disabled="ctrl.isCurrentEntity()">
+                                        <label>{{lang.lbl_status}} : {{ctrl.entity.getTranslatedStatus()}}</label>
+                                    </md-switch>
+                                </div>
+                                <!-- is using system -->
+                                <div flex>
+                                    <md-switch ng-model="ctrl.entity.isUseSystem">
+                                        <label>{{lang.lbl_use_system}} :
+                                            {{ctrl.entity.getTranslatedIsUseSystem()}}</label>
+                                    </md-switch>
+                                </div>
+                            </div>
+                        </form>
+                    </md-content>
+                </md-tab>
+                <!-- Entity Employees -->
+                <md-tab ng-if="ctrl.showTab(ctrl.tabsToShow.employees)" label="{{lang[ctrl.tabsToShow.employees.key]}}"
+                        ng-disabled="!ctrl.editMode"
+                        md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.employees, $event)">
+                    <md-content layout-padding>
+                        <div layout="column">
+                            <div layout="row" layout-align="start center"
+                                 ng-class="{'page-header small': !ctrl.showEntityEmployeeForm}">
+                                <md-button ng-click="ctrl.openAddEntityEmployeeForm($event)"
+                                           class="md-icon-button"
+                                           tooltip="{{lang.lbl_add_employee_to_entity}}"
+                                           ng-if="!ctrl.showEntityEmployeeForm">
+                                    <md-icon md-svg-icon="account-plus"></md-icon>
+                                </md-button>
+                                <span flex></span>
+                                <grid-search-directive ng-if="!ctrl.showEntityEmployeeForm"
+                                                       grid="ctrl.entityEmployeesGrid"></grid-search-directive>
+                            </div>
+                            <!-- Entity Employees Grid -->
+                            <md-card md-whiteframe="3" layout="column" class="card-overlay"
+                                     ng-if="!ctrl.showEntityEmployeeForm">
+                                <md-table-container>
+                                    <div flex scroll-directive>
+                                        <table md-table ng-model="ctrl.entityEmployeesGrid.selectedRecords"
+                                               md-progress="ctrl.entityEmployeesGrid.progress">
+                                            <!--md-row-select multiple-->
+                                            <thead md-head md-order="ctrl.entityEmployeesGrid.order"
+                                                   md-on-reorder="ctrl.entityEmployeesGrid.sortCallback">
+                                            <tr md-row>
+                                                <th ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.arabicName, true)"
+                                                    md-column
+                                                    md-order-by="{{ctrl.entityEmployeesGrid.columns.arabicName.sortKey()}}">
+                                                    <span>{{lang[ctrl.entityEmployeesGrid.columns.arabicName.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.englishName, true)"
+                                                    md-column
+                                                    md-order-by="{{ctrl.entityEmployeesGrid.columns.englishName.sortKey()}}">
+                                                    <span>{{lang[ctrl.entityEmployeesGrid.columns.englishName.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.userName, true)"
+                                                    md-column
+                                                    md-order-by="{{ctrl.entityEmployeesGrid.columns.userName.sortKey()}}">
+                                                    <span>{{lang[ctrl.entityEmployeesGrid.columns.userName.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.status, true)"
+                                                    md-column
+                                                    md-order-by="{{ctrl.entityEmployeesGrid.columns.status.sortKey()}}">
+                                                    <span>{{lang[ctrl.entityEmployeesGrid.columns.status.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.mobileNumber, true)"
+                                                    md-column
+                                                    md-order-by="{{ctrl.entityEmployeesGrid.columns.mobileNumber.sortKey()}}">
+                                                    <span>{{lang[ctrl.entityEmployeesGrid.columns.mobileNumber.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.permissions, true)"
+                                                    md-column
+                                                    md-order-by="">
+                                                    <span>{{lang[ctrl.entityEmployeesGrid.columns.permissions.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.gridActions, true)"
+                                                    md-column>
+                                                    <span>{{lang[ctrl.entityEmployeesGrid.columns.gridActions.langKey]}}</span>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody md-body>
+                                            <tr md-row
+                                                ng-repeat="item in (ctrl.entityEmployees | limitTo: ctrl.entityEmployeesGrid.limit: ((ctrl.entityEmployeesGrid.page - 1) * ctrl.entityEmployeesGrid.limit)) track by $index"
+                                                md-select="item">
+                                                <td md-cell
+                                                    ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.arabicName)"
+                                                    md-highlight-text="ctrl.entityEmployeesGrid.searchText"
+                                                    md-highlight-flags="i">
+                                                    {{item.employee.arName}}
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.englishName)"
+                                                    md-highlight-text="ctrl.entityEmployeesGrid.searchText"
+                                                    md-highlight-flags="i">
+                                                    {{item.employee.enName}}
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.userName)"
+                                                    md-highlight-text="ctrl.entityEmployeesGrid.searchText"
+                                                    md-highlight-flags="i">
+                                                    {{item.employee.userName}}
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.status)">
+                                                    <md-switch aria-label="{{lang.lbl_status}}"
+                                                               title="{{item.employee.getTranslatedStatus()}}"
+                                                               ng-change="ctrl.changeEmployeeStatus(item, $event)"
+                                                               ng-model="item.employee.active">
+                                                    </md-switch>
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.mobileNumber)"
+                                                    md-highlight-text="ctrl.entityEmployeesGrid.searchText"
+                                                    md-highlight-flags="i">
+                                                    {{item.employee.mobileNumber}}
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.permissions)">
+                                                    <md-button
+                                                            tooltip="{{(!item.permissions.length ) ? lang.msg_no_permissions : (item.permissions.length + ' ' + lang.lbl_permissions)}}"
+                                                            ng-click="ctrl.openPermissionsDialog(item, $event )"
+                                                            aria-label="{{lang.lbl_view_permissions}}"
+                                                            class="md-icon-button"
+                                                            ng-class="{'md-raised':item.permissions.length}">
+                                                        <md-icon md-svg-icon="coins"></md-icon>
+                                                    </md-button>
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.entityEmployeesGrid.showColumn(ctrl.entityEmployeesGrid.columns.gridActions)">
+                                                    <div flex layout="row" layout-align="start center">
+                                                        <md-button class="md-icon-button"
+                                                                   title="{{lang.btn_delete}}"
+                                                                   ng-click="ctrl.removeEmployeeFromEntity(item, $event)">
+                                                            <md-icon md-svg-icon="delete"></md-icon>
+                                                        </md-button>
+                                                        <md-button class="md-icon-button" title="{{lang.btn_edit}}"
+                                                                   ng-click="ctrl.openEditEntityEmployeeForm(item, $event)">
+                                                            <md-icon md-svg-icon="pencil"></md-icon>
+                                                        </md-button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr md-row ng-if="!ctrl.entityEmployeesCopy.length">
+                                                <td md-cell colspan="{{ctrl.entityEmployeesGrid.colSpan()}}"
+                                                    class="red-text text-center">
+                                                    {{lang.msg_no_items_found}}
+                                                </td>
+                                            </tr>
+                                            <tr md-row
+                                                ng-if="ctrl.entityEmployeesCopy.length && !ctrl.entityEmployees.length">
+                                                <td md-cell colspan="{{ctrl.entityEmployeesGrid.colSpan()}}"
+                                                    class="red-text text-center">
+                                                    {{lang.msg_no_items_found_matching_search}}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <md-table-pagination
+                                            md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                                            md-limit-options="ctrl.entityEmployeesGrid.limitOptions"
+                                            md-limit="ctrl.entityEmployeesGrid.limit"
+                                            md-page="ctrl.entityEmployeesGrid.page"
+                                            md-total="{{ctrl.entityEmployees.length}}" md-page-select>
+                                    </md-table-pagination>
+                                </md-table-container>
+                            </md-card>
+                            <!-- Entity Employee Form -->
+                            <div ng-if="ctrl.showEntityEmployeeForm">
+                                <form name="entityEmployeeForm" autocomplete="off">
+                                    <div layout="row">
+                                        <md-input-container flex>
+                                            <label for="entityEmployee">{{lang.lbl_employee}}</label>
+                                            <md-select id="entityEmployee" name="entityEmployee" required
+                                                       ng-disabled="ctrl.entityEmployeeEditMode"
+                                                       ng-model-options="{trackBy: '$value.employee.id'}"
+                                                       ng-change="ctrl.resetPermissions($event)"
+                                                       ng-model="ctrl.selectedAvailableEmployee">
+                                                <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                                                <md-option
+                                                        ng-repeat="employeePermission in ctrl.employees"
+                                                        ng-if="ctrl.isEmployeeAvailable(employeePermission)"
+                                                        ng-value="employeePermission">
+                                                    {{employeePermission.employee.getTranslatedName()}}
+                                                </md-option>
+                                            </md-select>
+                                            <div ng-messages="entityEmployeeForm.entityEmployee.$invalid">
+                                                <div ng-message="required">{{lang.error_field_required}}</div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div ng-if="ctrl.selectedAvailableEmployee" layout="row"
+                                         ng-repeat="chunk in ctrl.permissions">
+                                        <div flex ng-repeat="permission in chunk">
+                                            <md-checkbox ng-checked="ctrl.isPermissionSelected(permission)"
+                                                         ng-click="ctrl.togglePermission(permission)"
+                                                         flex aria-label="{{permission.getTranslatedName()}}">
+                                                {{permission.getTranslatedName()}}
+                                            </md-checkbox>
+                                        </div>
+                                        <div flex
+                                             ng-repeat="emptyElement in ctrl.getEmptyChunkElements(chunk) track by $index"></div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </md-content>
+                </md-tab>
+                <!-- Departments -->
+                <md-tab ng-if="ctrl.showTab(ctrl.tabsToShow.departments)"
+                        label="{{lang[ctrl.tabsToShow.departments.key]}}"
+                        ng-disabled="!ctrl.editMode"
+                        md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.departments, $event)">
+                    <md-content layout-padding>
+                        <div layout="column">
+                            <div layout="row" layout-align="start center"
+                                 class="page-header small">
+                                <md-button ng-click="ctrl.openAddDepartmentDialog($event)"
+                                           class="md-icon-button"
+                                           tooltip="{{lang.lbl_add}}">
+                                    <md-icon md-svg-icon="plus"></md-icon>
+                                </md-button>
+                                <span flex></span>
+                                <grid-search-directive grid="ctrl.departmentsGrid"></grid-search-directive>
+                            </div>
+                            <!-- Departments Grid -->
+                            <md-card md-whiteframe="3" layout="column" class="card-overlay">
+                                <md-table-container>
+                                    <div flex scroll-directive>
+                                        <table md-table ng-model="ctrl.departmentsGrid.selectedRecords"
+                                               md-progress="ctrl.departmentsGrid.progress">
+                                            <!--md-row-select multiple-->
+                                            <thead md-head md-order="ctrl.departmentsGrid.order"
+                                                   md-on-reorder="ctrl.departmentsGrid.sortCallback">
+                                            <tr md-row>
+                                                <th ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.arabicName, true)"
+                                                    md-column
+                                                    md-order-by="{{ctrl.departmentsGrid.columns.arabicName.sortKey()}}">
+                                                    <span>{{lang[ctrl.departmentsGrid.columns.arabicName.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.englishName, true)"
+                                                    md-column
+                                                    md-order-by="{{ctrl.departmentsGrid.columns.englishName.sortKey()}}">
+                                                    <span>{{lang[ctrl.departmentsGrid.columns.englishName.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.responsibleName, true)"
+                                                    md-column
+                                                    md-order-by="{{ctrl.departmentsGrid.columns.responsibleName.sortKey()}}">
+                                                    <span>{{lang[ctrl.departmentsGrid.columns.responsibleName.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.responsibleEmail, true)"
+                                                    md-column
+                                                    md-order-by="{{ctrl.departmentsGrid.columns.responsibleEmail.sortKey()}}">
+                                                    <span>{{lang[ctrl.departmentsGrid.columns.responsibleEmail.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.entityCode, true)"
+                                                    md-column
+                                                    md-order-by="{{ctrl.departmentsGrid.columns.entityCode.sortKey()}}">
+                                                    <span>{{lang[ctrl.departmentsGrid.columns.entityCode.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.departmentsGrid.showColumn(ctrl.grid.columns.useSystem, true)"
+                                                    md-column
+                                                    md-order-by="{{ctrl.departmentsGrid.columns.useSystem.sortKey()}}">
+                                                    <span>{{lang[ctrl.departmentsGrid.columns.useSystem.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.status, true)"
+                                                    md-column
+                                                    md-order-by="{{ctrl.departmentsGrid.columns.status.sortKey()}}">
+                                                    <span>{{lang[ctrl.departmentsGrid.columns.status.langKey]}}</span>
+                                                </th>
+                                                <th ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.gridActions, true)"
+                                                    md-column>
+                                                    <span>{{lang[ctrl.departmentsGrid.columns.gridActions.langKey]}}</span>
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            <tbody md-body>
+                                            <tr md-row
+                                                ng-repeat="item in (ctrl.departments | limitTo: ctrl.departmentsGrid.limit: ((ctrl.departmentsGrid.page - 1) * ctrl.departmentsGrid.limit)) track by $index"
+                                                md-select="item">
+                                                <td md-cell
+                                                    ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.arabicName)"
+                                                    md-highlight-text="ctrl.departmentsGrid.searchText"
+                                                    md-highlight-flags="i">
+                                                    {{item.arName}}
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.englishName)"
+                                                    md-highlight-text="ctrl.departmentsGrid.searchText"
+                                                    md-highlight-flags="i">
+                                                    {{item.enName}}
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.responsibleName)"
+                                                    md-highlight-text="ctrl.departmentsGrid.searchText"
+                                                    md-highlight-flags="i">
+                                                    {{item.responsibleName}}
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.responsibleEmail)"
+                                                    md-highlight-text="ctrl.departmentsGrid.searchText"
+                                                    md-highlight-flags="i">
+                                                    {{item.responsibleEmail}}
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.entityCode)"
+                                                    md-highlight-text="ctrl.grid.searchText" md-highlight-flags="i">
+                                                    {{item.entityCode}}
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.grid.showColumn(ctrl.departmentsGrid.columns.useSystem)">
+                                                    <md-switch aria-label="{{lang.lbl_use_system}}"
+                                                               ng-disabled="true"
+                                                               title="{{item.getTranslatedIsUseSystem()}}"
+                                                               ng-change="ctrl.changeIsUseSystem(item, $event)"
+                                                               ng-model="item.isUseSystem">
+                                                    </md-switch>
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.status)">
+                                                    <md-switch aria-label="{{lang.lbl_status}}"
+                                                               title="{{item.getTranslatedStatus()}}"
+                                                               ng-change="ctrl.changeEntityStatus(item, $event)"
+                                                               ng-model="item.active">
+                                                    </md-switch>
+                                                </td>
+                                                <td md-cell
+                                                    ng-if="ctrl.departmentsGrid.showColumn(ctrl.departmentsGrid.columns.gridActions)">
+                                                    <div flex layout="row" layout-align="start center">
+                                                        <md-button class="md-icon-button" title="{{lang.btn_delete}}"
+                                                                   ng-click="ctrl.removeDepartment(item, $event)">
+                                                            <md-icon md-svg-icon="delete"></md-icon>
+                                                        </md-button>
+                                                        <md-button class="md-icon-button" title="{{lang.btn_edit}}"
+                                                                   ng-click="ctrl.openEditDepartmentDialog(item, $event)">
+                                                            <md-icon md-svg-icon="pencil"></md-icon>
+                                                        </md-button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr md-row ng-if="!ctrl.departmentsCopy.length">
+                                                <td md-cell colspan="{{ctrl.departmentsGrid.colSpan()}}"
+                                                    class="red-text text-center">
+                                                    {{lang.msg_no_items_found}}
+                                                </td>
+                                            </tr>
+                                            <tr md-row
+                                                ng-if="ctrl.departmentsCopy.length && !ctrl.departments.length">
+                                                <td md-cell colspan="{{ctrl.departmentsGrid.colSpan()}}"
+                                                    class="red-text text-center">
+                                                    {{lang.msg_no_items_found_matching_search}}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <md-table-pagination
+                                            md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                                            md-limit-options="ctrl.departmentsGrid.limitOptions"
+                                            md-limit="ctrl.departmentsGrid.limit"
+                                            md-page="ctrl.departmentsGrid.page"
+                                            md-total="{{ctrl.departments.length}}" md-page-select>
+                                    </md-table-pagination>
+                                </md-table-container>
+                            </md-card>
+                        </div>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <!-- Basic buttons -->
+        <div layout="row" flex ng-if="ctrl.isTabSelected(ctrl.tabsToShow.basicInfo)">
+            <md-button class=" md-raised" ng-if="!ctrl.editMode"
+                       ng-disabled="ctrl.entityForm.$invalid"
+                       ng-click="ctrl.addEntity($event)">
+                {{lang.btn_add}}
+            </md-button>
+            <md-button class="md-raised" ng-if="ctrl.editMode"
+                       ng-disabled="ctrl.entityForm.$invalid"
+                       ng-click="ctrl.saveEntity($event)">
+                {{lang.btn_save}}
+            </md-button>
+            <span flex></span>
+            <md-button class="md-raised" ng-click="ctrl.resetEntityForm(ctrl.entityForm, $event)">
+                {{lang.btn_reset}}
+            </md-button>
+            <span flex></span>
+            <md-button class="md-raised" ng-click="ctrl.closeDialog($event)">
+                {{lang.btn_close}}
+            </md-button>
+        </div>
+        <!-- Employees buttons -->
+        <div layout="row" flex ng-if="ctrl.isTabSelected(ctrl.tabsToShow.employees) && ctrl.editMode">
+            <md-button class="md-raised" ng-if="ctrl.showEntityEmployeeForm && !ctrl.entityEmployeeEditMode"
+                       ng-disabled="ctrl.checkSaveEmployeeDisabled()"
+                       ng-click="ctrl.addEntityEmployee($event)">
+                {{lang.btn_add}}
+            </md-button>
+            <md-button class="md-raised" ng-if="ctrl.showEntityEmployeeForm && ctrl.entityEmployeeEditMode"
+                       ng-disabled="ctrl.checkSaveEmployeeDisabled()"
+                       ng-click="ctrl.saveEntityEmployee($event)">
+                {{lang.btn_save}}
+            </md-button>
+
+            <span flex></span>
+            <md-button class="md-raised" ng-click="ctrl.hideEntityEmployeeForm($event)"
+                       ng-if="ctrl.showEntityEmployeeForm">
+                {{lang.btn_cancel}}
+            </md-button>
+            <md-button class="md-raised" ng-click="ctrl.closeDialog($event)"
+                       ng-if="!ctrl.showEntityEmployeeForm">
+                {{lang.btn_close}}
+            </md-button>
+        </div>
+        <!-- Departments buttons -->
+        <div layout="row" flex ng-if="ctrl.isTabSelected(ctrl.tabsToShow.departments) && ctrl.editMode">
+            <span flex></span>
+            <md-button class="md-raised" ng-click="ctrl.closeDialog($event)">
+                {{lang.btn_close}}
+            </md-button>
+        </div>
+    </md-dialog-actions>
+</md-dialog>

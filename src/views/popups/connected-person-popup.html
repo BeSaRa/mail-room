@@ -1,0 +1,106 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_connected_person}}">
+    <popup-toolbar-directive ng-if="!ctrl.editMode"
+                             header-text="{{lang.lbl_add_connected_person}}"
+                             close-callback="ctrl.closeDialog"></popup-toolbar-directive>
+    <popup-toolbar-directive ng-if="ctrl.editMode"
+                             header-text="{{ctrl.disableAll ? lang.lbl_view: lang.lbl_edit}} {{ctrl.connectedPersonCopy.getFullName()}}"
+                             close-callback="ctrl.closeDialog"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <form name="connectedPersonForm" autocomplete="off">
+            <div class="md-dialog-content mr-dialog-content">
+                <div layout="row">
+                    <!-- Full Name-->
+                    <md-input-container flex>
+                        <label for="fullName">{{lang.lbl_full_name}}</label>
+                        <input name="fullName" id="fullName" required
+                               ng-model="ctrl.connectedPerson.fullName"
+                               ng-disabled="ctrl.formDisabled()">
+                        <div ng-messages="connectedPersonForm.fullName.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                        </div>
+                    </md-input-container>
+                    <!-- Personal Id -->
+                    <md-input-container flex>
+                        <label for="personalId">{{lang.lbl_personal_id}}</label>
+                        <input name="personalId" id="personalId"
+                               ng-model="ctrl.connectedPerson.personalId"
+                               ng-disabled="ctrl.formDisabled()">
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <!-- Address 1 -->
+                    <md-input-container flex>
+                        <label for="address1">{{lang.lbl_address_1}}</label>
+                        <input name="address1" id="address1"
+                               ng-model="ctrl.connectedPerson.address1"
+                               ng-disabled="ctrl.formDisabled()">
+                    </md-input-container>
+                    <!-- Address 2 -->
+                    <md-input-container flex>
+                        <label for="address2">{{lang.lbl_address_2}}</label>
+                        <input name="address2" id="address2"
+                               ng-model="ctrl.connectedPerson.address2"
+                               ng-disabled="ctrl.formDisabled()">
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <!-- Mobile1 1 -->
+                    <md-input-container flex>
+                        <label for="mobile1">{{lang.lbl_mobile_1}}</label>
+                        <input name="mobile1" id="mobile1"
+                               ng-model="ctrl.connectedPerson.mobile1"
+                               custom-validate-directive="phone_mobile"
+                               ng-disabled="ctrl.formDisabled()">
+                        <div ng-messages="connectedPersonForm.mobile1.$error">
+                            <div ng-message="phone_mobile">{{lang.error_mobile_number}}</div>
+                        </div>
+                    </md-input-container>
+                    <!-- Mobile 2 -->
+                    <md-input-container flex>
+                        <label for="mobile2">{{lang.lbl_mobile_2}}</label>
+                        <input name="mobile2" id="mobile2"
+                               ng-model="ctrl.connectedPerson.mobile2"
+                               custom-validate-directive="phone_mobile"
+                               ng-disabled="ctrl.formDisabled()">
+                        <div ng-messages="connectedPersonForm.mobile2.$error">
+                            <div ng-message="phone_mobile">{{lang.error_mobile_number}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout="row">
+                    <md-input-container flex>
+                        <label for="notes">{{lang.lbl_notes}}</label>
+                        <textarea maxlength="2000"
+                                  md-maxlength="2000"
+                                  id="notes" name="notes" rows="5"
+                                  ng-model="ctrl.connectedPerson.notes"
+                                  ng-disabled="ctrl.formDisabled()"></textarea>
+                    </md-input-container>
+                </div>
+            </div>
+        </form>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised" ng-if="!ctrl.editMode && !ctrl.disableAll"
+                   ng-disabled="connectedPersonForm.$invalid"
+                   ng-click="ctrl.addConnectedPerson($event)">
+            {{lang.btn_ok}}
+        </md-button>
+        <md-button class="md-raised" ng-if="ctrl.editMode && !ctrl.disableAll"
+                   ng-disabled="connectedPersonForm.$invalid"
+                   ng-click="ctrl.saveConnectedPerson($event)">
+            {{lang.btn_ok}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.resetConnectedPersonForm(connectedPersonForm, $event)"
+                   ng-if="!ctrl.disableAll">
+            {{lang.btn_reset}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closeDialog()">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

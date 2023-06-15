@@ -1,0 +1,43 @@
+<md-menu-bar class="user-menu">
+    <md-menu flex md-position-mode="right bottom">
+        <md-button ng-click="$mdMenu.open()">
+            <div layout="row" flex layout-align="start center">
+                <div layout="column" layout-align="start center" class="avatar-wrapper">
+                    <img class="avatar-image"
+                         src="../../../assets/images/profile.jpg">
+                    <!--<md-icon class="profile-status" ng-class="userMenu.selectedStatus.class"
+                             md-svg-icon="{{userMenu.selectedStatus.icon}}"></md-icon>-->
+                </div>
+                <div class="user-name">{{userMenu.userInfoService.getTranslatedName()}}</div>
+                <md-icon md-svg-icon="chevron-down"></md-icon>
+            </div>
+        </md-button>
+        <md-menu-content width="3">
+            <!--<md-menu-item>
+                <md-button ng-click="userMenu.userPreferences($event)">
+                    <div layout="row" layout-align="start center">
+                        <md-icon md-svg-icon="account-settings-variant"></md-icon>
+                        <span>{{lang.user_preferences}}</span>
+                    </div>
+                </md-button>
+            </md-menu-item>
+            <md-menu-divider></md-menu-divider>-->
+            <md-menu-item>
+                <md-button ng-click="userMenu.changePassword($event)">
+                    <div layout="row" layout-align="start center">
+                        <md-icon md-svg-icon="lock-reset"></md-icon>
+                        <span>{{lang.lbl_change_password}}</span>
+                    </div>
+                </md-button>
+            </md-menu-item>
+            <md-menu-item>
+                <md-button ng-click="userMenu.logout($event)">
+                    <div layout="row" layout-align="start center">
+                        <md-icon md-svg-icon="logout"></md-icon>
+                        <span>{{lang.auth_logout}}</span>
+                    </div>
+                </md-button>
+            </md-menu-item>
+        </md-menu-content>
+    </md-menu>
+</md-menu-bar>

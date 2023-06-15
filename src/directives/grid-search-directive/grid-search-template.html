@@ -1,0 +1,37 @@
+<div layout="row" layout-align="start center">
+    <span ng-if="ctrl.filter" id="filter_icons">
+        <md-button ng-if="!ctrl.grid.filterGridCriteria.showReset"
+                   ng-click="ctrl.filterRecords(false, $event)"
+                   aria-label="{{lang.lbl_filter}}"
+                   class="md-icon-button" tooltip="{{lang.lbl_filter}}">
+            <md-icon md-svg-icon="filter-outline"></md-icon>
+        </md-button>
+        <md-button ng-if="ctrl.grid.filterGridCriteria.showReset"
+                   ng-click="ctrl.filterRecords(false, $event)"
+                   aria-label="{{lang.lbl_filter}}"
+                   class="md-icon-button" tooltip="{{lang.lbl_filter}}">
+            <md-icon md-svg-icon="filter"></md-icon>
+        </md-button>
+        <md-button ng-if="ctrl.grid.filterGridCriteria.showReset"
+                   ng-click="ctrl.filterRecords(true, $event)"
+                   aria-label="{{lang.lbl_reset_filter}}"
+                   class="md-icon-button" tooltip="{{lang.lbl_reset_filter}}">
+            <md-icon md-svg-icon="filter-remove"></md-icon>
+        </md-button>
+          <md-button ng-if="ctrl.grid.filterGridCriteria.showReset"
+                     ng-click="ctrl.printResultRecords($event)"
+                     aria-label="{{lang.btn_print}}"
+                     class="md-icon-button" tooltip="{{lang.btn_print}}">
+            <md-icon md-svg-icon="printer"></md-icon>
+        </md-button>
+    </span>
+    <div md-whiteframe="3" layout="row" id="search_header">
+        <md-button class="md-icon-button" id="btn_searchGrid">
+            <md-icon md-svg-icon="magnify"></md-icon>
+        </md-button>
+        <input flex ng-model="ctrl.grid.searchText"
+               ng-change="ctrl.search($event)"
+               name="search_header_query" id="search_header_query"
+               placeholder="{{lang.lbl_search_placeholder}}">
+    </div>
+</div>

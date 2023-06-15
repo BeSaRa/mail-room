@@ -1,0 +1,21 @@
+module.exports = function (app) {
+    require('./configurations/01-index')(app);
+    require('./controllers/01-index')(app);
+    require('./decorators/01-index')(app);
+    require('./directives/01-index')(app);
+    require('./E2EModule')(app);
+    require('./factories/01-index')(app);
+    require('./filters/01-index')(app);
+    require('./followups/01-index')(app);
+    require('./helper-methods/01-index')(app);
+    require('./interceptors/01-index')(app);
+    require('./model-interceptors/01-index')(app);
+    require('./models/01-index')(app);
+    require('./modules/01-index')(app);
+    require('./popup-controllers/01-index')(app);
+    require('./providers/01-index')(app);
+    require('./relation-services/01-index')(app);
+    require('./routes/routes')(app);
+    require('./service-interceptors/01-index')(app);
+    require('./services/01-index')(app);
+};

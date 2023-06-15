@@ -1,0 +1,19 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_barcode}}">
+    <popup-toolbar-directive header-text="{{lang.lbl_barcode}} - {{ctrl.mail.getMailReferenceNo()}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div class="md-dialog-content mr-dialog-content">
+            <barcode-scanner-directive status-types-key="ctrl.statusTypesKey"></barcode-scanner-directive>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button ng-click="ctrl.send($event)" class="md-raised">
+            {{lang.btn_send}}
+        </md-button>
+        <span flex></span>
+        <md-button ng-click="ctrl.closeDialog($event)" class="md-raised">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link media="all" rel="stylesheet" href="print-grid-style.css">
+</head>
+<body>
+
+<div>
+    <table id="searchTable">
+
+    </table>
+</div>
+<script>
+    (function () {
+        var data = JSON.parse(localStorage.getItem('printData'));
+        var columns = data.header;
+        var columnCount = columns.length;
+        var records = data.records;
+
+        var currentLang = localStorage.getItem('currentLang');
+        var htmlTag = document.getElementsByTagName("html")[0];
+        if (currentLang === 'ar') {
+            htmlTag.classList.add('rtl');
+            htmlTag.setAttribute('dir', 'rtl');
+            document.title = "غرفة البريد - طباعة التائج";
+        } else {
+            htmlTag.classList.remove('rtl');
+            htmlTag.setAttribute('dir', 'ltr');
+            document.title = "MailRoom - Print Results";
+        }
+
+        function fillData() {
+            return new Promise(function (resolve, reject) {
+                var table = document.getElementById('searchTable');
+
+                //create header
+                var tableHeader = table.createTHead();
+                var rowHeader = tableHeader.insertRow(0);
+
+                // loop through headers
+                for (var i = 0; i < columnCount; i++) {
+                    rowHeader.insertCell(i).innerHTML = columns[i];
+                }
+
+                var tableBody = table.createTBody();
+                // loop through data
+                for (var i = 0; i < records.length; i++) {
+                    var record = records[i];
+
+                    var row = tableBody.insertRow();
+
+                    for (var j = 0; j < columnCount; j++) {
+                        var cell = row.insertCell(j);
+
+                        if (Array.isArray(record[j].indicator)) {
+                            var indicators = '';
+                            for (var indc = 0; indc <= record[j].indicator.length; indc++) {
+                                indicators += (record[j].indicator[indc] ? '<span class="' + record[j].indicator[indc].class + '">' + record[j].indicator[indc].svgIcon + '</span>' : '');
+                            }
+                            cell.innerHTML = indicators + (record[j].value ? '<span class="span-text word-break-all">' + record[j].value + '</span>' : '');
+                        } else {
+                            cell.innerHTML = (record[j].indicator ? '<span class="' + record[j].indicator.class + '">' + record[j].indicator.svgIcon + '</span>' : '') +
+                                (record[j].value ? '<span class="span-text word-break-all">' + record[j].value + '</span>' : '');
+                        }
+                    }
+                }
+                localStorage.removeItem('printData');
+                localStorage.removeItem('currentLang');
+                resolve(true);
+            });
+        }
+
+        fillData().then(function (value) {
+            window.print()
+        });
+
+    })();
+</script>
+</body>
+</html>

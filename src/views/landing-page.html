@@ -1,0 +1,44 @@
+<div background-directive="short" class="page-content">
+    <div layout="column" class="content">
+        <div layout="row" layout-align="start center" class="page-header padding-header small">
+            <span>{{lang.header_dashboard}}</span>
+        </div>
+        <div layout="column">
+            <div scroll-directive>
+                <div layout="row" layout-padding>
+                    <md-card md-whiteframe="3" flex class="dash-card card-overlay cursor-pointer"
+                             ng-click="ctrl.outgoingMails()" ng-if="ctrl.currentUser.hasPermissionTo('ENT_SHOW_OUTGOING')">
+                        <md-card-content layout="row" layout-align="space-between">
+                            <div layout="row">
+                                <md-icon md-svg-icon="arrow-up-bold-box"></md-icon>
+                                <span flex>{{lang.header_outgoing_mail}} ({{ctrl.counterService.counter.getCount('menu_item_outgoing')}})</span>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                    <span flex="2"></span>
+                    <md-card md-whiteframe="3" flex class="dash-card card-overlay cursor-pointer"
+                             ng-click="ctrl.incomingMails()" ng-if="ctrl.currentUser.hasPermissionTo('ENT_SHOW_INCOMING')">
+                        <md-card-content layout="row" layout-align="space-between">
+                            <div layout="row">
+                                <md-icon md-svg-icon="arrow-down-bold-box"></md-icon>
+                                <span flex>{{lang.header_incoming_mail}} ({{ctrl.counterService.counter.getCount('menu_item_incoming')}})</span>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                    <span flex="2"></span>
+                    <md-card md-whiteframe="3" flex class="dash-card card-overlay cursor-pointer"
+                             ng-click="ctrl.internalMails()" ng-if="ctrl.currentUser.hasPermissionTo('ENT_SHOW_INTERNAL')">
+                        <md-card-content layout="row" layout-align="space-between">
+                            <div layout="row">
+                                <md-icon md-svg-icon="recycle"></md-icon>
+                                <span flex>{{lang.header_internal_mail}} ({{ctrl.counterService.counter.getCount('menu_item_internal')}})</span>
+                            </div>
+                        </md-card-content>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

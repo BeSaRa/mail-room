@@ -1,0 +1,185 @@
+.icon {
+    height: 25px;
+    width: 25px;
+    fill: gray;
+    display: inline-block;
+}
+
+.p10_0 {
+    padding: 10px 0 !important;
+}
+
+.m0 {
+    margin: 0;
+}
+
+.span-text {
+    position: relative;
+    top: -8px;
+}
+
+.text-ltr {
+    direction: ltr !important;
+}
+
+.timeline_reference {
+    padding: .5rem 1.5rem;
+    color: #ffffff;
+    background-color: #4557bb;
+    position: absolute;
+    left: -29px;
+    right:auto;
+    top: 0;
+}
+
+.timeline_group {
+    position: relative;
+    padding-top: 55px;
+}
+
+.timeline_group:not(:first-of-type) {
+    margin-top: 4rem;
+}
+
+.timeline_container {
+    flex-grow: 1;
+    max-width: 960px;
+    padding: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.timeline {
+    position: relative;
+    font-size: 16px;
+}
+
+.timeline:before {
+    content: "";
+    width: 4px;
+    height: 100%;
+    background-color: #4557bb;
+    position: absolute;
+    top: 0;
+    left: 45px;
+}
+
+.timeline_box {
+    position: relative;
+    padding-left: 120px;
+    padding-right: 0;
+}
+
+.timeline_box:before {
+    content: "";
+    width: 90%;
+    height: 2px;
+    position: absolute;
+    left: 0;
+    right: auto;
+    z-index: -1;
+    top: 53%;
+    transform: translateY(-50%);
+}
+
+.timeline_box.color-1:before {
+    background-color: red !important;
+}
+
+.timeline_box.color-2:before {
+    background-color: green !important;
+}
+
+.timeline_box.color-3:before {
+    background-color: orange !important;
+}
+
+.timeline_box.color-4:before {
+    background-color: yellow !important;
+}
+
+.timeline_box:not(:last-of-type) {
+    margin-bottom: 30px;
+}
+
+.timeline_header {
+    min-width: 65px;
+    position: absolute;
+    left: 0;
+    right: auto;
+    box-sizing: border-box;
+    padding: .5rem 1.5rem;
+    text-align: center;
+    top: 64%;
+    margin-top: -27px;
+    background-color: #4557bb;
+    color: #ffffff;
+}
+
+.timeline_header.color-1 {
+    background-color: red !important;
+}
+
+.timeline_header.color-2 {
+    background-color: green !important;
+}
+
+.timeline_header.color-3 {
+    background-color: orange !important;
+}
+
+.timeline_header.color-4 {
+    background-color: yellow !important;
+}
+
+.timeline_header_content {
+    display: block;
+    font-size: .8em;
+    text-transform: uppercase;
+}
+
+.timeline_body {
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, .12), 0 1px 2px 0 rgba(0, 0, 0, .24);
+    background-color: #ffffff;
+}
+
+.timeline_body.color-1 {
+    border-left: 3px solid red !important;
+    border-right: 3px solid red !important;
+}
+
+.timeline_body.color-2 {
+    border-left: 3px solid green !important;
+    border-right: 3px solid green !important;
+}
+
+.timeline_body.color-3 {
+    border-left: 3px solid orange !important;
+    border-right: 3px solid orange !important;
+}
+
+.timeline_body.color-4 {
+    border-left: 3px solid yellow !important;
+    border-right: 3px solid yellow !important;
+}
+
+html.rtl .timeline_reference{
+    right: -29px;
+    left:auto;
+}
+
+html.rtl .timeline_header,
+html.rtl .timeline_box:before {
+    right: 0;
+    left: auto;
+}
+
+html.rtl .timeline:before {
+    right: 45px;
+}
+
+html.rtl .timeline_box {
+    padding-left: 0;
+    padding-right: 120px;
+}

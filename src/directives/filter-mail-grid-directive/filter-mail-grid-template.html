@@ -1,0 +1,265 @@
+<form form-directive="ctrl.formControl" name="filterMailForm" autocomplete="off">
+    <div layout="row">
+        <!-- Integrated System -->
+        <md-input-container flex>
+            <label for="integratedSystemId">{{lang.lbl_integrated_system}}</label>
+            <md-select id="integratedSystemId" name="integratedSystemId"
+                       ng-model="ctrl.criteria.integratedSystemId"
+                       ng-change="ctrl.handleChangeIntegratedSystem($event)"
+                       tabindex="1"
+                       md-auto-focus>
+                <md-option ng-repeat="option in ctrl.integratedSystemList track by $index"
+                           ng-value="option.id">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+        <!-- Priority -->
+        <md-input-container flex>
+            <label for="priority">{{lang.lbl_priority}}</label>
+            <md-select id="priority" name="priority"
+                       ng-model="ctrl.criteria.priority"
+                       tabindex="2">
+                <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                <md-option ng-repeat="option in ctrl.priorityTypes track by $index"
+                           ng-value="option.typeId">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+
+    <div layout="row" ng-if="!ctrl.criteria.isInternalMail()">
+        <!-- Sender Entity -->
+        <md-input-container flex>
+            <label for="senderEntity">{{lang.lbl_sender_entity}}</label>
+            <md-select id="senderEntity" name="senderEntity"
+                       ng-change="ctrl.getSenderDepartments(true, $event)"
+                       ng-model="ctrl.criteria.senderEntity"
+                       tabindex="3"> <!--ng-model-options="{trackBy: '$value.id'}"-->
+                <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                <md-option ng-repeat="option in ctrl.mainEntities track by $index"
+                           ng-if="ctrl.isNotReceiverEntity(option) && option.isActive()"
+                           ng-value="option">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+        <!-- Sender Department -->
+        <md-input-container flex>
+            <label for="senderDep">{{lang.lbl_sender_department}}</label>
+            <md-select id="senderDep" name="senderDep"
+                       ng-model-options="{trackBy: '$value.id'}"
+                       ng-disabled="!ctrl.criteria.senderEntity"
+                       ng-model="ctrl.criteria.senderDep"
+                       tabindex="4"> <!--ng-model-options="{trackBy: '$value.id'}"-->
+                <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                <md-option ng-repeat="option in ctrl.senderDepartments"
+                           ng-if="option.isActive()"
+                           ng-value="option">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+
+    <div layout="row" ng-if="!ctrl.criteria.isInternalMail()">
+        <!-- Receiver Entity -->
+        <md-input-container flex>
+            <label for="receiverEntity">{{lang.lbl_receiver_entity}}</label>
+            <md-select id="receiverEntity" name="receiverEntity"
+                       ng-change="ctrl.getReceiverDepartments(true, $event)"
+                       ng-model="ctrl.criteria.receiverEntity"
+                       tabindex="5"> <!--ng-model-options="{trackBy: '$value.id'}"-->
+                <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                <md-option ng-repeat="option in ctrl.mainEntities track by $index"
+                           ng-if="ctrl.isNotSenderEntity(option) && option.isActive()"
+                           ng-value="option">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+        <!-- Receiver Department -->
+        <md-input-container flex>
+            <label for="receiverDep">{{lang.lbl_receiver_department}}</label>
+            <md-select id="receiverDep" name="receiverDep"
+                       ng-model-options="{trackBy: '$value.id'}"
+                       ng-disabled="!ctrl.criteria.receiverEntity"
+                       ng-model="ctrl.criteria.receiverDep"
+                       tabindex="6"><!-- ng-model-options="{trackBy: '$value.id'}"-->
+                <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                <md-option ng-repeat="option in ctrl.receiverDepartments"
+                           ng-if="option.isActive()"
+                           ng-value="option">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+
+    <div layout="row" ng-if="ctrl.criteria.isInternalMail()">
+        <!-- Sender Department -->
+        <md-input-container flex>
+            <label for="senderDepInternal">{{lang.lbl_sender_department}}</label>
+            <md-select id="senderDepInternal" name="senderDepInternal"
+                       ng-model-options="{trackBy: '$value.id'}"
+                       ng-disabled="!ctrl.criteria.senderEntity"
+                       ng-model="ctrl.criteria.senderDep"
+                       tabindex="7"> <!--ng-model-options="{trackBy: '$value.id'}"-->
+                <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                <md-option ng-repeat="option in ctrl.senderDepartments"
+                           ng-if="option.isActive()"
+                           ng-value="option">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+        <!-- Receiver Department -->
+        <md-input-container flex>
+            <label for="receiverDepInternal">{{lang.lbl_receiver_department}}</label>
+            <md-select id="receiverDepInternal" name="receiverDepInternal"
+                       ng-model-options="{trackBy: '$value.id'}"
+                       ng-disabled="!ctrl.criteria.receiverEntity"
+                       ng-model="ctrl.criteria.receiverDep"
+                       tabindex="8"><!-- ng-model-options="{trackBy: '$value.id'}"-->
+                <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                <md-option ng-repeat="option in ctrl.receiverDepartments"
+                           ng-if="option.isActive()"
+                           ng-value="option">{{option.getTranslatedName()}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+
+    <div layout="row" ng-if="!ctrl.criteria.isExpectedMailStatus()">
+        <!-- Reference Number -->
+        <md-input-container flex>
+            <label for="referenceNo">{{lang.lbl_reference_number}}</label>
+            <input ng-model="ctrl.criteria.referenceNo"
+                   id="referenceNo" name="referenceNo"
+                   tabindex="9">
+        </md-input-container>
+
+        <!-- Attachment No -->
+        <!--<md-input-container flex>
+            <label for="attachmentNo">{{lang.lbl_attachment_no}}</label>
+            <input ng-model="ctrl.criteria.attachmentNo"
+                   id="attachmentNo" name="attachmentNo"
+                   custom-validate-directive="number">
+            <div ng-messages="filterMailForm.attachmentNo.$error">
+                <div ng-message="number">{{lang.error_number_only}}</div>
+            </div>
+        </md-input-container>-->
+    </div>
+
+    <!-- Register Date -->
+    <fieldset class="fieldset" ng-if="!ctrl.criteria.isExpectedMailStatus()">
+        <legend class="md-accent">{{lang.lbl_register_date}}</legend>
+        <div layout="row" flex>
+            <!-- Register Date From -->
+            <md-input-container flex>
+                <label for="registerDateFrom">{{lang.lbl_from}}</label>
+                <md-datepicker ng-model="ctrl.criteria.registerDateFrom"
+                               name="registerDateFrom" id="registerDateFrom"
+                               md-max-date="ctrl.criteria.registerDateTo"
+                               md-open-on-focus
+                               tabindex="10"></md-datepicker>
+                <div ng-messages="filterMailForm.registerDateFrom.$error">
+                    <div ng-message="required">{{lang.error_field_required}}</div>
+                </div>
+            </md-input-container>
+            <!-- Register Date To -->
+            <md-input-container flex>
+                <label for="registerDateTo">{{lang.lbl_to}}</label>
+                <md-datepicker ng-model="ctrl.criteria.registerDateTo"
+                               name="registerDateTo" id="registerDateTo"
+                               md-min-date="ctrl.criteria.registerDateFrom"
+                               md-open-on-focus
+                               tabindex="11"></md-datepicker>
+                <div ng-messages="filterMailForm.registerDateTo.$error">
+                    <div ng-message="required">{{lang.error_field_required}}</div>
+                </div>
+            </md-input-container>
+        </div>
+    </fieldset>
+
+    <!-- Sender -->
+    <fieldset class="fieldset" ng-if="ctrl.criteria.isSentMailStatus() || ctrl.criteria.isReceivedMailStatus()">
+        <legend class="md-accent">{{lang.lbl_sender}}</legend>
+        <div layout="row">
+            <!-- Sender Employee -->
+            <md-input-container flex ng-if="ctrl.criteria.isSentMailStatus() || ctrl.criteria.isReceivedMailStatus()">
+                <label for="senderEmployee">{{lang.lbl_employee}}</label>
+                <md-select id="senderEmployee" name="senderEmployee"
+                           ng-model="ctrl.criteria.senderEmployee"
+                           tabindex="12">
+                    <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                    <md-option ng-repeat="option in ctrl.employees track by $index"
+                               ng-value="option.getEmployeeId()">{{option.getTranslatedName()}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+
+            <!-- Sent Date From -->
+            <md-input-container>
+                <label for="sentDateFrom">{{lang.lbl_from}}</label>
+                <md-datepicker ng-model="ctrl.criteria.sentDateFrom"
+                               name="sentDateFrom" id="sentDateFrom"
+                               md-max-date="ctrl.criteria.sentDateTo"
+                               md-open-on-focus
+                               tabindex="13"></md-datepicker>
+                <div ng-messages="filterMailForm.sentDateFrom.$error">
+                    <div ng-message="required">{{lang.error_field_required}}</div>
+                </div>
+            </md-input-container>
+            <!-- Sent Date To -->
+            <md-input-container>
+                <label for="sentDateTo">{{lang.lbl_to}}</label>
+                <md-datepicker ng-model="ctrl.criteria.sentDateTo"
+                               name="sentDateTo" id="sentDateTo"
+                               md-min-date="ctrl.criteria.sentDateFrom"
+                               md-open-on-focus
+                               tabindex="14"></md-datepicker>
+                <div ng-messages="filterMailForm.sentDateTo.$error">
+                    <div ng-message="required">{{lang.error_field_required}}</div>
+                </div>
+            </md-input-container>
+        </div>
+    </fieldset>
+
+    <!-- Receiver -->
+    <fieldset class="fieldset" ng-if="ctrl.criteria.isReceivedMailStatus()">
+        <legend class="md-accent">{{lang.lbl_receiver}}</legend>
+        <div layout="row">
+            <!-- Receiver name -->
+            <!--<md-input-container flex>
+                <label for="receiverName">{{lang.lbl_receiver}}</label>
+                <input ng-model="ctrl.criteria.receiverName"
+                       id="receiverName" name="receiverName"
+                       tabindex="15">
+            </md-input-container>-->
+
+            <!-- Received Date From -->
+            <md-input-container>
+                <label for="receivedDateFrom">{{lang.lbl_from}}</label>
+                <md-datepicker ng-model="ctrl.criteria.receivedDateFrom"
+                               name="receivedDateFrom" id="receivedDateFrom"
+                               md-max-date="ctrl.criteria.receivedDateTo"
+                               md-open-on-focus
+                               tabindex="16"></md-datepicker>
+                <div ng-messages="filterMailForm.receivedDateFrom.$error">
+                    <div ng-message="required">{{lang.error_field_required}}</div>
+                </div>
+            </md-input-container>
+            <!-- Received Date To -->
+            <md-input-container>
+                <label for="receivedDateTo">{{lang.lbl_to}}</label>
+                <md-datepicker ng-model="ctrl.criteria.receivedDateTo"
+                               name="receivedDateTo" id="receivedDateTo"
+                               md-min-date="ctrl.criteria.receivedDateFrom"
+                               md-open-on-focus
+                               tabindex="17"></md-datepicker>
+                <div ng-messages="filterMailForm.receivedDateTo.$error">
+                    <div ng-message="required">{{lang.error_field_required}}</div>
+                </div>
+            </md-input-container>
+        </div>
+    </fieldset>
+
+</form>

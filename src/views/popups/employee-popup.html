@@ -1,0 +1,149 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_mail}}">
+    <popup-toolbar-directive ng-if="ctrl.model.employee.isNewRecord()"
+                             header-text="{{lang.lbl_add_employee}}"></popup-toolbar-directive>
+    <popup-toolbar-directive ng-if="!ctrl.model.employee.isNewRecord()"
+                             header-text="{{lang.lbl_edit}} - {{ctrl.model.getTranslatedName()}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div>
+            <form name="employeeForm" autocomplete="off">
+                <md-tabs md-dynamic-height md-selected="ctrl.selectedTabIndex">
+                    <md-tab label="{{lang[ctrl.tabsToShow.basicInfo.key]}}"
+                            ng-if="ctrl.showTab(ctrl.tabsToShow.basicInfo)"
+                            md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.basicInfo, $event)">
+                        <md-content layout-padding>
+                            <div layout="row">
+                                <!-- Arabic Name-->
+                                <md-input-container flex>
+                                    <label for="arName">{{lang.lbl_arabic_name}}</label>
+                                    <input name="arName" id="arName" required
+                                           ng-model="ctrl.employeePermission.employee.arName"
+                                           custom-validate-directive="A1NS">
+                                    <div ng-messages="employeeForm.arName.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                        <div ng-message="A1NS">{{lang.error_at_least_one_arabic_number}}</div>
+                                    </div>
+                                </md-input-container>
+                                <!-- English Name -->
+                                <md-input-container flex>
+                                    <label for="enName">{{lang.lbl_english_name}}</label>
+                                    <input name="enName" id="enName" required
+                                           ng-model="ctrl.employeePermission.employee.enName"
+                                           custom-validate-directive="E1NS">
+                                    <div ng-messages="employeeForm.enName.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                        <div ng-message="E1NS">{{lang.error_at_least_one_english_number}}</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <!-- Username-->
+                                <md-input-container flex>
+                                    <label for="username">{{lang.lbl_username}}</label>
+                                    <input name="username" id="username" required
+                                           ng-model="ctrl.employeePermission.employee.userName"
+                                           no-space-directive
+                                           custom-validate-directive="EN_">
+                                    <div ng-messages="employeeForm.userName.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                        <div ng-message="EN_">{{lang.error_english_number_under_score}}</div>
+                                    </div>
+                                </md-input-container>
+                                <!-- Password -->
+                                <md-input-container flex ng-if="!ctrl.editMode">
+                                    <label for="password">{{lang.lbl_password}}</label>
+                                    <input type="password" name="password" id="password"
+                                           ng-required="!ctrl.editMode"
+                                           ng-model="ctrl.employeePermission.employee.password"
+                                           no-space-directive>
+                                    <div ng-messages="employeeForm.password.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <!-- Mobile Number-->
+                                <md-input-container flex>
+                                    <label for="mobileNumber">{{lang.lbl_mobile_number}}</label>
+                                    <input name="mobileNumber" id="mobileNumber" required maxlength="12"
+                                           placeholder="{{lang.lbl_mobile_placehoder}}"
+                                           ng-model="ctrl.employeePermission.employee.mobileNumber"
+                                           custom-validate-directive="phone_mobile">
+                                    <div ng-messages="employeeForm.mobileNumber.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                        <div ng-message="phone_mobile">{{lang.error_mobile_number}}</div>
+                                    </div>
+                                </md-input-container>
+                                <!-- Status -->
+                                <div flex>
+                                    <md-switch ng-model="ctrl.employeePermission.employee.active"
+                                               ng-disabled="ctrl.isCurrentEmployee()">
+                                        <label>{{lang.lbl_status}} :
+                                            {{ctrl.employeePermission.employee.getTranslatedStatus()}}</label>
+                                    </md-switch>
+                                </div>
+                            </div>
+                            <div layout="row">
+                                <!-- Default Entity -->
+                                <md-input-container flex ng-if="ctrl.employeePermission.getEmployeeId()">
+                                    <label for="defaultEntity">{{lang.lbl_default_entity}}</label>
+                                    <md-select id="defaultEntity" name="defaultEntity"
+                                               ng-model="ctrl.employeePermission.employee.defaultEntity">
+                                        <md-option ng-repeat="entity in ctrl.employeeEntities track by $index"
+                                                   ng-value="entity.id">
+                                            {{entity.getTranslatedName()}}
+                                        </md-option>
+                                    </md-select>
+                                    <div ng-messages="employeeForm.defaultEntity.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                    </div>
+                                </md-input-container>
+                                <!-- empty -->
+                                <div flex>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="{{lang[ctrl.tabsToShow.sysPermissions.key]}}"
+                            ng-if="ctrl.showTab(ctrl.tabsToShow.sysPermissions)"
+                            md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.sysPermissions, $event)">
+                        <md-content layout-padding>
+                            <div scroll-directive>
+                                <div layout="row" ng-repeat="chunk in ctrl.permissions track by $index">
+                                    <div flex ng-repeat="permission in chunk track by $index">
+                                        <md-checkbox ng-checked="ctrl.isPermissionSelected(permission)"
+                                                     ng-click="ctrl.togglePermission(permission)"
+                                                     flex aria-label="{{permission.getTranslatedName()}}">
+                                            {{permission.getTranslatedName()}}
+                                        </md-checkbox>
+                                    </div>
+                                    <div flex
+                                         ng-repeat="emptyElement in ctrl.getEmptyChunkElements(chunk) track by $index"></div>
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised" ng-if="!ctrl.editMode" ng-disabled="employeeForm.$invalid"
+                   ng-click="ctrl.addEmployee($event)">
+            {{lang.btn_add}}
+        </md-button>
+        <md-button class="md-raised" ng-if="ctrl.editMode" ng-disabled="employeeForm.$invalid"
+                   ng-click="ctrl.saveEmployee($event)">
+            {{lang.btn_save}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.resetEmployeeForm(employeeForm, $event)">
+            {{lang.btn_reset}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closeDialog($event)">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

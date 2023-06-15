@@ -1,0 +1,84 @@
+<div background-directive="tall" class="page-content" flex="">
+    <div layout="column" class="content">
+        <!-- page-header start -->
+        <div layout="row" layout-align="start center" class="page-header padding-header small">
+            <span>{{lang[ctrl.pageHeadTextLangKey]}}</span>
+            <span flex></span>
+            <md-menu ng-if="ctrl.isTabSelected(ctrl.tabsToShow.view)"
+                     md-position-mode="target-right target">
+                <md-button ng-click="$mdMenu.open($event)"
+                           class="md-icon-button"
+                           tooltip="{{lang.btn_print}}">
+                    <md-icon md-svg-icon="printer" class="color-white"></md-icon>
+                </md-button>
+                <md-menu-content width="4">
+                    <md-menu-item>
+                        <md-button ng-click="ctrl.printReport($event, ctrl.reportFormats.PDF)">
+                            <md-icon md-svg-icon="file-pdf-box" md-menu-align-target></md-icon>
+                            PDF
+                        </md-button>
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="ctrl.printReport($event, ctrl.reportFormats.EXCEL)">
+                            <md-icon md-svg-icon="file-excel-box" md-menu-align-target></md-icon>
+                            Excel
+                        </md-button>
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </div>
+        <!-- end page-header -->
+
+        <div layout="column" flex>
+            <div scroll-directive>
+                <div class="page-padding">
+                    <md-card md-whiteframe="3" layout="column" class="card-overlay">
+                        <md-tabs md-dynamic-height md-selected="ctrl.selectedTabIndex">
+                            <md-tab label="{{lang[ctrl.tabsToShow.search.key]}}"
+                                    md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.search, $event)">
+                                <md-content class="white-bg">
+                                    <ng-form class="white-bg" name="reportForm" id="reportForm" flex
+                                             autocomplete="off" enter-submit-directive="btn_viewReport">
+                                        <reports-directive form-control="reportForm"
+                                                           criteria="ctrl.criteria"
+                                                           report-type="ctrl.reportType"></reports-directive>
+                                    </ng-form>
+                                </md-content>
+                            </md-tab>
+                            <md-tab label="{{lang[ctrl.tabsToShow.view.key]}}"
+                                    md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.view, $event)"
+                                    ng-if="ctrl.isResultTabVisible">
+                                <md-content class="white-bg">
+                                    <!--pdf viewer-->
+                                    <div layout="row">
+                                        <iframe class="iframe-attachment-viewer"
+                                                ng-if="ctrl.reportUrl"
+                                                ng-src="{{ctrl.reportUrl}}"
+                                                frameborder="0" flex></iframe>
+                                    </div>
+                                </md-content>
+                            </md-tab>
+                        </md-tabs>
+                    </md-card>
+
+                    <div layout="row"
+                         ng-if="ctrl.isTabSelected(ctrl.tabsToShow.search)">
+                        <md-button id="btn_viewReport"
+                                   class="md-raised"
+                                   ng-click="ctrl.viewReport($event)"
+                                   ng-disabled="reportForm.$invalid || ctrl.criteria.isSearchEmpty()"
+                                   tabindex="21">
+                            {{lang.btn_view_report}}
+                        </md-button>
+                        <md-button class="md-raised"
+                                   ng-click="ctrl.resetForm($event)"
+                                   tabindex="22">
+                            {{ lang.btn_reset }}
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

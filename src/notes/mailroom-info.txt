@@ -1,0 +1,18 @@
+Types of mails (mailType):
+1. Outgoing
+2. Incoming
+3. Internal
+
+Entry Types (entryType):
+1. General
+2. Correspondence (related to CMS)
+
+Priority Types:
+1. Normal
+2. Fast
+
+Status Types (Status):
+1. New
+2. Received
+3. Sent
+4. Expected

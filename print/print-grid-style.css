@@ -1,0 +1,77 @@
+.text-ltr {
+    direction: ltr !important;
+}
+
+.span-text {
+    position: relative;
+    top: -5px;
+}
+.word-break-all {
+    word-break: break-all !important;
+}
+
+table {
+    width: 100%;
+    display: table;
+    border-collapse: separate;
+    border-spacing: 0px;
+    border-color: grey;
+    font-family: Roboto, "Helvetica Neue", sans-serif;;
+}
+
+table tr {
+    height: 56px;
+    display: table-row;
+}
+
+table thead td {
+    padding: 0 24px;
+    vertical-align: middle;
+    text-align: left;
+    color: rgba(0, 0, 0, 0.54);
+    border-bottom: 1px rgba(0, 0, 0, 0.12) solid;
+    font-size: 12px;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+table tbody tr td {
+    padding: 0 20px;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 13px;
+    border-bottom: 1px rgba(0, 0, 0, 0.12) solid;
+    vertical-align: middle;
+    text-align: left;
+}
+
+.row {
+    width: 100%;
+    margin: 10px;
+}
+
+.subRow {
+    display: inline-block;
+    width: 33%;
+}
+
+.text-bold {
+    font-weight: bold;
+}
+
+span.indicator {
+    min-width: 18px;
+    min-height: 18px;
+    height: 18px;
+    width: 18px;
+    display: inline-block;
+    margin: 0 2px;
+    fill: #757575;
+}
+
+span.red {
+    fill: red !important;
+}
+
+span.green {
+    fill: green !important;;
+}

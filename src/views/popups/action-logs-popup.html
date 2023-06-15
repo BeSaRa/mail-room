@@ -1,0 +1,101 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_actions}}">
+    <popup-toolbar-directive header-text="{{lang.lbl_actions}} - {{ctrl.mail.getNames()}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div class="md-dialog-content mr-dialog-content">
+            <div layout="column">
+                <div flex class="span-column">
+                    <label class="text-bold">{{lang.lbl_entry_type}}:</label>
+                    <span>{{ctrl.mail.entryTypeLookup.getTranslatedName()}}</span>
+                </div>
+                <div flex class="span-column">
+                    <label class="text-bold">{{lang.lbl_mail_type}}:</label>
+                    <span>{{ctrl.mail.mailTypeLookup.getTranslatedName()}}</span>
+                </div>
+
+                <div ng-if="!ctrl.mail.isInternalMail()" flex class="span-column">
+                    <label class="text-bold">{{lang.lbl_sender_entity}}:</label>
+                    <span>{{ctrl.mail.senderEntity.getTranslatedName()}}</span>
+                </div>
+                <div ng-if="!ctrl.mail.isInternalMail()" flex class="span-column">
+                    <label class="text-bold">{{lang.lbl_receiver_entity}}:</label>
+                    <span>{{ctrl.mail.receiverEntity.getTranslatedName()}}</span>
+                </div>
+
+                <div ng-if="ctrl.mail.isInternalMail()" flex class="span-column">
+                    <label class="text-bold">{{lang.lbl_sender_department}}:</label>
+                    <span>{{ctrl.mail.senderDep.getTranslatedName()}}</span>
+                </div>
+                <div ng-if="ctrl.mail.isInternalMail()" flex class="span-column">
+                    <label class="text-bold">{{lang.lbl_receiver_department}}:</label>
+                    <span>{{ctrl.mail.receiverDep.getTranslatedName()}}</span>
+                </div>
+            </div>
+            <md-card md-whiteframe="3" class="card-overlay">
+                <md-table-container>
+                    <div flex scroll-directive>
+                        <table md-table ng-model="ctrl.grid.selectedRecords"
+                               md-progress="ctrl.grid.progress">
+                            <thead md-head md-order="ctrl.grid.order"
+                                   md-on-reorder="ctrl.grid.sortCallback">
+                            <tr md-row>
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.sequence, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.sequence.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.sequence.langKey]}}</span>
+                                </th>
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.actionType, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.actionType.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.actionType.langKey]}}</span>
+                                </th>
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.actionDate, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.actionDate.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.actionDate.langKey]}}</span>
+                                </th>
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.userName, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.userName.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.userName.langKey]}}</span>
+                                </th>
+                                <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.actionDetails, true)"
+                                    md-column
+                                    md-order-by="{{ctrl.grid.columns.actionDetails.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.actionDetails.langKey]}}</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row
+                                ng-repeat="action in (ctrl.actionLogs | limitTo: ctrl.grid.limit: ((ctrl.grid.page - 1) * ctrl.grid.limit)) track by $index ">
+                                <td md-cell>{{action.actionLogSequence}}</td>
+                                <td md-cell>{{action.actionLogType.getTranslatedName()}}</td>
+                                <td md-cell>{{action.actionDateFormatted}}</td>
+                                <td md-cell>{{action.user.getTranslatedName()}}</td>
+                                <td md-cell>{{action.actionDetails}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <md-table-pagination
+                            md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                            md-limit-options="ctrl.grid.limitOptions"
+                            md-limit="ctrl.grid.limit" md-page="ctrl.grid.page"
+                            md-total="{{ctrl.actionLogs.length}}" md-page-select>
+                    </md-table-pagination>
+                </md-table-container>
+            </md-card>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised" ng-click="ctrl.print($event)">
+            {{lang.btn_print}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closeDialog($event)">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,76 @@
+<div background-directive="tall" class="page-content" flex="">
+    <div layout="column" class="content">
+        <!-- page-header start -->
+        <div layout="row" layout-align="start center" class="page-header padding-header small">
+            <span>{{lang.menu_item_outgoing}}</span>
+            <md-button ng-click="ctrl.openAddMailDialog($event)" class="md-icon-button"
+                       ng-if="ctrl.isTabSelected(ctrl.tabsToShow.newMails) && ctrl.hasPermissionToAdd"
+                       tooltip="{{lang.lbl_add}}">
+                <md-icon md-svg-icon="plus"></md-icon>
+            </md-button>
+            <md-button ng-click="ctrl.reloadGrid($event)" class="md-icon-button"
+                       tooltip="{{lang.lbl_reload}}">
+                <md-icon md-svg-icon="refresh"></md-icon>
+            </md-button>
+            <span flex></span>
+            <md-button ng-click="ctrl.grid[ctrl.selectedTabName].ScanCallback($event)" class="md-icon-button"
+                       tooltip="{{lang.lbl_barcode_scan}}" ng-hide="true">
+                <md-icon md-svg-icon="barcode-scan"></md-icon>
+            </md-button>
+            <grid-search-directive ng-if="ctrl.isTabSelected(ctrl.tabsToShow.newMails)"
+                                   filter="true"
+                                   grid="ctrl.grid.newMails"></grid-search-directive>
+            <grid-search-directive ng-if="ctrl.isTabSelected(ctrl.tabsToShow.sentMails)"
+                                   filter="true"
+                                   grid="ctrl.grid.sentMails"></grid-search-directive>
+            <grid-search-directive ng-if="ctrl.isTabSelected(ctrl.tabsToShow.receivedMails)"
+                                   filter="true"
+                                   grid="ctrl.grid.receivedMails"></grid-search-directive>
+        </div>
+        <!-- end page-header -->
+        <div layout="column" flex>
+            <div scroll-directive>
+                <div class="page-padding">
+                    <md-card md-whiteframe="3" layout="column" class="card-overlay">
+                        <md-tabs md-selected="ctrl.selectedTab" class="filter-tabs" md-dynamic-height>
+                            <!-- New Mails -->
+                            <md-tab md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.newMails, $event)"
+                                    label="{{lang[ctrl.tabsToShow.newMails.key]}} ({{ctrl.counterService.counter.getCount(ctrl.tabsToShow.newMails.key)}})">
+                                <md-content class="white-bg">
+                                    <outgoing-mails-grid-directive
+                                            records="ctrl.newMails"
+                                            grid="ctrl.grid.newMails"
+                                            total-records="ctrl.totalRecords">
+                                    </outgoing-mails-grid-directive>
+                                </md-content>
+                            </md-tab>
+                            <!-- Sent Mails -->
+                            <md-tab md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.sentMails, $event)"
+                                    label="{{lang[ctrl.tabsToShow.sentMails.key]}} ({{ctrl.counterService.counter.getCount(ctrl.tabsToShow.sentMails.key)}})">
+                                <md-content class="white-bg">
+                                    <outgoing-mails-grid-directive
+                                            records="ctrl.sentMails"
+                                            grid="ctrl.grid.sentMails"
+                                            total-records="ctrl.totalRecords">
+                                    </outgoing-mails-grid-directive>
+                                </md-content>
+                            </md-tab>
+                            <!-- Received Mails -->
+                            <md-tab md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.receivedMails, $event)"
+                                    label="{{lang[ctrl.tabsToShow.receivedMails.key]}}">
+                                <!-- ({{ctrl.counterService.counter.getCount(ctrl.tabsToShow.receivedMails.key)}}) -->
+                                <md-content class="white-bg">
+                                    <outgoing-mails-grid-directive
+                                            records="ctrl.receivedMails"
+                                            grid="ctrl.grid.receivedMails"
+                                            total-records="ctrl.totalRecords">
+                                    </outgoing-mails-grid-directive>
+                                </md-content>
+                            </md-tab>
+                        </md-tabs>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

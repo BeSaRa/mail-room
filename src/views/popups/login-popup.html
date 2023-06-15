@@ -1,0 +1,47 @@
+<div scroll-directive id="login-popup" layout="column">
+    <h4 flex class="small-h">{{lang.auth_session_expired}}</h4>
+    <div layout="column" flex layout-align="center center">
+        <div id="login-logo-popup" layout="row" layout-align="center center">
+            <img src="assets/images/logo.png"
+                 alt="EBLA">
+        </div>
+        <div class="small-h application-data" layout="column" layout-align="center center">
+            <h2>EBLA</h2>
+            <h4>EBLA - {{ lang.app_description }}</h4>
+        </div>
+        <form name="login_form" id="login_form" enter-submit-directive="login-popup-button" autocomplete="off">
+            <div layout="row">
+                <md-input-container flex>
+                    <input name="username" required ng-model="login.credentials.username"
+                           placeholder="{{lang.auth_username}}">
+                    <div ng-messages="login_form.username.$error">
+                        <div ng-message="required">{{lang.field_required}}</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="row">
+                <md-input-container flex>
+                    <input type="password" name="password" required ng-model="login.credentials.password"
+                           placeholder="{{lang.auth_password}}">
+                    <div ng-messages="login_form.password.$error">
+                        <div ng-message="required">{{lang.field_required}}</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout="column">
+                <!--<div layout="row">
+                    <md-checkbox aria-label="{{lang.auth_remember_me}}">
+                        {{lang.auth_remember_me}}
+                    </md-checkbox>
+                    <span flex></span>
+                    <a id="forget-password-link" href="#">{{lang.auth_forget_password}}</a>
+                </div>-->
+                <br/>
+                <md-button id="login-popup-button" ng-disabled="login_form.$invalid || login.loginStatus"
+                           ng-click="login.login($event , callback)"
+                           class="md-raised md-primary">{{lang.auth_login}}
+                </md-button>
+            </div>
+        </form>
+    </div>
+</div>

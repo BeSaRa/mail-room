@@ -1,0 +1,35 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.header_load_entities_cms}}">
+    <popup-toolbar-directive header-text="{{lang.header_load_entities_cms}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div class="md-dialog-content mr-dialog-content">
+            <form form-directive="ctrl.barcodeForm" name="barcodeForm" autocomplete="off">
+                <!-- barcode -->
+                <div layout="row">
+                    <md-input-container flex>
+                        <label for="barcode">{{lang.lbl_barcode}}</label>
+                        <input name="barcode" id="barcode"
+                               required maxlength="100"
+                               ng-model="ctrl.barcode">
+                        <div ng-messages="barcodeForm.barcode.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                            <div ng-message="maxlength">{{lang.error_max_length.change({length:100})}}</div>
+                        </div>
+                </div>
+                </md-input-container>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised"
+                   ng-disabled="ctrl.barcodeForm.$invalid"
+                   ng-click="ctrl.loadWorkItemByBarcode($event)">
+            {{lang.btn_search}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closePopup($event)">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

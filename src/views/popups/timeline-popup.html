@@ -1,0 +1,21 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_timeline}}">
+    <popup-toolbar-directive header-text="{{lang.lbl_timeline}} - {{ctrl.mail.getMailReferenceNo()}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div class="md-dialog-content mr-dialog-content">
+            <md-card md-whiteframe="3" class="card-overlay" id="timeline-main-container">
+                <timeline-directive mail="ctrl.mail" timeline-records="ctrl.timelineRecords"></timeline-directive>
+            </md-card>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised" ng-click="ctrl.print($event)">
+            {{lang.btn_print}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closeDialog($event)">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

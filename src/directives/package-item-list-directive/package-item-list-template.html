@@ -1,0 +1,168 @@
+<div layout="column">
+    <div layout="row" layout-align="start center"
+         class="page-header small">
+        <md-button ng-click="ctrl.openAddPackageItem($event)"
+                   ng-if="!ctrl.disableAll"
+                   class="md-icon-button"
+                   tooltip="{{lang.lbl_add_package_item}}">
+            <md-icon md-svg-icon="plus"></md-icon>
+        </md-button>
+        <span flex></span>
+        <grid-search-directive grid="ctrl.grid"></grid-search-directive>
+    </div>
+    <div>
+        <md-card md-whiteframe="3" layout="column" class="card-overlay">
+            <md-table-container>
+                <div flex scroll-directive>
+                    <table md-table ng-model="ctrl.grid.selectedRecords"
+                           md-progress="ctrl.grid.progress">
+                        <!--md-row-select multiple-->
+                        <thead md-head md-order="ctrl.grid.order"
+                               md-on-reorder="ctrl.grid.sortCallback">
+                        <tr md-row>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.category, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.category.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.category.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.quantity, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.quantity.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.quantity.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.weight, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.weight.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.weight.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.height, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.height.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.height.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.width, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.width.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.width.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.length, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.length.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.length.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.description, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.description.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.description.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.notes, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.notes.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.notes.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions, true)"
+                                md-column>
+                                <span>{{lang[ctrl.grid.columns.gridActions.langKey]}}</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row
+                            ng-repeat="item in (ctrl.packageItemList | limitTo: ctrl.grid.limit: ((ctrl.grid.page - 1) * ctrl.grid.limit)) track by $index"
+                            md-select="item">
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.category)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.categoryId.getTranslatedName()}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.quantity)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.quantity}} {{item.quantityUnitId.getTranslatedName()}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.weight)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.oneItemWeight}} {{item.weightUnitId.getTranslatedName()}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.height)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.height}} {{item.heightUnitId.getTranslatedName()}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.width)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.width}} {{item.widthUnitId.getTranslatedName()}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.length)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.length}} {{item.lengthUnitId.getTranslatedName()}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.description)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.description}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.notes)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.notes}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions)">
+                                <div flex layout="row" layout-align="start center">
+                                    <md-button class="md-icon-button"
+                                               title="{{lang.btn_delete}}"
+                                               ng-click="ctrl.removePackageItem($event, item)"
+                                               ng-if="!ctrl.disableAll">
+                                        <md-icon md-svg-icon="delete"></md-icon>
+                                    </md-button>
+                                    <md-button class="md-icon-button" title="{{lang.btn_edit}}"
+                                               ng-click="ctrl.openEditPackageItem($event, item)"
+                                               ng-if="!ctrl.disableAll">
+                                        <md-icon md-svg-icon="pencil"></md-icon>
+                                    </md-button>
+                                    <md-button class="md-icon-button" title="{{lang.lbl_view}}" ng-if="ctrl.disableAll"
+                                               ng-click="ctrl.openEditPackageItem($event, item)">
+                                        <md-icon md-svg-icon="eye"></md-icon>
+                                    </md-button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr md-row ng-if="!ctrl.packageItemListClone.length">
+                            <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                class="red-text text-center">
+                                {{lang.msg_no_items_found}}
+                            </td>
+                        </tr>
+                        <tr md-row
+                            ng-if="ctrl.packageItemListClone.length && !ctrl.packageItemList.length">
+                            <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                class="red-text text-center">
+                                {{lang.msg_no_items_found_matching_search}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <md-table-pagination
+                        md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                        md-limit-options="ctrl.grid.limitOptions"
+                        md-limit="ctrl.grid.limit"
+                        md-page="ctrl.grid.page"
+                        md-total="{{ctrl.packageItemList.length}}" md-page-select>
+                </md-table-pagination>
+            </md-table-container>
+        </md-card>
+    </div>
+</div>

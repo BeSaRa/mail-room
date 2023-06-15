@@ -1,0 +1,125 @@
+<div layout="column">
+    <div layout="row" layout-align="start center"
+         class="page-header small">
+        <md-button ng-click="ctrl.openAddDeliveryRequiredItem($event)"
+                   class="md-icon-button" ng-if="!ctrl.disableAll && !ctrl.isMobileReceive"
+                   tooltip="{{lang.lbl_add_delivery_required_item}}">
+            <md-icon md-svg-icon="plus"></md-icon>
+        </md-button>
+        <span flex></span>
+        <grid-search-directive grid="ctrl.grid"></grid-search-directive>
+    </div>
+    <div>
+        <md-card md-whiteframe="3" layout="column" class="card-overlay">
+            <md-table-container>
+                <div flex scroll-directive>
+                    <table md-table ng-model="ctrl.grid.selectedRecords"
+                           md-progress="ctrl.grid.progress">
+                        <!--md-row-select multiple-->
+                        <thead md-head md-order="ctrl.grid.order"
+                               md-on-reorder="ctrl.grid.sortCallback">
+                        <tr md-row>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.labelEn, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.labelEn.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.labelEn.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.labelAr, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.labelAr.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.labelAr.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.keyStr, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.keyStr.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.keyStr.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.collected, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.collected.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.collected.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions, true)"
+                                md-column>
+                                <span>{{lang[ctrl.grid.columns.gridActions.langKey]}}</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row
+                            ng-repeat="item in (ctrl.deliveryRequiredItemList | limitTo: ctrl.grid.limit: ((ctrl.grid.page - 1) * ctrl.grid.limit)) track by $index"
+                            md-select="item">
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.labelEn)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.labelEn}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.labelAr)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.labelAr}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.keyStr)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.keyStr}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.collected)">
+                                <md-switch aria-label="{{lang.lbl_collected}}"
+                                           ng-disabled="!ctrl.isMobileReceive"
+                                           name="collected" id="collected"
+                                           title="{{item.getTranslatedCollected()}}"
+                                           ng-change="ctrl.changeCollected(item, $event)"
+                                           ng-model="item.collected">
+                                </md-switch>
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions)">
+                                <div flex layout="row" layout-align="start center">
+                                    <md-button class="md-icon-button" ng-if="!ctrl.disableAll"
+                                               title="{{lang.btn_delete}}"
+                                               ng-click="ctrl.removeDeliveryRequiredItem(item, $event)">
+                                        <md-icon md-svg-icon="delete"></md-icon>
+                                    </md-button>
+                                    <md-button class="md-icon-button" title="{{lang.btn_edit}}" ng-if="!ctrl.disableAll"
+                                               ng-click="ctrl.openEditDeliveryRequiredItem(item, $event)">
+                                        <md-icon md-svg-icon="pencil"></md-icon>
+                                    </md-button>
+                                    <md-button class="md-icon-button" title="{{lang.lbl_view}}" ng-if="ctrl.disableAll"
+                                               ng-click="ctrl.openEditDeliveryRequiredItem(item, $event)">
+                                        <md-icon md-svg-icon="eye"></md-icon>
+                                    </md-button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr md-row ng-if="!ctrl.deliveryRequiredItemListCopy.length">
+                            <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                class="red-text text-center">
+                                {{lang.msg_no_items_found}}
+                            </td>
+                        </tr>
+                        <tr md-row
+                            ng-if="ctrl.deliveryRequiredItemListCopy.length && !ctrl.deliveryRequiredItemList.length">
+                            <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                class="red-text text-center">
+                                {{lang.msg_no_items_found_matching_search}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <md-table-pagination
+                        md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                        md-limit-options="ctrl.grid.limitOptions"
+                        md-limit="ctrl.grid.limit"
+                        md-page="ctrl.grid.page"
+                        md-total="{{ctrl.deliveryRequiredItemList.length}}" md-page-select>
+                </md-table-pagination>
+            </md-table-container>
+        </md-card>
+    </div>
+</div>

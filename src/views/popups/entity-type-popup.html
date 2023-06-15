@@ -1,0 +1,83 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_entity_type}}">
+    <popup-toolbar-directive ng-if="ctrl.model.isNewRecord()"
+                             header-text="{{lang.lbl_add_entity_type}}"></popup-toolbar-directive>
+    <popup-toolbar-directive ng-if="!ctrl.model.isNewRecord()"
+                             header-text="{{lang.lbl_edit}} - {{ctrl.model.getTranslatedName()}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div>
+            <form name="entityTypeForm" autocomplete="off">
+                <md-tabs md-dynamic-height md-selected="ctrl.selectedTabIndex">
+                    <md-tab label="{{lang[ctrl.tabsToShow.basicInfo.key]}}"
+                            ng-if="ctrl.showTab(ctrl.tabsToShow.basicInfo)"
+                            md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.basicInfo, $event)">
+                        <md-content layout-padding>
+                            <div layout="row">
+                                <!-- Arabic Name-->
+                                <md-input-container flex>
+                                    <label for="arName">{{lang.lbl_arabic_name}}</label>
+                                    <input name="arName" id="arName" required
+                                           ng-model="ctrl.entityType.arName"
+                                           custom-validate-directive="A1NS">
+                                    <div ng-messages="entityTypeForm.arName.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                        <div ng-message="A1NS">{{lang.error_at_least_one_arabic_number}}</div>
+                                    </div>
+                                </md-input-container>
+                                <!-- English Name -->
+                                <md-input-container flex>
+                                    <label for="enName">{{lang.lbl_english_name}}</label>
+                                    <input name="enName" id="enName" required
+                                           ng-model="ctrl.entityType.enName"
+                                           custom-validate-directive="E1NS">
+                                    <div ng-messages="entityTypeForm.enName.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                        <div ng-message="E1NS">{{lang.error_at_least_one_english_number}}</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="{{lang[ctrl.tabsToShow.entities.key]}}"
+                            ng-if="ctrl.showTab(ctrl.tabsToShow.entities)"
+                            md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.entities, $event)">
+                        <md-content layout-padding>
+                            <div layout="column">
+                                <div layout="row">
+                                    Entities
+                                </div>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <div flex layout="row" ng-if="ctrl.isTabSelected(ctrl.tabsToShow.basicInfo)">
+            <md-button class="md-raised" ng-if="!ctrl.editMode" ng-disabled="entityTypeForm.$invalid"
+                       ng-click="ctrl.addEntityType($event)">
+                {{lang.btn_add}}
+            </md-button>
+            <md-button class="md-raised" ng-if="ctrl.editMode" ng-disabled="entityTypeForm.$invalid"
+                       ng-click="ctrl.saveEntityType($event)">
+                {{lang.btn_save}}
+            </md-button>
+            <span flex></span>
+            <md-button class="md-raised" ng-click="ctrl.resetEntityTypeForm(entityTypeForm, $event)">
+                {{lang.btn_reset}}
+            </md-button>
+            <span flex></span>
+            <md-button class="md-raised" ng-click="ctrl.closeDialog($event)">
+                {{lang.btn_close}}
+            </md-button>
+        </div>
+        <div flex layout="row" ng-if="ctrl.isTabSelected(ctrl.tabsToShow.entities)">
+            <span flex></span>
+            <md-button class="md-raised" ng-click="ctrl.closeDialog($event)">
+                {{lang.btn_close}}
+            </md-button>
+        </div>
+    </md-dialog-actions>
+</md-dialog>

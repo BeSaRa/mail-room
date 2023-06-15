@@ -1,0 +1,174 @@
+<div background-directive="tall" class="page-content" flex="">
+    <div layout="column" class="content">
+        <!-- page-header start -->
+        <div layout="row" layout-align="start center" class="page-header padding-header small">
+            <span>{{lang.menu_item_admin_entities}}</span>
+            <md-button ng-click="ctrl.openAddEntityDialog($event)" class="md-icon-button"
+                       tooltip="{{lang.lbl_add}}">
+                <md-icon md-svg-icon="plus"></md-icon>
+            </md-button>
+            <md-button ng-click="ctrl.grid.reload(ctrl.grid.page, $event)" class="md-icon-button"
+                       tooltip="{{lang.lbl_reload}}">
+                <md-icon md-svg-icon="refresh"></md-icon>
+            </md-button>
+            <span flex></span>
+            <md-input-container flex>
+                <label for="integratedSystemId">{{lang.lbl_integrated_system}}</label>
+                <md-select id="integratedSystemId" name="integratedSystemId"
+                           ng-change="ctrl.filterEntitiesByIntegratedSystem()"
+                           ng-model="ctrl.integratedSystemId">
+                    <md-option ng-value="option.id" ng-repeat="option in ctrl.integratedSystemList track by $index">
+                        {{option.getTranslatedName()}}
+                    </md-option>
+                </md-select>
+                <div ng-messages="entityForm.integratedSystemId.$error">
+                    <div ng-message="required">{{lang.error_field_required}}</div>
+                </div>
+            </md-input-container>
+            <grid-search-directive grid="ctrl.grid"></grid-search-directive>
+        </div>
+        <!-- end page-header -->
+        <div layout="column" flex>
+            <div scroll-directive>
+                <div class="page-padding">
+                    <md-card md-whiteframe="3" layout="column" class="card-overlay">
+                        <md-table-container>
+                            <div flex scroll-directive>
+                                <table md-table ng-model="ctrl.grid.selectedRecords"
+                                       md-progress="ctrl.grid.progress"><!--md-row-select multiple-->
+                                    <thead md-head md-order="ctrl.grid.order"
+                                           md-on-reorder="ctrl.grid.sortCallback">
+                                    <tr md-row>
+                                        <th colspan="{{ctrl.grid.colSpan()}}" ng-if="ctrl.grid.selectedRecords.length"
+                                            md-column>
+                                            <div layout="row" layout-align="start center">
+                                                <span>{{ctrl.grid.selectedRecords.length}} {{lang.lbl_items_selected}} </span>
+                                                <span flex></span>
+                                                <!--<table-status-directive
+                                                        when-close="ctrl.changeBulkEntitiesStatus"></table-status-directive>
+                                                <md-button class="md-icon-button" tooltip="{{lang.btn_delete}}"
+                                                           ng-click="ctrl.removeBulkEntities($event)">
+                                                    <md-icon md-svg-icon="delete"></md-icon>
+                                                </md-button>-->
+                                            </div>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.arabicName, true)"
+                                            md-column
+                                            md-order-by="{{ctrl.grid.columns.arabicName.sortKey()}}">
+                                            <span>{{lang[ctrl.grid.columns.arabicName.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.englishName, true)"
+                                            md-column
+                                            md-order-by="{{ctrl.grid.columns.englishName.sortKey()}}">
+                                            <span>{{lang[ctrl.grid.columns.englishName.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.responsibleName, true)"
+                                            md-column
+                                            md-order-by="{{ctrl.grid.columns.responsibleName.sortKey()}}">
+                                            <span>{{lang[ctrl.grid.columns.responsibleName.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.responsibleEmail, true)"
+                                            md-column
+                                            md-order-by="{{ctrl.grid.columns.responsibleEmail.sortKey()}}">
+                                            <span>{{lang[ctrl.grid.columns.responsibleEmail.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.entityCode, true)"
+                                            md-column
+                                            md-order-by="{{ctrl.grid.columns.entityCode.sortKey()}}">
+                                            <span>{{lang[ctrl.grid.columns.entityCode.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.useSystem, true)"
+                                            md-column
+                                            md-order-by="{{ctrl.grid.columns.useSystem.sortKey()}}">
+                                            <span>{{lang[ctrl.grid.columns.useSystem.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.status, true)"
+                                            md-column
+                                            md-order-by="{{ctrl.grid.columns.status.sortKey()}}">
+                                            <span>{{lang[ctrl.grid.columns.status.langKey]}}</span>
+                                        </th>
+                                        <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions, true)"
+                                            md-column>
+                                            <span>{{lang[ctrl.grid.columns.gridActions.langKey]}}</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody md-body>
+                                    <tr md-row
+                                        ng-repeat="item in (ctrl.entities | limitTo: ctrl.grid.limit: ((ctrl.grid.page - 1) * ctrl.grid.limit)) track by $index"
+                                        md-select="item">
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.arabicName)"
+                                            md-highlight-text="ctrl.grid.searchText" md-highlight-flags="i">
+                                            {{item.arName}}
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.englishName)"
+                                            md-highlight-text="ctrl.grid.searchText" md-highlight-flags="i">
+                                            {{item.enName}}
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.responsibleName)"
+                                            md-highlight-text="ctrl.grid.searchText" md-highlight-flags="i">
+                                            {{item.responsibleName}}
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.responsibleEmail)"
+                                            md-highlight-text="ctrl.grid.searchText" md-highlight-flags="i">
+                                            {{item.responsibleEmail}}
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.entityCode)"
+                                            md-highlight-text="ctrl.grid.searchText" md-highlight-flags="i">
+                                            {{item.entityCode}}
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.useSystem)">
+                                            <md-switch aria-label="{{lang.lbl_use_system}}"
+                                                       title="{{item.getTranslatedIsUseSystem()}}"
+                                                       ng-change="ctrl.changeUseSystem(item, $event)"
+                                                       ng-model="item.isUseSystem">
+                                            </md-switch>
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.status)">
+                                            <md-switch aria-label="{{lang.lbl_status}}"
+                                                       title="{{item.getTranslatedStatus()}}"
+                                                       ng-change="ctrl.changeEntityStatus(item, $event)"
+                                                       ng-model="item.active"
+                                                       ng-disabled="ctrl.isCurrentEntity(item)">
+                                            </md-switch>
+                                        </td>
+                                        <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions)">
+                                            <div flex layout="row" layout-align="start center">
+                                                <md-button class="md-icon-button" title="{{lang.btn_delete}}"
+                                                           ng-click="ctrl.removeEntity(item, $event)">
+                                                    <md-icon md-svg-icon="delete"></md-icon>
+                                                </md-button>
+                                                <md-button class="md-icon-button" title="{{lang.btn_edit}}"
+                                                           ng-click="ctrl.openEditEntityDialog(item, $event)">
+                                                    <md-icon md-svg-icon="pencil"></md-icon>
+                                                </md-button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr md-row ng-if="!ctrl.entitiesCopy.length">
+                                        <td md-cell colspan="{{ctrl.grid.colSpan()}}" class="red-text text-center">
+                                            {{lang.msg_no_items_found}}
+                                        </td>
+                                    </tr>
+                                    <tr md-row
+                                        ng-if="ctrl.entitiesCopy.length && !ctrl.entities.length">
+                                        <td md-cell colspan="{{ctrl.grid.colSpan()}}" class="red-text text-center">
+                                            {{lang.msg_no_items_found_matching_search}}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <md-table-pagination
+                                    md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                                    md-limit-options="ctrl.grid.limitOptions"
+                                    md-limit="ctrl.grid.limit" md-page="ctrl.grid.page"
+                                    md-total="{{ctrl.entities.length}}" md-page-select>
+                            </md-table-pagination>
+                        </md-table-container>
+                    </md-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

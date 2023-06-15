@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="print-timeline-style.css" rel="stylesheet" />
+</head>
+<body>
+<div class="timeline_container">
+    <div id="timeline" class="timeline">
+        <div id="timeline_group" class="timeline_group">
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    (function () {
+        var currentLang = localStorage.getItem('currentLang');
+        var htmlTag = document.getElementsByTagName("html")[0];
+        if (currentLang === 'ar') {
+            htmlTag.classList.add('rtl');
+            htmlTag.setAttribute('dir', 'rtl');
+            document.title = "غرفة البريد - طباعة الجدول الزمني";
+        }
+        else {
+            htmlTag.classList.remove('rtl');
+            htmlTag.setAttribute('dir', 'ltr');
+            document.title = "MailRoom - Print Timeline";
+        }
+        var data = JSON.parse(localStorage.getItem('printData')),
+            userIcon = "\n" +
+                "<span class=\"icon\">\n" +
+                "    <svg xmlns=\"http://www.w3.org/2000/svg\" fit=\"\" height=\"100%\" width=\"100%\" preserveAspectRatio=\"xMidYMid meet\"\n" +
+                "         viewBox=\"0 0 24 24\" focusable=\"false\">\n" +
+                "        <g id=\"account\">\n" +
+                "            <path d=\"M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z\"></path>\n" +
+                "        </g>\n" +
+                "    </svg>\n" +
+                "</span>",
+            calendarIcon = "<span class=\"icon\">\n" +
+                "    <svg xmlns=\"http://www.w3.org/2000/svg\" fit=\"\" height=\"100%\" width=\"100%\" preserveAspectRatio=\"xMidYMid meet\"\n" +
+                "         viewBox=\"0 0 24 24\" focusable=\"false\">\n" +
+                "        <g id=\"calendar-range\">\n" +
+                "            <path d=\"M9,10H7V12H9V10M13,10H11V12H13V10M17,10H15V12H17V10M19,3H18V1H16V3H8V1H6V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M19,19H5V8H19V19Z\"></path>\n" +
+                "        </g>\n" +
+                "    </svg>\n" +
+                "</span>",
+            timelineBox = '<div class="timeline_box {{statusColor}}">\n' +
+                '                    <div class="timeline_header {{statusColor}}">\n' +
+                '                        <span class="timeline_header_content">{{actionLogType}}</span>\n' +
+                '                    </div>\n' +
+                '                    <div class="timeline_body p10_0 {{statusColor}}" >\n' +
+                '                        <p class="m0">' + calendarIcon + '<span class="text-ltr span-text"> {{actionDate}}</span></p>\n' +
+                '                        <p class="m0">' + userIcon + '<span class="span-text"> {{user}}</span></p>\n' +
+                '                    </div>\n' +
+                '                </div>';
+
+        function generateTimeline() {
+            var html = '<span class="timeline_reference text-ltr">' + data[0].referenceNoForPrint + '</span>';
+            for (var i = 0; i < data.length; i++) {
+                html += timelineBox
+                    .replace(/{{statusColor}}/g, 'color-' + data[i].actionLogTypeIdForPrint)
+                    .replace('{{actionLogType}}', data[i].actionLogTypeForPrint)
+                    .replace('{{user}}', data[i].userNameForPrint)
+                    .replace('{{actionDate}}', data[i].actionDateForPrint)
+            }
+            return html;
+        }
+
+        function getTimeline() {
+            return new Promise(function (resolve, reject) {
+                var element = document.getElementById('timeline_group');
+                element.innerHTML = generateTimeline();
+                localStorage.removeItem('printData');
+                localStorage.removeItem('currentLang');
+                resolve(true);
+            });
+        }
+
+        getTimeline().then(function (value) {
+            window.print();
+        });
+
+    })();
+</script>
+</html>

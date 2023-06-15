@@ -1,0 +1,79 @@
+.gm-separator-horizontal {
+  min-height: 9px;
+  max-height: 9px;
+  height: 9px;
+}
+
+#grid-menu-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+#current-menu-container {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.menu-handler {
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.gm-info {
+  height: auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  .docInfoTable {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .docInfoTable tr {
+    height: 32px !important;
+  }
+  .docInfoTable tr td.md-cell {
+    border: none !important;
+  }
+}
+
+.grid-action-menu {
+  button {
+    margin: 0 !important
+  }
+}
+
+// Temporary classes to highlight status of actions
+.action-red {
+  color: red !important;
+}
+
+.action-yellow {
+  color: #e7d118 !important;
+}
+
+.action-green {
+  color: green !important;
+}
+
+.md-open-menu-container vertical-divider-directive {
+  margin-left: 4px;
+  margin-right: 4px;
+  width: 1px;
+  min-width: 1px;
+  max-width: 1px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.11);
+  padding-right: 0px;
+  padding-left: 0px;
+}

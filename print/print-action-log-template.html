@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link media="all" rel="stylesheet" href="print-grid-style.css">
+</head>
+<body>
+<div id="actionLogContainer">
+    <div id="mailDataContainer">
+        <div class="row">
+            <div class="subRow">
+                <label class="text-bold">{{lblRefNo}}: </label>
+                <label class="text-ltr">{{txtRefNo}}</label>
+            </div>
+            <div class="subRow">
+                <label class="text-bold">{{lblEntryType}}: </label>
+                <label>{{txtEntryType}}</label>
+            </div>
+            <div class="subRow">
+                <label class="text-bold">{{lblMailType}}: </label>
+                <label>{{txtMailType}}</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="subRow">
+                <label class="text-bold">{{lblSender}}: </label>
+                <label>{{txtSender}}</label>
+            </div>
+            <div class="subRow">
+                <label class="text-bold">{{lblReceiver}}: </label>
+                <label>{{txtReceiver}}</label>
+            </div>
+        </div>
+    </div>
+    <table id="actionLogTable">
+
+    </table>
+</div>
+<script>
+    (function () {
+        var data = JSON.parse(localStorage.getItem('printData'));
+        var columns = data.header;
+        var columnCount = columns.length;
+        var records = data.records;
+        var mailData = data.mailData;
+
+        var currentLang = localStorage.getItem('currentLang');
+        var htmlTag = document.getElementsByTagName("html")[0];
+        if (currentLang === 'ar') {
+            htmlTag.classList.add('rtl');
+            htmlTag.setAttribute('dir', 'rtl');
+            document.title = "غرفة البريد - طباعة سجل الاجراءات";
+        }
+        else {
+            htmlTag.classList.remove('rtl');
+            htmlTag.setAttribute('dir', 'ltr');
+            document.title = "MailRoom - Print Action Log";
+        }
+
+        var mailDataContainer = document.getElementById('mailDataContainer');
+        mailDataContainer.innerHTML = mailDataContainer.innerHTML
+            .replace('{{lblRefNo}}', mailData.referenceNo.header)
+            .replace('{{txtRefNo}}', mailData.referenceNo.value)
+            .replace('{{lblEntryType}}', mailData.entryType.header)
+            .replace('{{txtEntryType}}', mailData.entryType.value)
+            .replace('{{lblMailType}}', mailData.mailType.header)
+            .replace('{{txtMailType}}', mailData.mailType.value)
+            .replace('{{lblSender}}', mailData.sender.header)
+            .replace('{{txtSender}}', mailData.sender.value)
+            .replace('{{lblReceiver}}', mailData.receiver.header)
+            .replace('{{txtReceiver}}', mailData.receiver.value);
+
+        function fillData() {
+            return new Promise(function (resolve, reject) {
+                var table = document.getElementById('actionLogTable');
+
+                //create header
+                var tableHeader = table.createTHead();
+                var rowHeader = tableHeader.insertRow(0);
+
+                // loop through headers
+                for (var i = 0; i < columnCount; i++) {
+                    rowHeader.insertCell(i).innerHTML = columns[i];
+                }
+
+                var tableBody = table.createTBody();
+                // loop through data
+                for (var i = 0; i < records.length; i++) {
+                    var record = records[i];
+                    var row = tableBody.insertRow();
+                    for (var j = 0; j < columnCount; j++) {
+                        var cell = row.insertCell(j);
+                        cell.innerHTML = record[j] ? record[j] : '';
+                    }
+                }
+                localStorage.removeItem('printData');
+                localStorage.removeItem('currentLang');
+                resolve(true);
+            });
+        }
+
+        fillData().then(function (value) {
+            window.print()
+        });
+    })();
+</script>
+</body>
+</html>

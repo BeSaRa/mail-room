@@ -1,0 +1,1566 @@
+{
+  "app_description": {
+    "ar": "نظام الغرف البريدية",
+    "en": "Mailing Room System"
+  },
+  "app_project_name": {
+    "ar": "نظام الغرف البريدية",
+    "en": "Mailing Room System"
+  },
+  "app_print_action_log": {
+    "ar": "طباعة سجل الاجراءات",
+    "en": "Print Action Log"
+  },
+  "application_name": {
+    "ar": "نظام الغرف البريدية",
+    "en": "Mailing Room System"
+  },
+  "application_title": {
+    "ar": "نظام الغرف البريدية",
+    "en": "Mailing Room System"
+  },
+  "auth_access_denied": {
+    "ar": "غير مصرح لك بالوصول",
+    "en": "access denied"
+  },
+  "auth_confirm_logout": {
+    "ar": "?هل أنت متأكد أنك تريد تسجيل الخروج",
+    "en": "Are you sure you want to logout ?"
+  },
+  "auth_forget_password": {
+    "ar": "نسيت كلمة المرور !",
+    "en": "Forget Password !"
+  },
+  "auth_login": {
+    "ar": "دخول",
+    "en": "login"
+  },
+  "auth_login_to_your_account": {
+    "ar": "تسجيل الدخول إلى حسابك",
+    "en": "Login to your account"
+  },
+  "auth_logout": {
+    "ar": "تسجيل خروج",
+    "en": "Logout"
+  },
+  "auth_password": {
+    "ar": "كلمة المرور",
+    "en": "Password"
+  },
+  "auth_remember_me": {
+    "ar": "تذكرني !",
+    "en": "Remember Me !"
+  },
+  "auth_session_expired": {
+    "ar": "ربما انتهت جلستك رجاء تسجيل الدخول مرة أخرى",
+    "en": "Your session may have expired. Please log in again"
+  },
+  "auth_success_login": {
+    "ar": "تم تسجيل دخولك بنجاح وجاري تحوليك إلي واجهة النظام",
+    "en": "You are logged in successfully"
+  },
+  "auth_success_logout": {
+    "ar": "تم تسجيل خروك بنجاح",
+    "en": "You are logged out successfully"
+  },
+  "auth_username": {
+    "ar": "اسم المستخدم",
+    "en": "Username"
+  },
+  "auth_you_are_logged_out_by_session": {
+    "ar": "تم تسجيل خروجك لوجودك  غير نشط لفترة طويلة",
+    "en": "You have been logged out for being idle for a long time"
+  },
+  "btn_add": {
+    "ar": "أضف",
+    "en": "Add"
+  },
+  "btn_cancel": {
+    "ar": "الغاء",
+    "en": "Cancel"
+  },
+  "btn_close": {
+    "ar": "إغلاق",
+    "en": "close"
+  },
+  "btn_delete": {
+    "ar": "حذف",
+    "en": "Delete"
+  },
+  "btn_edit": {
+    "ar": "تعديل",
+    "en": "Edit"
+  },
+  "btn_filter": {
+    "ar": "تصفية",
+    "en": "Filter"
+  },
+  "btn_get_mail": {
+    "ar": "الحصول على البريد",
+    "en": "Get Mail"
+  },
+  "btn_link_mail": {
+    "ar": "ربط البريد",
+    "en": "Link Mail"
+  },
+  "btn_print": {
+    "ar": "طباعة",
+    "en": "Print"
+  },
+  "btn_receive": {
+    "ar": "استلام",
+    "en": "Receive"
+  },
+  "btn_reset": {
+    "ar": "اعادة تعيين",
+    "en": "Reset"
+  },
+  "btn_save": {
+    "ar": "حفظ",
+    "en": "Save"
+  },
+  "btn_search": {
+    "ar": "البحث",
+    "en": "Search"
+  },
+  "btn_send": {
+    "ar": "ارسال",
+    "en": "Send"
+  },
+  "btn_skip_mail": {
+    "ar": "تخطي البريد",
+    "en": "Skip Mail"
+  },
+  "btn_unlink_mail": {
+    "ar": "فك ارتباط البريد",
+    "en": "Unlink Mail"
+  },
+  "btn_view_report": {
+    "ar": "عرض التقرير",
+    "en": "View Report"
+  },
+  "error_at_least_one_arabic_number": {
+    "ar": "الأحرف العربية فقط هي الأرقام المسموح بها مع حرف عربي واحد على الأقل",
+    "en": "Only arabic characters, numbers are allowed with at least 1 arabic character"
+  },
+  "error_at_least_one_english_number": {
+    "ar": "الأحرف الإنجليزية فقط هي الأرقام المسموح بها مع حرف إنجليزي واحد على الأقل",
+    "en": "Only english characters, numbers are allowed with at least 1 english character"
+  },
+  "error_email": {
+    "ar": "عنوان البريد الإلكتروني غير صحيح",
+    "en": "Invalid email address"
+  },
+  "error_english_number_under_score": {
+    "ar": "يتم السماح فقط بالحروف الإنجليزية والأرقام وتسطير الشرطة",
+    "en": "Only english alphabets, numbers, underscore are allowed"
+  },
+  "error_field_required": {
+    "ar": "مطلوب لا تتركه فارغأ",
+    "en": "This is required"
+  },
+  "error_max_length": {
+    "ar": "يجب ان لا تتجاوز :length",
+    "en": "Should be maximum :length characters"
+  },
+  "error_min_length": {
+    "ar": "يجب على الأقل :length حرف",
+    "en": "Should be minimum :length characters"
+  },
+  "error_min_number": {
+    "ar": "الرجاء إدخال رقم أكبر من :number",
+    "en": "Please enter number greater than :number"
+  },
+  "error_mobile_number": {
+    "ar": "رقم الجوال يجب أن يكون من الصيغة +974xxxxxxxx",
+    "en": "Mobile number should be in format +974xxxxxxxx"
+  },
+  "error_name_duplicate": {
+    "ar": "لايمكن تكرار نفس الاسم.",
+    "en": "Name can't be duplicated."
+  },
+  "error_name_code_duplicate": {
+    "ar": "لا يمكن تكرار الاسم والكود.",
+    "en": "Name and Code can't be duplicated."
+  },
+  "error_number_only": {
+    "ar": "الرجاء إدخال ارقام فقط",
+    "en": "Please enter number only"
+  },
+  "error_number_should_be_greater_than_zero": {
+    "ar": "الرجاء إدخال رقم أكبر من الصفر",
+    "en": "Please enter number greater than zero"
+  },
+  "error_positive_number_only": {
+    "ar": "الرجاء إدخال ارقام فقط",
+    "en": "Please enter positive number only"
+  },
+  "error_should_less_max-limit": {
+    "ar": "لا يمكن ادخال رقم اكبر من الحد الاقصى",
+    "en": "Should be less than max limit"
+  },
+  "error_show_barcode": {
+    "ar": "حدث خطأ أثناء تحميل الباركود",
+    "en": "An error occurred while loading barcode"
+  },
+  "error_too_short": {
+    "ar": "قصير جدا",
+    "en": "it is too short"
+  },
+  "error_unauthorized": {
+    "ar": "خطأ في اسم المستخدم أو كلمة مرور",
+    "en": "Invalid username or password"
+  },
+  "error_username_mobile_duplicate": {
+    "ar": "لا يمكن تكرار اسم المستخدم ورقم الجوال.",
+    "en": "Username and mobile number can't be duplicated."
+  },
+  "error_change_entity": {
+    "ar": "حدث خطأ أثناء تغير الجهة",
+    "en": "Error Change Entity"
+  },
+  "grid_action_action_logs": {
+    "ar": "سجلات الاجراءات",
+    "en": "Action Logs"
+  },
+  "grid_action_delete": {
+    "ar": "حذف",
+    "en": "Delete"
+  },
+  "grid_action_edit": {
+    "ar": "تعديل",
+    "en": "Edit"
+  },
+  "grid_action_view": {
+    "ar": "معاينة",
+    "en": "View"
+  },
+  "grid_action_new": {
+    "ar": "قبول جديد",
+    "en": "Accept as New"
+  },
+  "grid_action_receive": {
+    "ar": "استلام",
+    "en": "Receive"
+  },
+  "grid_action_return": {
+    "ar": "استرجاع",
+    "en": "Return"
+  },
+  "grid_action_return_to_new": {
+    "ar": "الى الجديد",
+    "en": "To New"
+  },
+  "grid_action_return_to_sent": {
+    "ar": "الى الارسال",
+    "en": "To Send"
+  },
+  "grid_action_send": {
+    "ar": "ارسال",
+    "en": "Send"
+  },
+  "grid_action_show_barcode": {
+    "ar": "عرض الباركود",
+    "en": "Show Barcode"
+  },
+  "grid_action_show_linked_mail": {
+    "ar": "عرض البريد المرتبط",
+    "en": "Show Linked Mail"
+  },
+  "grid_action_timeline": {
+    "ar": "الجدول الزمني",
+    "en": "Timeline"
+  },
+  "grid_action_tracking": {
+    "ar": "سجل",
+    "en": "History"
+  },
+  "header_action_date": {
+    "ar": "تاريخ الاجراء",
+    "en": "Action Date"
+  },
+  "header_action_details": {
+    "ar": "تفاصيل الاجراء",
+    "en": "Action Details"
+  },
+  "header_action_type": {
+    "ar": "نوع الاجراء",
+    "en": "Action Type"
+  },
+  "header_actions": {
+    "ar": "الاجراءات",
+    "en": "Actions"
+  },
+  "header_add_outgoing": {
+    "ar": "اضافة بريد صادر",
+    "en": "Add Outgoing Mail"
+  },
+  "header_arabic_name": {
+    "ar": "الاسم بالعربية",
+    "en": "Arabic Name"
+  },
+  "header_dashboard": {
+    "ar": "لوحة البداية",
+    "en": "Dashboard"
+  },
+  "header_employees": {
+    "ar": "الموظفين",
+    "en": "Employees"
+  },
+  "header_english_name": {
+    "ar": "الاسم بالانجليزية",
+    "en": "English Name"
+  },
+  "header_entered_by": {
+    "ar": "تم الادخال بواسطة",
+    "en": "Entered By"
+  },
+  "header_entities": {
+    "ar": "جهات التراسل",
+    "en": "Entities"
+  },
+  "header_entity_types": {
+    "ar": "أنواع جهات التراسل",
+    "en": "Entity Types"
+  },
+  "header_incoming_mail": {
+    "ar": "البريد الوارد",
+    "en": "Incoming Mail"
+  },
+  "header_internal_mail": {
+    "ar": "البريد الداخلي",
+    "en": "Internal Mail"
+  },
+  "header_mail_type": {
+    "ar": "نوع البريد",
+    "en": "Mail Type"
+  },
+  "header_mobile_number": {
+    "ar": "رقم الجوال",
+    "en": "Mobile Number"
+  },
+  "header_number_of_days": {
+    "ar": "أيام",
+    "en": "Days"
+  },
+  "header_outgoing_mail": {
+    "ar": "جاهز للتصدير",
+    "en": "Ready To Export"
+  },
+  "header_permissions": {
+    "ar": "الصالحيات",
+    "en": "Permissions"
+  },
+  "header_entry_type": {
+    "ar": "نوع الإدخال",
+    "en": "Entry Type"
+  },
+  "header_post_type": {
+    "ar": "نوع البريد",
+    "en": "Post Type"
+  },
+  "header_priority": {
+    "ar": "الأولوية",
+    "en": "Priority"
+  },
+  "header_received_date": {
+    "ar": "تاريخ الاستلام",
+    "en": "Received Date"
+  },
+  "header_receiver": {
+    "ar": "المستلم",
+    "en": "Receiver"
+  },
+  "header_receiver_department": {
+    "ar": "الادارة المستلمة",
+    "en": "Receiver Department"
+  },
+  "header_receiver_entity": {
+    "ar": "الجهة المستلمة",
+    "en": "Receiver Entity"
+  },
+  "header_receiver_notes": {
+    "ar": "ملاحظات المستلم",
+    "en": "Receiver Notes"
+  },
+  "header_reference_no": {
+    "ar": "الرقم المرجعي",
+    "en": "Reference No"
+  },
+  "header_register_date": {
+    "ar": "تاريخ التسجيل",
+    "en": "Register Date"
+  },
+  "header_responsible_email": {
+    "ar": "البريد الإلكتروني المسؤول",
+    "en": "Responsible Email"
+  },
+  "header_responsible_name": {
+    "ar": "الاسم المسؤول",
+    "en": "Responsible Name"
+  },
+  "header_code": {
+    "ar": "الكود",
+    "en": "Code"
+  },
+  "header_sender": {
+    "ar": "المرسل",
+    "en": "Sender"
+  },
+  "header_sender_department": {
+    "ar": "الادارة المرسلة",
+    "en": "Sender Department"
+  },
+  "header_sender_entity": {
+    "ar": "الجهة المرسلة",
+    "en": "Sender Entity"
+  },
+  "header_sent_date": {
+    "ar": "تاريخ الارسال",
+    "en": "Sent Date"
+  },
+  "header_sequence": {
+    "ar": "#",
+    "en": "#"
+  },
+  "header_status": {
+    "ar": "الحالة",
+    "en": "Status"
+  },
+  "header_use_system": {
+    "ar": "مستخدم النظام",
+    "en": "Use system"
+  },
+  "header_username": {
+    "ar": "اسم المستخدم",
+    "en": "User Name"
+  },
+  "header_load_entities_cms": {
+    "ar": "تحميل معلومات البريد من نظام المراسلات",
+    "en": "Load Mail Information From CMS"
+  },
+  "header_notes": {
+    "ar": "ملاحظات",
+    "en": "Notes"
+  },
+  "menu_item_tracking": {
+    "ar": "تعقب البريد",
+    "en": "Tracking Mail"
+  },
+  "indicator_entity_not_using_system": {
+    "ar": "الجهة: لاتستخدم النظام",
+    "en": "Entity: Not Using System"
+  },
+  "indicator_entity_using_system": {
+    "ar": "الجهة: تستخدم النظام",
+    "en": "Entity: Using System"
+  },
+  "indicator_incoming_mail": {
+    "ar": "بريد وارد",
+    "en": "Incoming Mail"
+  },
+  "indicator_internal_mail": {
+    "ar": "بريد داخلي",
+    "en": "Internal Mail"
+  },
+  "indicator_outgoing_mail": {
+    "ar": "بريد صادر",
+    "en": "Outgoing Mail"
+  },
+  "indicator_entry_type_correspondence": {
+    "ar": "نوع الإدخال: مراسة",
+    "en": "Entry Type: Correspondence Mail"
+  },
+  "indicator_entry_type_general": {
+    "ar": "نوع الإدخال: بريد عام",
+    "en": "Entry Type: General Mail"
+  },
+  "lbl_post_type": {
+    "ar": "نوع البريد",
+    "en": "Post Type"
+  },
+  "indicator_priority_fast": {
+    "ar": "الأولوية: سريع",
+    "en": "Priority: Fast"
+  },
+  "indicator_priority_normal": {
+    "ar": "الأولوية: عادي",
+    "en": "Priority: Normal"
+  },
+  "lbl_actions": {
+    "ar": "الاجراءات",
+    "en": "Actions"
+  },
+  "lbl_active": {
+    "ar": "فعال",
+    "en": "Active"
+  },
+  "lbl_add": {
+    "ar": "أضف",
+    "en": "Add"
+  },
+  "lbl_add_department": {
+    "ar": "اضافة ادارة",
+    "en": "Add Department"
+  },
+  "lbl_add_employee": {
+    "ar": "اضافة موظفين",
+    "en": "Add Employee"
+  },
+  "lbl_add_employee_to_entity": {
+    "ar": "اضافة موظف لجهة",
+    "en": "Add employee to entity"
+  },
+  "lbl_add_entity": {
+    "ar": "اضافة جهة",
+    "en": "Add Entity"
+  },
+  "lbl_reason": {
+    "ar": "السبب",
+    "en": "Reason"
+  },
+  "lbl_add_entity_type": {
+    "ar": "اضافة نوع الجهة",
+    "en": "Add Entity Type"
+  },
+  "lbl_add_mail": {
+    "ar": "اضافة بريد",
+    "en": "Add Mail"
+  },
+  "lbl_arabic_name": {
+    "ar": "الاسم باللغة العربية",
+    "en": "Arabic Name"
+  },
+  "lbl_attachment_no": {
+    "ar": "رقم المرفق",
+    "en": "Attachment No"
+  },
+  "lbl_barcode": {
+    "ar": "باركود",
+    "en": "Barcode"
+  },
+  "lbl_barcode_scan": {
+    "ar": "مسح الباركود",
+    "en": "Barcode Scan"
+  },
+  "lbl_basic_info": {
+    "ar": "المعلومات الاساسية",
+    "en": "Basic Info"
+  },
+  "lbl_check_missing_fields": {
+    "ar": "رجاء التأكد من هذه الحقول أولا",
+    "en": "Please check these fields first"
+  },
+  "lbl_check_these_fields": {
+    "ar": "رجاء التأكد من هذه الحقول أول",
+    "en": "Please check these fields first"
+  },
+  "lbl_confirm_accept_mail": {
+    "ar": "هل أنت متأكد من الموافقة؟",
+    "en": "Are you sure you want to accept?"
+  },
+  "lbl_confirm_link_incoming_to_outgoing": {
+    "ar": "هل تريد الربط مع جاهز للتصدير",
+    "en": "Do you want to link to ready to export"
+  },
+  "lbl_confirm_return_mail": {
+    "ar": "هل أنت متأكد أنك تريد الاسترجاع؟?",
+    "en": "Are you sure you want to return?"
+  },
+  "lbl_date": {
+    "ar": "تاريخ",
+    "en": "Date"
+  },
+  "lbl_day": {
+    "ar": "يوم",
+    "en": "Day"
+  },
+  "lbl_days": {
+    "ar": "أيام",
+    "en": "Days"
+  },
+  "lbl_default_entity": {
+    "ar": "الجهة الافتراضية",
+    "en": "Default entity"
+  },
+  "lbl_departments": {
+    "ar": "الأقسام",
+    "en": "Departments"
+  },
+  "lbl_edit": {
+    "ar": "تعديل",
+    "en": "Edit"
+  },
+  "lbl_email": {
+    "ar": "البريد الالكتروني",
+    "en": "E-mail Address"
+  },
+  "lbl_employee": {
+    "ar": "الموظف",
+    "en": "Employee"
+  },
+  "lbl_employees": {
+    "ar": "الموظفين",
+    "en": "Employees"
+  },
+  "lbl_english_name": {
+    "ar": "الاسم باللغة الانجليزية",
+    "en": "English Name"
+  },
+  "lbl_enter": {
+    "ar": "ادخال",
+    "en": "Enter"
+  },
+  "lbl_entered_by": {
+    "ar": "تم الادخال بواسطة",
+    "en": "Entered By"
+  },
+  "lbl_entities": {
+    "ar": "جهات التراسل",
+    "en": "Entities"
+  },
+  "lbl_entity_permissions": {
+    "ar": "صلاحيات الجهات",
+    "en": "Entity Permissions"
+  },
+  "lbl_entity_type": {
+    "ar": "نوع الجهة",
+    "en": "Entity Type"
+  },
+  "lbl_entry_type": {
+    "ar": "نوع الإدخال",
+    "en": "Entry Type"
+  },
+  "lbl_female": {
+    "ar": "أنثى",
+    "en": "Female"
+  },
+  "lbl_filter": {
+    "ar": "تصفية",
+    "en": "Filter"
+  },
+  "lbl_from": {
+    "ar": "من",
+    "en": "From"
+  },
+  "lbl_gender": {
+    "ar": "الجنس",
+    "en": "Gender"
+  },
+  "lbl_general": {
+    "ar": "عام",
+    "en": "General"
+  },
+  "lbl_global": {
+    "ar": "عام",
+    "en": "Global"
+  },
+  "lbl_help": {
+    "ar": "مساعدة",
+    "en": "Help"
+  },
+  "lbl_hour": {
+    "ar": "ساعة",
+    "en": "Hour"
+  },
+  "lbl_idle_status": {
+    "ar": "يبدو انك فى حالة غير نشطة",
+    "en": "You seem to be idle"
+  },
+  "lbl_inactive": {
+    "ar": "غير فعال",
+    "en": "Inactive"
+  },
+  "lbl_incoming_expected_mails": {
+    "ar": "متوقع",
+    "en": "Expected"
+  },
+  "lbl_incoming_new_mails": {
+    "ar": "جديد",
+    "en": "New"
+  },
+  "lbl_incoming_received_mails": {
+    "ar": "تم التسليم",
+    "en": "Received"
+  },
+  "lbl_incoming_sent_mails": {
+    "ar": "مرسل",
+    "en": "Sent"
+  },
+  "lbl_internal_new_mails": {
+    "ar": "جديد",
+    "en": "New"
+  },
+  "lbl_internal_received_mails": {
+    "ar": "تم التسليم",
+    "en": "Received"
+  },
+  "lbl_internal_sent_mails": {
+    "ar": "مرسل",
+    "en": "Sent"
+  },
+  "lbl_item_selected": {
+    "ar": "عنصر مختار",
+    "en": "Item selected"
+  },
+  "lbl_items_selected": {
+    "ar": "عناصر مختارة",
+    "en": "Items selected"
+  },
+  "lbl_link": {
+    "ar": "ربط",
+    "en": "Link"
+  },
+  "lbl_linked_mail": {
+    "ar": "ربط بريد",
+    "en": "Linked mail"
+  },
+  "lbl_mail": {
+    "ar": "بريد",
+    "en": "Mail"
+  },
+  "lbl_mail_id": {
+    "ar": "رقم البريد",
+    "en": "Mail Id"
+  },
+  "lbl_mail_type": {
+    "ar": "نوع البريد",
+    "en": "Mail Type"
+  },
+  "lbl_male": {
+    "ar": "ذكر",
+    "en": "Male"
+  },
+  "lbl_minute": {
+    "ar": "دقيقة",
+    "en": "Minute"
+  },
+  "lbl_minutes": {
+    "ar": "دقائق",
+    "en": "Minutes"
+  },
+  "lbl_mobile": {
+    "ar": "رقم الجوال",
+    "en": "Mobile Number"
+  },
+  "lbl_mobile_number": {
+    "ar": "رقم الجوال",
+    "en": "Mobile Number"
+  },
+  "lbl_month": {
+    "ar": "شهر",
+    "en": "Month"
+  },
+  "lbl_month_april": {
+    "ar": "ابريل",
+    "en": "April"
+  },
+  "lbl_month_august": {
+    "ar": "أغسطس",
+    "en": "August"
+  },
+  "lbl_month_december": {
+    "ar": "ديسمبر",
+    "en": "December"
+  },
+  "lbl_month_february": {
+    "ar": "فبراير",
+    "en": "February"
+  },
+  "lbl_month_january": {
+    "ar": "يناير",
+    "en": "January"
+  },
+  "lbl_month_july": {
+    "ar": "يوليو",
+    "en": "July"
+  },
+  "lbl_month_june": {
+    "ar": "يونيو",
+    "en": "June"
+  },
+  "lbl_month_march": {
+    "ar": "مارس",
+    "en": "March"
+  },
+  "lbl_month_may": {
+    "ar": "مايو",
+    "en": "May"
+  },
+  "lbl_month_november": {
+    "ar": "نوفمبر",
+    "en": "November"
+  },
+  "lbl_month_october": {
+    "ar": "أكتوبر",
+    "en": "October"
+  },
+  "lbl_month_september": {
+    "ar": "سبتمبر",
+    "en": "September"
+  },
+  "lbl_morasalat": {
+    "ar": "مراسلات",
+    "en": "Morasalat"
+  },
+  "lbl_next": {
+    "ar": "التالي",
+    "en": "Next"
+  },
+  "lbl_no": {
+    "ar": "لا",
+    "en": "No"
+  },
+  "lbl_none": {
+    "ar": "لا يوجد",
+    "en": "None"
+  },
+  "lbl_notes": {
+    "ar": "ملاحظات",
+    "en": "Notes"
+  },
+  "lbl_outgoing_mail_reference": {
+    "ar": "الرقم المرجعي لجاهز للتصدير",
+    "en": "Ready To Export Reference"
+  },
+  "lbl_outgoing_new_mails": {
+    "ar": "جديد",
+    "en": "New"
+  },
+  "lbl_outgoing_received_mails": {
+    "ar": "تم التسليم",
+    "en": "Received"
+  },
+  "lbl_outgoing_sent_mails": {
+    "ar": "مرسل",
+    "en": "Sent"
+  },
+  "lbl_page": {
+    "ar": "صفحة:",
+    "en": "Page:"
+  },
+  "lbl_page_all": {
+    "ar": "الكل",
+    "en": "All"
+  },
+  "lbl_page_count_of": {
+    "ar": "من",
+    "en": "of"
+  },
+  "lbl_page_rows_per_page": {
+    "ar": "عدد العناصر بالصفحة:",
+    "en": "Rows per page:"
+  },
+  "lbl_password": {
+    "ar": "كلمة المرور",
+    "en": "Password"
+  },
+  "lbl_old_password": {
+    "ar": "كلمة المرور القديمة",
+    "en": "Old Password"
+  },
+  "lbl_new_password": {
+    "ar": "كلمة المرور الجديدة",
+    "en": "New Password"
+  },
+  "lbl_confirm_password": {
+    "ar": "تأكيد كلمة المرور",
+    "en": "Confirm Password"
+  },
+  "lbl_permissions": {
+    "ar": "الصالحيات",
+    "en": "Permissions"
+  },
+  "lbl_phone": {
+    "ar": "هاتف",
+    "en": "Phone"
+  },
+  "lbl_please_select": {
+    "ar": "-- اختر --",
+    "en": "-- Please select --"
+  },
+  "lbl_priority": {
+    "ar": "الأولوية",
+    "en": "Priority"
+  },
+  "lbl_qid": {
+    "ar": "الرقم الشخصى القطرى",
+    "en": "Qatari ID"
+  },
+  "lbl_receive": {
+    "ar": "استلام",
+    "en": "Receive"
+  },
+  "lbl_received_date": {
+    "ar": "تاريخ الاستلام",
+    "en": "Received Date"
+  },
+  "lbl_receiver": {
+    "ar": "المستلم",
+    "en": "Receiver"
+  },
+  "lbl_receiver_department": {
+    "ar": "الادارة المستلمة",
+    "en": "Receiver Department"
+  },
+  "lbl_receiver_entity": {
+    "ar": "الجهة المستلمة",
+    "en": "Receiver Entity"
+  },
+  "lbl_receiver_notes": {
+    "ar": "ملاحظات المستلم",
+    "en": "Receiver Notes"
+  },
+  "lbl_reference_number": {
+    "ar": "الرقم المرجعي",
+    "en": "Reference Number"
+  },
+  "lbl_refresh": {
+    "ar": "إعادة تحميل",
+    "en": "Refresh"
+  },
+  "lbl_register_date": {
+    "ar": "تاريخ التسجيل",
+    "en": "Register Date"
+  },
+  "lbl_reload": {
+    "ar": "إعادة تحميل",
+    "en": "Reload"
+  },
+  "lbl_reset_filter": {
+    "ar": "اعادة تعيين التصفية",
+    "en": "Reset Filter"
+  },
+  "lbl_responsible_email": {
+    "ar": "البريد الالكتروني المسؤول",
+    "en": "Responsible Email"
+  },
+  "lbl_responsible_name": {
+    "ar": "الاسم المسؤول",
+    "en": "Responsible Name"
+  },
+  "lbl_scan_barcode": {
+    "ar": "مسح الباركود",
+    "en": "Scan Barcode"
+  },
+  "lbl_view": {
+    "ar": "معاينة",
+    "en": "View"
+  },
+  "lbl_search": {
+    "ar": "البحث",
+    "en": "Search"
+  },
+  "lbl_search_for_item_in_menu": {
+    "ar": "أبحث عن عنصر في القائمة",
+    "en": "Search for an item in menu"
+  },
+  "lbl_search_placeholder": {
+    "ar": "البحث",
+    "en": "Search"
+  },
+  "lbl_mobile_placehoder": {
+    "ar": "+974xxxxxxxx",
+    "en": "+974xxxxxxxx"
+  },
+  "lbl_search_result": {
+    "ar": "نتائج البحث",
+    "en": "Search Result"
+  },
+  "lbl_select": {
+    "ar": "اختر",
+    "en": "Select"
+  },
+  "lbl_select_date_and_year": {
+    "ar": "اختر تاريخ وسنة",
+    "en": "Select Date and Year"
+  },
+  "lbl_select_month_and_year": {
+    "ar": "اختر شهر وسنة",
+    "en": "Select Month and Year"
+  },
+  "lbl_select_status": {
+    "ar": "أختر الحالة",
+    "en": "Select a Status"
+  },
+  "lbl_send": {
+    "ar": "أرسل",
+    "en": "Send"
+  },
+  "lbl_sender": {
+    "ar": "المرسل",
+    "en": "Sender"
+  },
+  "lbl_sender_department": {
+    "ar": "الادارة المرسلة",
+    "en": "Sender Department"
+  },
+  "lbl_sender_entity": {
+    "ar": "الجهة المرسلة",
+    "en": "Sender Entity"
+  },
+  "lbl_sent_date": {
+    "ar": "التاريخ المرسل",
+    "en": "Sent Date"
+  },
+  "lbl_status": {
+    "ar": "الحالة",
+    "en": "Status"
+  },
+  "lbl_status_type": {
+    "ar": "نوع الحالة",
+    "en": "Status Type"
+  },
+  "lbl_swap": {
+    "ar": "تبديل",
+    "en": "Swap"
+  },
+  "lbl_system_permissions": {
+    "ar": "صلاحيات النظام",
+    "en": "System Permissions"
+  },
+  "lbl_terms": {
+    "ar": "شروط",
+    "en": "Terms"
+  },
+  "lbl_timeline": {
+    "ar": "الجدول الزمني",
+    "en": "Timeline"
+  },
+  "lbl_title": {
+    "ar": "عنوان",
+    "en": "Title"
+  },
+  "lbl_to": {
+    "ar": "الى",
+    "en": "To"
+  },
+  "lbl_tracking": {
+    "ar": "متابعة",
+    "en": "Tracking"
+  },
+  "lbl_type": {
+    "ar": "النوع",
+    "en": "Type"
+  },
+  "lbl_upload": {
+    "ar": "تحميل",
+    "en": "Upload"
+  },
+  "lbl_upload_file": {
+    "ar": "تحميل الملف",
+    "en": "Upload file"
+  },
+  "lbl_use_reference": {
+    "ar": "استخدام المرجع",
+    "en": "Use Reference"
+  },
+  "lbl_use_system": {
+    "ar": "مستخدم النظام",
+    "en": "Use system"
+  },
+  "lbl_username": {
+    "ar": "اسم المستخدم",
+    "en": "Username"
+  },
+  "lbl_view_permissions": {
+    "ar": "عرض الصلاحيات",
+    "en": "View permissions"
+  },
+  "lbl_view_report": {
+    "ar": "عرض التقرير",
+    "en": "View Report"
+  },
+  "lbl_year": {
+    "ar": "العام",
+    "en": "Year"
+  },
+  "lbl_yes": {
+    "ar": "نعم",
+    "en": "Yes"
+  },
+  "lbl_change_password": {
+    "ar": "تغيير كلمة المرور",
+    "en": "Change Password"
+  },
+  "lbl_idCopy": {
+    "ar": "صورة البطاقة الشخصية",
+    "en": "Id Copy"
+  },
+  "lbl_signature": {
+    "ar": "التوقيع",
+    "en": "Signature"
+  },
+  "lbl_serialNumber": {
+    "ar": "الرقم التسلسلي",
+    "en": "Serial Number"
+  },
+  "lbl_code": {
+    "ar": "الكود",
+    "en": "Code"
+  },
+  "login_form_text": {
+    "ar": "تسجيل الدخول",
+    "en": "Sign In"
+  },
+  "menu_item_add_incoming": {
+    "ar": "أضف",
+    "en": "Add"
+  },
+  "menu_item_add_internal": {
+    "ar": "أضف",
+    "en": "Add"
+  },
+  "menu_item_add_outgoing": {
+    "ar": "أضف",
+    "en": "Add"
+  },
+  "menu_item_admin_employees": {
+    "ar": "موظفين",
+    "en": "Employees"
+  },
+  "menu_item_admin_entities": {
+    "ar": "جهات التراسل",
+    "en": "Entities"
+  },
+  "menu_item_admin_entity_types": {
+    "ar": "أنواع جهات التراسل",
+    "en": "Entity Types"
+  },
+  "menu_item_admin_mail_types": {
+    "ar": "نوع البريد",
+    "en": "Mail Types"
+  },
+  "menu_item_admin_permissions": {
+    "ar": "الصلاحيات",
+    "en": "Permissions"
+  },
+  "menu_item_dashboard": {
+    "ar": "لوحة البداية",
+    "en": "Dashboard"
+  },
+  "menu_item_incoming": {
+    "ar": "البريد الوارد",
+    "en": "Incoming Mail"
+  },
+  "menu_item_incoming_mails": {
+    "ar": "البريد",
+    "en": "Mails"
+  },
+  "menu_item_internal": {
+    "ar": "البريد الداخلى",
+    "en": "Internal Mail"
+  },
+  "menu_item_internal_mails": {
+    "ar": "البريد",
+    "en": "Mails"
+  },
+  "menu_item_outgoing": {
+    "ar": "جاهز للتصدير",
+    "en": "Ready To Export"
+  },
+  "menu_item_outgoing_mails": {
+    "ar": "البريد",
+    "en": "Mails"
+  },
+  "menu_item_report_department_statical": {
+    "ar": "تقرير احصائي باعمال المستخدم",
+    "en": "Department Statical Operation"
+  },
+  "menu_item_report_employee_details": {
+    "ar": "تقرير تفصيلي باعمال المستخدم",
+    "en": "Employee Details Operation"
+  },
+  "menu_item_report_employee_statical": {
+    "ar": "تقرير احصائي باعمال المستخدم",
+    "en": "Employee Statical Operation"
+  },
+  "menu_item_report_mail_action_details": {
+    "ar": "تقرير إجراءات البريد التفصيلي",
+    "en": "Mail Actions Details Report"
+  },
+  "menu_item_report_mail_details": {
+    "ar": "تقرير بيانات البريد التفصيلي",
+    "en": "Mail Details Report"
+  },
+  "menu_item_reports": {
+    "ar": "التقارير",
+    "en": "Reports"
+  },
+  "menu_item_search": {
+    "ar": "البحث",
+    "en": "Search"
+  },
+  "menu_item_search_general": {
+    "ar": "البحث العام",
+    "en": "General Search"
+  },
+  "menu_item_system_administration": {
+    "ar": "إدارة النظام",
+    "en": "System Administration"
+  },
+  "msg_add_mail_success": {
+    "ar": "اضافة بريد بنجاح",
+    "en": "Added mail successfully"
+  },
+  "msg_add_success_only": {
+    "ar": "تم أضافة بنجاح",
+    "en": "Added successfully"
+  },
+  "msg_add_success": {
+    "ar": "تم أضافة ( :name ) بنجاح",
+    "en": "Added ( :name ) successfully"
+  },
+  "msg_confirm_delete": {
+    "ar": "هل تريد حذف :name؟",
+    "en": "Are you sure you want to delete :name?"
+  },
+  "msg_confirm_delete_selected_multiple": {
+    "ar": "هل تريد حذف العناصر المختارة؟",
+    "en": "Are you sure you want to delete selected items?"
+  },
+  "msg_confirm_delete_simple": {
+    "ar": "هل تريد حذف؟",
+    "en": "Are you sure you want to delete?"
+  },
+  "msg_confirm_skip_mail": {
+    "ar": "هل أنت متأكد أنك تريد تخطي البريد (:ref) ? ",
+    "en": "Are you sure you want to skip mail (:ref) ?"
+  },
+  "msg_delete_specific_success": {
+    "ar": "تم حذف ( :name ) بنجاح",
+    "en": "Deleted successfully ( :name )"
+  },
+  "msg_delete_success": {
+    "ar": "تم الحذف بنجاح",
+    "en": "Deleted successfully"
+  },
+  "msg_delete_success_except_following": {
+    "ar": "تم حذف العناصر المحددة بنجاح باستثناء",
+    "en": "Successfully deleted selected items except"
+  },
+  "msg_edit_mail_success": {
+    "ar": "تم التعديل بنجاح",
+    "en": "Updated mail successfully"
+  },
+  "msg_edit_specific_success": {
+    "ar": "( :name ) تعدل بنجاح",
+    "en": "( :name ) updated successfully"
+  },
+  "msg_edit_success": {
+    "ar": "تم التعديل بنجاح",
+    "en": "Updated successfully"
+  },
+  "msg_enable_background_graphics_in_print_settings": {
+    "ar": "يرجى تفعيل الرسومات الخلفية في إعدادات الطباعة لطباعة أفضل (اعدادات -> خيارات -> رسومات الخلفية)",
+    "en": "Please enable the background graphics in print dialog settings for better printing (more settings -> Options -> background graphics)"
+  },
+  "msg_error_occurred_while_processing_request": {
+    "ar": "حدث خطأ أثناء معالجة الطلب",
+    "en": "An error occurred while processing request"
+  },
+  "msg_failed_activate_selected": {
+    "ar": "فشل تفعيل العناصر المحددة",
+    "en": "Selected items failed to activate"
+  },
+  "msg_failed_deactivate_selected": {
+    "ar": "فشلت العناصر المحددة في إلغاء التفعيل",
+    "en": "Selected items failed to deactivate"
+  },
+  "msg_failed_delete_selected": {
+    "ar": "لا يمكن حذف السجلات المحددة",
+    "en": "Failed to delete selected records"
+  },
+  "msg_file_upload_success": {
+    "ar": "تم رفع الملف بنجاح",
+    "en": "File Uploaded Successfully"
+  },
+  "msg_name_duplication_message": {
+    "ar": "لا يمكن تكرار نفس الاسم",
+    "en": "Name can not be duplicated"
+  },
+  "msg_no_items_found": {
+    "ar": "لا يوجد سجلات",
+    "en": "No Records Found"
+  },
+  "msg_no_items_found_matching_search": {
+    "ar": "لم يتم العثور على سجلات تطابق معايير البحث",
+    "en": "No records found matching search criteria"
+  },
+  "msg_no_records_to_print": {
+    "ar": "لم يتم العثور على سجلات للطباعة",
+    "en": "No records found to print"
+  },
+  "msg_no_linked_mail": {
+    "ar": "لا يوجد بريد مرتبط",
+    "en": "There is no linked mail"
+  },
+  "msg_no_mail_found": {
+    "ar": "لا يمكن العثور على البريد",
+    "en": "Can not find mail"
+  },
+  "msg_no_permissions": {
+    "ar": "غير مصرح",
+    "en": "No permission"
+  },
+  "msg_receive_success": {
+    "ar": "تم الاستلام بنجاح",
+    "en": "Received successfully"
+  },
+  "msg_return_success": {
+    "ar": "تم الارجاع بنجاح",
+    "en": "Returned Successfully"
+  },
+  "msg_save_success": {
+    "ar": "تم الحفظ بنجاح",
+    "en": "Save Successfully"
+  },
+  "msg_selected_status_updated": {
+    "ar": "تم تحديث الحالة بنجاح للعناصر المحددة",
+    "en": "Status updated successfully for selected items"
+  },
+  "msg_sent_success": {
+    "ar": "تم الارسال بنجاح",
+    "en": "Sent successfully"
+  },
+  "msg_something_happened_when_update_status": {
+    "ar": "حدث شيء أثناء تحديث الحالة. حاول مرة اخرى",
+    "en": "Something happened while updating status. Please try again."
+  },
+  "msg_something_wrong": {
+    "ar": "حدث خطاء ما اثناء أتخاذ الاجراء",
+    "en": "Something went wrong while taking action"
+  },
+  "msg_specific_status_success": {
+    "ar": "تم تحديث حالة ( :name ) بنجاح",
+    "en": "( :name ) status has been successfully updated"
+  },
+  "msg_status_changed_success_except_following": {
+    "ar": "تم تحديث الحالة للعناصر المحددة بنجاح باستثناء",
+    "en": "Successfully status changed of selected items except"
+  },
+  "msg_status_success": {
+    "ar": "تم تحديث الحالة بنجاح",
+    "en": "Status updated successfully"
+  },
+  "msg_success_activate_selected": {
+    "ar": "تم تفعيل العناصر المحددة بنجاح",
+    "en": "Selected items activated successfully"
+  },
+  "msg_success_activate_selected_except_following": {
+    "ar": "تم تفعيل العناصر المحددة بنجاح ماعدا",
+    "en": "Selected items activated successfully except"
+  },
+  "msg_success_deactivate_selected": {
+    "ar": "تم الغاء تفعيل العناصر المحددة بنجاح",
+    "en": "Selected items deactivated successfully"
+  },
+  "msg_success_deactivate_selected_except_following": {
+    "ar": "تم الغاء تفعيل العناصر المحددة بنجاح ماعدا",
+    "en": "Selected items deactivated successfully except"
+  },
+  "msg_use_system_success": {
+    "ar": "تم تحديث الحالة بنجاح",
+    "en": "Use system updated successfully"
+  },
+  "msg_successfully_password_changed": {
+    "ar": "تم تغيير كلمة المرور بنجاح",
+    "en": "successfully password changed"
+  },
+  "msg_successfully_password_changed_with_logout": {
+    "ar": "تم تغيير كلمة المرور بنجاح <br/> يجب عليك تسجيل الدخول مرة أخرى",
+    "en": "successfully password changed , <br/> you have to login again"
+  },
+  "lbl_days_ago": {
+    "ar": "day(s) ago",
+    "en": "day(s) ago"
+  },
+  "indicator_added_days_ago": {
+    "ar": "تم اضافة  منذ :number أيام مضت",
+    "en": "Added :number days ago"
+  },
+  "indicator_sent_days_ago": {
+    "ar": "تم الارسال  منذ :number أيام مضت",
+    "en": "Sent :number days ago"
+  },
+  "indicator_received_days_ago": {
+    "ar": "تم الاستلام  منذ :number أيام مضت",
+    "en": "Received :number days ago"
+  },
+  "indicator_new_mail_status": {
+    "ar": "الحالة: جديد",
+    "en": "Status: New"
+  },
+  "indicator_sent_mail_status": {
+    "ar": "الحالة: مرسل",
+    "en": "Status: Sent"
+  },
+  "indicator_received_mail_status": {
+    "ar": "الحالة: مستلم",
+    "en": "Status: Received"
+  },
+  "indicator_expected_mail_status": {
+    "ar": "الحالة: متوقع",
+    "en": "Status: Expected"
+  },
+  "error_update_password_to_complete_login": {
+    "ar": "يجب تحديث كلمة المرور لإكمال تسجيل الدخول",
+    "en": "Update password is required to complete the login"
+  },
+  "error_update_password": {
+    "ar": "خطأ أثناء تغيير كلمة المرور",
+    "en": "Error Update Password"
+  },
+  "error_password_not_matched": {
+    "ar": "كلمات المرور هذه غير متطابقة. أعد المحاولة.",
+    "en": "Those Password didn't match, Try Again."
+  },
+  "lbl_tawasol_ref_id": {
+    "ar": "الرقم المرجعي (تواصل)",
+    "en": "Tawasol Ref Id"
+  },
+  "lbl_connected_person": {
+    "ar": "بيانات المستلم",
+    "en": "Receiver Details"
+  },
+  "lbl_add_connected_person": {
+    "ar": "اضافة بيانات المستلم",
+    "en": "Add Receiver Details"
+  },
+  "lbl_full_name": {
+    "ar": "الاسم الكامل",
+    "en": "Full Name"
+  },
+  "lbl_personal_id": {
+    "ar": "البطاقة الشخصية",
+    "en": "Personal Id"
+  },
+  "lbl_address_1": {
+    "ar": "العنوان 1",
+    "en": "Address 1"
+  },
+  "lbl_address_2": {
+    "ar": "العنوان 2",
+    "en": "Address 2"
+  },
+  "lbl_mobile_1": {
+    "ar": "رقم الجوال 1",
+    "en": "Mobile 1"
+  },
+  "lbl_mobile_2": {
+    "ar": "رقم الجوال 2",
+    "en": "Mobile 2"
+  },
+  "lbl_mail_info": {
+    "ar": "معلومات البريد",
+    "en": "Mail Info"
+  },
+  "lbl_connected_person_list": {
+    "ar": "بيانات المستلمين",
+    "en": "Receivers"
+  },
+  "lbl_download": {
+    "ar": "تحميل",
+    "en": "Download"
+  },
+  "lbl_package_item": {
+    "ar": "الطرد",
+    "en": "Package Item"
+  },
+  "lbl_add_package_item": {
+    "ar": "اضافة طرد",
+    "en": "Add Package Item"
+  },
+  "lbl_package_items": {
+    "ar": "الطرود",
+    "en": "Package Items"
+  },
+  "lbl_category": {
+    "ar": "الفئات",
+    "en": "Category"
+  },
+  "lbl_quantity": {
+    "ar": "الكمية",
+    "en": "Quantity"
+  },
+  "lbl_description": {
+    "ar": "الوصف",
+    "en": "Description"
+  },
+  "lbl_height": {
+    "ar": "الارتفاع",
+    "en": "Height"
+  },
+  "lbl_width": {
+    "ar": "العرض",
+    "en": "Width"
+  },
+  "lbl_weight": {
+    "ar": "الوزن",
+    "en": "Weight"
+  },
+  "lbl_length": {
+    "ar": "الطول",
+    "en": "Length"
+  },
+  "lbl_unit": {
+    "ar": "الوحدة",
+    "en": "Unit"
+  },
+  "lbl_delivery_required_item": {
+    "ar": "مستند مطلوب",
+    "en": "Required Document"
+  },
+  "lbl_delivery_required_items": {
+    "ar": "المستندات المطلوبة",
+    "en": "Required Documents"
+  },
+  "lbl_collected": {
+    "ar": "تم جمعها",
+    "en": "Collected"
+  },
+  "lbl_add_delivery_required_item": {
+    "ar": "إضافة مستند التسليم المطلوب",
+    "en": "Add Required Document"
+  },
+  "code_duplicate": {
+    "ar": "لا يمكن إضافة رمز مكرر",
+    "en": "cannot add duplicated code"
+  },
+  "btn_summary_report": {
+    "ar": "تقرير موجز",
+    "en": "Summary Report"
+  },
+  "summary_report": {
+    "ar": "تقرير موجز",
+    "en": "Summary Report"
+  },
+  "show_delivery_report": {
+    "ar": "عرض تقرير التسليم",
+    "en": "Show Delivery Report"
+  },
+  "please_select": {
+    "ar": "الرجاء الاختيار:",
+    "en": "Please Select:"
+  },
+  "lbl_incoming_external_add": {
+    "ar": "استلام وارد خارجي",
+    "en": "Receive External Incoming"
+  },
+  "btn_ok": {
+    "ar": "موافق",
+    "en": "OK"
+  },
+  "lbl_integrated_system": {
+    "ar": "الأنظمة المرتبطة",
+    "en": "Integrated System"
+  },
+  "lbl_ref_id": {
+    "ar": "الرقم المرجعي",
+    "en": "Reference Id"
+  },
+  "header_integration_system_dialog": {
+    "ar": "تحميل معلومات البريد",
+    "en": "Load Mail Information"
+  }
+}

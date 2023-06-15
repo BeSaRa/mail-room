@@ -1,0 +1,31 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_filter}}">
+    <popup-toolbar-directive header-text="{{lang.lbl_filter}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div class="md-dialog-content mr-dialog-content">
+            <filter-mail-grid-directive criteria="ctrl.grid.filterGridCriteria.criteria"
+                                        reset-form="ctrl.resetForm"
+                                        form-control="ctrl.filterMailForm"></filter-mail-grid-directive>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised"
+                   ng-disabled="ctrl.grid.filterGridCriteria.criteria.isFilterEmpty()"
+                   ng-click="ctrl.filter($event)"
+                   tabindex="18">
+            {{lang.btn_filter}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised"
+                   ng-click="ctrl.resetForm($event)"
+                   tabindex="19">
+            {{ lang.btn_reset }}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closePopup($event)"
+                   tabindex="20">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

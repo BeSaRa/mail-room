@@ -1,0 +1,230 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_package_item}}">
+    <popup-toolbar-directive ng-if="!ctrl.editMode"
+                             header-text="{{lang.lbl_add_package_item}}"
+                             close-callback="ctrl.closeDialog"></popup-toolbar-directive>
+    <popup-toolbar-directive ng-if="ctrl.editMode"
+                             header-text="{{ctrl.disableAll ? lang.lbl_view: lang.lbl_edit}} {{lang.package_item}}"
+                             close-callback="ctrl.closeDialog"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <form name="packageItemForm" autocomplete="off" novalidate>
+            <div class="md-dialog-content mr-dialog-content">
+                <div layout="row">
+                    <!-- Category-->
+                    <md-input-container flex>
+                        <label for="categoryId">{{lang.lbl_category}}</label>
+                        <md-select id="categoryId" name="categoryId" required
+                                   ng-model-options="{trackBy: '$value.id'}"
+                                   ng-model="ctrl.packageItem.categoryId"
+                                   ng-disabled="ctrl.formDisabled()">
+                            <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                            <md-option ng-repeat="option in ctrl.categoryList"
+                                       ng-value="option">{{option.getTranslatedName()}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="packageItemForm.categoryId.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                        </div>
+                    </md-input-container>
+                    <!-- Description -->
+                    <md-input-container flex>
+                        <label for="description">{{lang.lbl_description}}</label>
+                        <input name="description" id="description" required
+                               ng-model="ctrl.packageItem.description"
+                               ng-disabled="ctrl.formDisabled()">
+                        <div ng-messages="packageItemForm.description.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <!-- Quantity-->
+                <div layout="row">
+                    <!-- Quantity-->
+                    <md-input-container flex>
+                        <label for="quantity">{{lang.lbl_quantity}}</label>
+                        <input name="quantity" id="quantity"
+                               custom-validate-directive="number"
+                               ng-model="ctrl.packageItem.quantity"
+                               ng-disabled="ctrl.formDisabled()">
+                        <div ng-messages="packageItemForm.quantity.$error">
+                            <div ng-message="number">{{lang.error_number_only}}</div>
+                        </div>
+                    </md-input-container>
+                    <!-- Quantity Unit List -->
+                    <md-input-container flex>
+                        <label for="quantityUnitId">{{lang.lbl_unit}}</label>
+                        <md-select id="quantityUnitId" name="quantityUnitId"
+                                   ng-model-options="{trackBy: '$value.id'}"
+                                   ng-required="ctrl.packageItem.quantity"
+                                   ng-model="ctrl.packageItem.quantityUnitId"
+                                   ng-disabled="ctrl.formDisabled()">
+                            <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                            <md-option ng-repeat="option in ctrl.quantityUnitList"
+                                       ng-value="option">{{option.getTranslatedName()}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="packageItemForm.quantityUnitId.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <!-- Weight -->
+                <div layout="row">
+                    <!-- Weight -->
+                    <md-input-container flex>
+                        <label for="weight">{{lang.lbl_weight}}</label>
+                        <input name="weight" id="weight"
+                               custom-validate-directive="number"
+                               ng-model="ctrl.packageItem.oneItemWeight"
+                               ng-disabled="ctrl.formDisabled()">
+                        <div ng-messages="packageItemForm.weight.$error">
+                            <div ng-message="number">{{lang.error_number_only}}</div>
+                        </div>
+                    </md-input-container>
+                    <!-- Weight Unit List -->
+                    <md-input-container flex>
+                        <label for="weightUnitId">{{lang.lbl_unit}}</label>
+                        <md-select id="weightUnitId" name="weightUnitId"
+                                   ng-model-options="{trackBy: '$value.id'}"
+                                   ng-required="ctrl.packageItem.oneItemWeight"
+                                   ng-model="ctrl.packageItem.weightUnitId"
+                                   ng-disabled="ctrl.formDisabled()">
+                            <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                            <md-option ng-repeat="option in ctrl.weightUnitList"
+                                       ng-value="option">{{option.getTranslatedName()}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="packageItemForm.weightUnitId.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <!-- Length -->
+                <div layout="row">
+                    <!-- Length -->
+                    <md-input-container flex>
+                        <label for="length">{{lang.lbl_length}}</label>
+                        <input name="length" id="length"
+                               custom-validate-directive="number"
+                               ng-model="ctrl.packageItem.length"
+                               ng-disabled="ctrl.formDisabled()">
+                        <div ng-messages="packageItemForm.length.$error">
+                            <div ng-message="number">{{lang.error_number_only}}</div>
+                        </div>
+                    </md-input-container>
+                    <!-- Length Unit List -->
+                    <md-input-container flex>
+                        <label for="lengthUnitId">{{lang.lbl_unit}}</label>
+                        <md-select id="lengthUnitId" name="lengthUnitId"
+                                   ng-model-options="{trackBy: '$value.id'}"
+                                   ng-required="ctrl.packageItem.length"
+                                   ng-model="ctrl.packageItem.lengthUnitId"
+                                   ng-disabled="ctrl.formDisabled()">
+                            <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                            <md-option ng-repeat="option in ctrl.lengthUnitList"
+                                       ng-value="option">{{option.getTranslatedName()}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="packageItemForm.lengthUnitId.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <!-- Height -->
+                <div layout="row">
+                    <!-- Height -->
+                    <md-input-container flex>
+                        <label for="height">{{lang.lbl_height}}</label>
+                        <input name="height" id="height"
+                               custom-validate-directive="number"
+                               ng-model="ctrl.packageItem.height"
+                               ng-disabled="ctrl.formDisabled()">
+                        <div ng-messages="packageItemForm.height.$error">
+                            <div ng-message="number">{{lang.error_number_only}}</div>
+                        </div>
+                    </md-input-container>
+                    <!-- Height Unit List -->
+                    <md-input-container flex>
+                        <label for="heightUnitId">{{lang.lbl_unit}}</label>
+                        <md-select id="heightUnitId" name="heightUnitId"
+                                   ng-model-options="{trackBy: '$value.id'}"
+                                   ng-required="ctrl.packageItem.height"
+                                   ng-model="ctrl.packageItem.heightUnitId"
+                                   ng-disabled="ctrl.formDisabled()">
+                            <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                            <md-option ng-repeat="option in ctrl.lengthUnitList"
+                                       ng-value="option">{{option.getTranslatedName()}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="packageItemForm.heightUnitId.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <!-- Width -->
+                <div layout="row">
+                    <!-- Width -->
+                    <md-input-container flex>
+                        <label for="width">{{lang.lbl_width}}</label>
+                        <input name="width" id="width"
+                               custom-validate-directive="number"
+                               ng-model="ctrl.packageItem.width"
+                               ng-disabled="ctrl.formDisabled()">
+                        <div ng-messages="packageItemForm.width.$error">
+                            <div ng-message="number">{{lang.error_number_only}}</div>
+                        </div>
+                    </md-input-container>
+                    <!-- Width Unit List -->
+                    <md-input-container flex>
+                        <label for="widthUnitId">{{lang.lbl_unit}}</label>
+                        <md-select id="widthUnitId" name="widthUnitId"
+                                   ng-model-options="{trackBy: '$value.id'}"
+                                   ng-required="ctrl.packageItem.width"
+                                   ng-model="ctrl.packageItem.widthUnitId"
+                                   ng-disabled="ctrl.formDisabled()">
+                            <md-option ng-value="null">{{lang.lbl_none}}</md-option>
+                            <md-option ng-repeat="option in ctrl.lengthUnitList"
+                                       ng-value="option">{{option.getTranslatedName()}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="packageItemForm.widthUnitId.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <!-- Notes -->
+                <div layout="row">
+                    <!-- Notes -->
+                    <md-input-container flex>
+                        <label for="notes">{{lang.lbl_notes}}</label>
+                        <input name="notes" id="notes"
+                               ng-model="ctrl.packageItem.notes"
+                               ng-disabled="ctrl.formDisabled()">
+                        <div ng-messages="packageItemForm.notes.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </div>
+        </form>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised" ng-if="!ctrl.editMode && !ctrl.disableAll" ng-disabled="packageItemForm.$invalid"
+                   ng-click="ctrl.addPackageItem($event)">
+            {{lang.btn_ok}}
+        </md-button>
+        <md-button class="md-raised" ng-if="ctrl.editMode && !ctrl.disableAll" ng-disabled="packageItemForm.$invalid"
+                   ng-click="ctrl.savePackageItem($event)">
+            {{lang.btn_ok}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.resetPackageForm(packageItemForm, $event)" ng-if="!ctrl.disableAll">
+            {{lang.btn_reset}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closeDialog()">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

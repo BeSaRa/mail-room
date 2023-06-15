@@ -1,0 +1,59 @@
+<!-- Mail Type Indicator -->
+<span ng-if="ctrl.indicatorType === 'mailType'" class="{{ctrl.spanClass}}"
+      ng-class="{'indicator-content': ctrl.record.mailTypeIndicator}">
+    <md-icon ng-if="ctrl.record.mailTypeIndicator && ctrl.isShowIndicator()"
+             class="{{ctrl.record.mailTypeIndicator.class}} {{ctrl.iconClass}}"
+             md-svg-icon="{{ctrl.record.mailTypeIndicator.icon}}"
+             tooltip="{{ctrl.getIndicatorTooltip(ctrl.record.mailTypeIndicator)}}"
+    ></md-icon>
+</span>
+
+<!-- Status Type Indicator -->
+<span ng-if="ctrl.indicatorType === 'statusType'" class="{{ctrl.spanClass}}"
+      ng-class="{'indicator-content': ctrl.record.statusTypeIndicator}">
+    <md-icon ng-if="ctrl.record.statusTypeIndicator && ctrl.isShowIndicator()"
+             class="{{ctrl.record.statusTypeIndicator.class}} {{ctrl.iconClass}}"
+             md-svg-icon="{{ctrl.record.statusTypeIndicator.icon}}"
+             tooltip="{{ctrl.getIndicatorTooltip(ctrl.record.statusTypeIndicator)}}"
+    ></md-icon>
+</span>
+
+<!-- Mail Entry Type Indicator -->
+<span ng-if="ctrl.indicatorType === 'mailEntryType'" class="{{ctrl.spanClass}}"
+      ng-class="{'indicator-content': ctrl.record.entryTypeIndicator}">
+    <md-icon ng-if="ctrl.record.entryTypeIndicator && ctrl.isShowIndicator()"
+             class="{{ctrl.record.entryTypeIndicator.class}} {{ctrl.iconClass}}"
+             md-svg-icon="{{ctrl.record.entryTypeIndicator.icon}}"
+             tooltip="{{ctrl.getIndicatorTooltip(ctrl.record.entryTypeIndicator)}}"
+    ></md-icon>
+</span>
+
+<!-- Mail Priority Indicator -->
+<span ng-if="ctrl.indicatorType === 'mailPriority'" class="{{ctrl.spanClass}}"
+      ng-class="{'indicator-content': ctrl.record.priorityIndicator}">
+    <md-icon ng-if="ctrl.record.priorityIndicator && ctrl.isShowIndicator()"
+             class="{{ctrl.record.priorityIndicator.class}} {{ctrl.iconClass}}"
+             md-svg-icon="{{ctrl.record.priorityIndicator.icon}}"
+             tooltip="{{ctrl.getIndicatorTooltip(ctrl.record.priorityIndicator)}}"
+    ></md-icon>
+</span>
+<!--
+&lt;!&ndash; Receiver Entity Use System Indicator &ndash;&gt;
+<span ng-if="ctrl.indicatorType === 'receiverEntityUseSystem'" class="{{ctrl.spanClass}}"
+      ng-class="{'indicator-content': ctrl.record.receiverEntityUseSystemIndicator}">
+    <md-icon ng-if="ctrl.record.receiverEntityUseSystemIndicator && ctrl.isShowIndicator()"
+             class="{{ctrl.record.receiverEntityUseSystemIndicator.class}} {{ctrl.iconClass}}"
+             md-svg-icon="{{ctrl.record.receiverEntityUseSystemIndicator.icon}}"
+             tooltip="{{ctrl.getIndicatorTooltip(ctrl.record.receiverEntityUseSystemIndicator)}}"
+    ></md-icon>
+</span>-->
+
+<!-- Entity Use System Indicator -->
+<span ng-if="ctrl.indicatorType === 'entityUseSystem'" class="{{ctrl.spanClass}}"
+      ng-class="{'indicator-content': ctrl.record.entityUseSystemIndicator}">
+    <md-icon ng-if="ctrl.record.entityUseSystemIndicator && ctrl.isShowIndicator()"
+             class="{{ctrl.record.entityUseSystemIndicator.class}} {{ctrl.iconClass}}"
+             md-svg-icon="{{ctrl.record.entityUseSystemIndicator.icon}}"
+             tooltip="{{ctrl.getIndicatorTooltip(ctrl.record.entityUseSystemIndicator)}}"
+    ></md-icon>
+</span>

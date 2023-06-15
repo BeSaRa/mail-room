@@ -1,0 +1,342 @@
+<div background-directive="tall" class="page-content" flex="">
+    <div layout="column" class="content">
+        <!-- page-header start -->
+        <div layout="row" layout-align="start center" class="page-header padding-header small">
+            <span>{{lang.menu_item_search_general}}</span>
+            <md-button ng-if="ctrl.isTabSelected(ctrl.tabsToShow.result)"
+                       ng-click="ctrl.grid.reload(ctrl.grid.page, $event)" class="md-icon-button"
+                       tooltip="{{lang.lbl_reload}}">
+                <md-icon md-svg-icon="refresh"></md-icon>
+            </md-button>
+            <span flex ng-if="ctrl.isTabSelected(ctrl.tabsToShow.result)"></span>
+            <grid-search-directive grid="ctrl.grid"
+                                   ng-if="ctrl.isTabSelected(ctrl.tabsToShow.result)"></grid-search-directive>
+        </div>
+        <!-- end page-header -->
+
+        <div layout="column" flex>
+            <div scroll-directive>
+                <div class="page-padding">
+                    <md-card md-whiteframe="3" layout="column" class="card-overlay">
+                        <md-tabs md-dynamic-height md-selected="ctrl.selectedTabIndex">
+                            <md-tab label="{{lang[ctrl.tabsToShow.search.key]}}"
+                                    md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.search, $event)">
+                                <md-content class="white-bg">
+                                    <ng-form class="white-bg" name="searchGeneralForm" id="searchGeneralForm" flex
+                                             autocomplete="off" enter-submit-directive="btn_SearchGeneral">
+                                        <search-mail-directive form-control="searchGeneralForm"
+                                                               criteria="ctrl.criteria"></search-mail-directive>
+                                    </ng-form>
+                                </md-content>
+                            </md-tab>
+                            <md-tab label="{{lang[ctrl.tabsToShow.result.key]}}"
+                                    md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.result, $event)"
+                                    ng-if="ctrl.isResultTabVisible">
+                                <md-content class="white-bg">
+                                    <md-table-container>
+                                        <div flex scroll-directive>
+                                            <table md-table ng-model="ctrl.grid.selectedRecords"
+                                                   md-progress="ctrl.grid.progress">
+                                                <!--md-row-select multiple-->
+                                                <thead md-head md-order="ctrl.grid.order"
+                                                       md-on-reorder="ctrl.grid.sortCallback">
+                                                <tr md-row>
+                                                    <th colspan="{{ctrl.grid.colSpan()}}"
+                                                        ng-if="ctrl.grid.selectedRecords.length"
+                                                        md-column>
+                                                        <div layout="row" layout-align="start center">
+                                                            <span>{{ctrl.grid.selectedRecords.length}} {{lang.lbl_items_selected}} </span>
+                                                            <span flex></span>
+                                                        </div>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.indicators,true)"
+                                                        md-column md-order-by=""></th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.referenceNo, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.referenceNo.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.referenceNo.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.registerDate, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.registerDate.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.registerDate.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.senderEntity, true) && !ctrl.criteria.mail.isInternalMail()"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.senderEntity.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.senderEntity.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.senderDepartment, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.senderDepartment.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.senderDepartment.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.sender, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.sender.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.sender.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.sentDate, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.sentDate.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.sentDate.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.receiverEntity, true) && !ctrl.criteria.mail.isInternalMail()"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.receiverEntity.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.receiverEntity.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.receiverDepartment, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.receiverDepartment.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.receiverDepartment.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.receiver, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.receiver.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.receiver.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.receivedDate, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.receivedDate.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.receivedDate.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.addedBy, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.addedBy.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.addedBy.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.entryType, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.entryType.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.entryType.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.priority, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.priority.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.priority.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.statusType, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.statusType.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.statusType.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.notes,true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.notes}}">
+                                                        <span>  <span>{{lang[ctrl.grid.columns.notes.langKey]}}</span></span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.numberOfDays, true)"
+                                                        md-column
+                                                        md-order-by="{{ctrl.grid.columns.numberOfDays.sortKey()}}">
+                                                        <span>{{lang[ctrl.grid.columns.numberOfDays.langKey]}}</span>
+                                                    </th>
+                                                    <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions, true)"
+                                                        md-column>
+                                                        <span>{{lang[ctrl.grid.columns.gridActions.langKey]}}</span>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody md-body>
+                                                <tr md-row
+                                                    ng-repeat="item in (ctrl.records | limitTo: ctrl.grid.limit: ((ctrl.grid.page - 1) * ctrl.grid.limit)) track by $index"
+                                                    md-select="item" model="item" grid-right-click-directive
+                                                    selected-length="{{ctrl.grid.selectedRecords.length ? ctrl.grid.selectedRecords.length : 0}}">
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.indicators)">
+                                                        <div layout="row">
+                                                            <!-- Mail Type Indicator -->
+                                                            <grid-indicator-directive
+                                                                    indicator-type="mailType"
+                                                                    record="item"
+                                                            ></grid-indicator-directive>
+                                                            <!-- Mail Status Indicator -->
+                                                            <grid-indicator-directive
+                                                                    indicator-type="statusType"
+                                                                    record="item"
+                                                            ></grid-indicator-directive>
+                                                        </div>
+                                                    </td>
+                                                    <td md-cell class="text-ltr"
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.referenceNo)">
+                                                        <!-- Entry Type Indicator -->
+                                                        <grid-indicator-directive
+                                                                indicator-type="mailEntryType"
+                                                                record="item"
+                                                        ></grid-indicator-directive>
+                                                        <span class="word-break-all"
+                                                              md-highlight-text="ctrl.grid.searchText"
+                                                              md-highlight-flags="i">{{item.referenceNo}}</span>
+                                                    </td>
+                                                    <td md-cell class="text-ltr"
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.registerDate)">
+                                                        <!-- Priority Indicator -->
+                                                        <grid-indicator-directive
+                                                                indicator-type="mailPriority"
+                                                                record="item"
+                                                        ></grid-indicator-directive>
+                                                        <span class="word-break-all"
+                                                              md-highlight-text="ctrl.grid.searchText"
+                                                              md-highlight-flags="i">{{item.registerDateFormatted}}</span>
+                                                    </td>
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.senderEntity) && !ctrl.criteria.mail.isInternalMail()">
+                                                        <span md-highlight-text="ctrl.grid.searchText"
+                                                              md-highlight-flags="i">{{item.senderEntity.getTranslatedName()}}</span>
+                                                    </td>
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.senderDepartment)"
+                                                        md-highlight-text="ctrl.grid.searchText"
+                                                        md-highlight-flags="i">
+                                                        {{item.senderDep.getTranslatedName()}}
+                                                    </td>
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.sender)"
+                                                        md-highlight-text="ctrl.grid.searchText"
+                                                        md-highlight-flags="i">
+                                                        {{item.senderEmployeeEmpPermission.getTranslatedName()}}
+                                                    </td>
+                                                    <td md-cell class="text-ltr"
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.sentDate)"
+                                                        md-highlight-text="ctrl.grid.searchText"
+                                                        md-highlight-flags="i">
+                                                        {{item.sentDateFormatted}}
+                                                    </td>
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.receiverEntity) && !ctrl.criteria.mail.isInternalMail()">
+                                                        <!-- Entity Use System Indicator -->
+                                                        <grid-indicator-directive indicator-type="entityUseSystem"
+                                                                                  record="item.receiverEntity"
+                                                        ></grid-indicator-directive>
+                                                        <span md-highlight-text="ctrl.grid.searchText"
+                                                              md-highlight-flags="i">{{item.receiverEntity.getTranslatedName()}}</span>
+                                                    </td>
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.receiverDepartment)"
+                                                        md-highlight-text="ctrl.grid.searchText"
+                                                        md-highlight-flags="i">
+                                                        {{item.receiverDep.getTranslatedName()}}
+                                                    </td>
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.receiver)"
+                                                        md-highlight-text="ctrl.grid.searchText"
+                                                        md-highlight-flags="i">
+                                                        {{item.receiverNameToDisplay.getTranslatedName()}}
+                                                    </td>
+                                                    <td md-cell class="text-ltr"
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.receivedDate)"
+                                                        md-highlight-text="ctrl.grid.searchText"
+                                                        md-highlight-flags="i">{{item.receivedDateFormatted}}
+                                                    </td>
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.addedBy)"
+                                                        md-highlight-text="ctrl.grid.searchText"
+                                                        md-highlight-flags="i">
+                                                        {{item.addedBy.getTranslatedName()}}
+                                                    </td>
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.entryType)"
+                                                        md-highlight-text="ctrl.grid.searchText"
+                                                        md-highlight-flags="i">
+                                                        {{item.entryTypeLookup.getTranslatedName()}}
+                                                    </td>
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.priority)"
+                                                        md-highlight-text="ctrl.grid.searchText"
+                                                        md-highlight-flags="i">
+                                                        {{item.priorityTypeLookup.getTranslatedName()}}
+                                                    </td>
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.statusType)"
+                                                        md-highlight-text="ctrl.grid.searchText"
+                                                        md-highlight-flags="i">
+                                                        {{item.statusTypeLookup.getTranslatedName()}}
+                                                    </td>
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.notes)"
+                                                        md-highlight-text="ctrl.grid.searchText"
+                                                        md-highlight-flags="i">
+                                                        {{item.notes}}
+                                                    </td>
+                                                    <td md-cell
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.numberOfDays)">
+                                                        <span md-highlight-text="ctrl.grid.searchText"
+                                                              md-highlight-flags="i"
+                                                              tooltip="{{lang[item.numberOfDaysTooltip].change({number: item.numberOfDays})}}">{{item.numberOfDays}}</span>
+                                                    </td>
+                                                    <td md-cell class="grid-actions"
+                                                        ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions)">
+                                                        <div layout-align="start center" ng-if="!ctrl.grid.selectedRecords.length
+                                                            || (ctrl.grid.selectedRecords.length===1 && ctrl.grid.selectedRecords[0].id === item.id)">
+                                                            <grid-actions-directive
+                                                                    menu-direction="horizontal"
+                                                                    grid-actions="ctrl.grid.actions"
+                                                                    model="item">
+                                                            </grid-actions-directive>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr md-row ng-if="!ctrl.recordsCopy.length">
+                                                    <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                                        class="red-text text-center">
+                                                        {{lang.msg_no_items_found}}
+                                                    </td>
+                                                </tr>
+                                                <tr md-row
+                                                    ng-if="ctrl.recordsCopy.length && !ctrl.records.length">
+                                                    <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                                        class="red-text text-center">
+                                                        {{lang.msg_no_items_found_matching_search}}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <md-table-pagination
+                                                md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                                                md-limit-options="ctrl.grid.limitOptions"
+                                                md-limit="ctrl.grid.limit" md-page="ctrl.grid.page"
+                                                md-total="{{ctrl.records.length}}" md-page-select>
+                                        </md-table-pagination>
+                                    </md-table-container>
+                                </md-content>
+                            </md-tab>
+                        </md-tabs>
+                    </md-card>
+
+                    <div layout="row"
+                         ng-if="ctrl.isTabSelected(ctrl.tabsToShow.search)">
+                        <md-button id="btn_SearchGeneral"
+                                   class="md-raised"
+                                   ng-click="ctrl.search($event)"
+                                   ng-disabled="searchGeneralForm.$invalid || ctrl.criteria.isSearchEmpty()"
+                                   tabindex="12">
+                            {{lang.btn_search}}
+                        </md-button>
+                        <md-button class="md-raised"
+                                   ng-click="ctrl.resetForm($event)"
+                                   tabindex="13">
+                            {{ lang.btn_reset }}
+                        </md-button>
+                    </div>
+                    <div layout="row"
+                         ng-if="ctrl.isTabSelected(ctrl.tabsToShow.result)">
+                        <md-button id="btn_Print"
+                                   class="md-raised"
+                                   ng-click="ctrl.print($event)"
+                                   ng-disabled="!ctrl.records.length"
+                                   tabindex="14">
+                            {{lang.btn_print}}
+                        </md-button>
+                        <md-button class="md-raised"
+                                   ng-click="ctrl.resetForm($event)"
+                                   tabindex="15">
+                            {{ lang.btn_reset }}
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

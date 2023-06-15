@@ -1,0 +1,91 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_mail}}">
+    <popup-toolbar-directive ng-if="ctrl.model.isNewRecord()"
+                             header-text="{{lang.lbl_add_mail}}"></popup-toolbar-directive>
+    <popup-toolbar-directive ng-if="!ctrl.model.isNewRecord()"
+                             header-text="{{ctrl.disableAll ? lang.lbl_view : lang.lbl_edit}} - {{ctrl.model.getMailReferenceNo()}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <md-tabs md-dynamic-height md-selected="ctrl.selectedTabIndex">
+            <!-- Mail Info -->
+            <md-tab label="{{lang[ctrl.tabsToShow.mailInfo.key]}}"
+                    md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.mailInfo, $event)">
+                <md-content layout-padding>
+                    <div class="md-dialog-content mr-dialog-content">
+                        <mail-form-directive mail="ctrl.mail"
+                                             mail-updated="ctrl.mailUpdated"
+                                             entity-defaults="ctrl.entityDefaults"
+                                             reset-form="ctrl.resetForm"
+                                             form-control="ctrl.mailForm"
+                                             disable-all="ctrl.disableAll"
+                                             edit-mode="ctrl.editMode"></mail-form-directive>
+                    </div>
+                </md-content>
+            </md-tab>
+            <!-- Connected Person list -->
+            <md-tab label="{{lang[ctrl.tabsToShow.connectedPersonList.key]}}"
+                    md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.connectedPersonList, $event)">
+                <md-content layout-padding>
+                    <div class="md-dialog-content mr-dialog-content">
+                        <connected-person-list-directive
+                                mail="ctrl.mail"
+                                mail-updated="ctrl.mailUpdated"
+                                disable-all="ctrl.disableAll"
+                                reset-form="ctrl.reset"
+                                edit-mode="ctrl.editMode"></connected-person-list-directive>
+                    </div>
+                </md-content>
+            </md-tab>
+            <!-- Package Items List -->
+            <md-tab label="{{lang[ctrl.tabsToShow.packageItems.key]}}"
+                    md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.packageItems, $event)">
+                <md-content layout-padding>
+                    <div class="md-dialog-content mr-dialog-content">
+                        <package-item-list-directive mail="ctrl.mail"
+                                                     mail-updated="ctrl.mailUpdated"
+                                                     reset-form="ctrl.reset"
+                                                     disable-all="ctrl.disableAll"
+                                                     edit-mode="ctrl.editMode"></package-item-list-directive>
+                    </div>
+                </md-content>
+            </md-tab>
+            <!-- Required Delivery Items -->
+            <md-tab label="{{lang[ctrl.tabsToShow.deliveryRequiredItems.key]}}"
+                    md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.deliveryRequiredItems, $event)">
+                <md-content layout-padding>
+                    <div class="md-dialog-content mr-dialog-content">
+                        <delivery-required-list-directive mail="ctrl.mail"
+                                                          mail-updated="ctrl.mailUpdated"
+                                                          reset-form="ctrl.reset"
+                                                          disable-all="ctrl.disableAll"
+                                                          edit-mode="ctrl.editMode"></delivery-required-list-directive>
+                    </div>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised"
+                   ng-if="ctrl.mail.isNewRecord() && !ctrl.disableAll"
+                   ng-disabled="ctrl.mailForm.$invalid"
+                   ng-click="ctrl.addMail($event)" tabindex="21">
+            {{lang.btn_add}}
+        </md-button>
+        <md-button class="md-raised"
+                   ng-if="!ctrl.mail.isNewRecord() && !ctrl.disableAll"
+                   ng-disabled="ctrl.mailForm.$invalid"
+                   ng-click="ctrl.updateMail($event)" tabindex="21">
+            {{lang.btn_save}}
+        </md-button>
+        <span flex ng-if="!ctrl.disableAll"></span>
+        <md-button class="md-raised"
+                   ng-if="!ctrl.disableAll"
+                   ng-click="ctrl.resetForm()" tabindex="22">
+            {{ lang.btn_reset }}
+        </md-button>
+        <span flex ng-if="!ctrl.disableAll"></span>
+        <md-button class="md-raised" ng-click="ctrl.closePopup($event)" tabindex="23">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

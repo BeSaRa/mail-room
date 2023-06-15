@@ -1,0 +1,80 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_receive}}">
+    <popup-toolbar-directive
+            header-text="{{lang.lbl_receive}} - {{ctrl.mail.getMailReferenceNo()}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div>
+            <form name="receiveMailForm" autocomplete="off">
+                <md-tabs md-dynamic-height md-selected="ctrl.selectedTabIndex">
+                    <md-tab label="{{lang[ctrl.tabsToShow.basicInfo.key]}}"
+                            ng-if="ctrl.showTab(ctrl.tabsToShow.basicInfo)"
+                            md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.basicInfo, $event)">
+                        <md-content layout-padding>
+                            <div layout="row">
+                                <!-- Receiver -->
+                                <md-input-container flex>
+                                    <label for="receiverName">{{lang.lbl_receiver}}</label>
+                                    <input name="receiverName" id="receiverName"
+                                           required maxlength="100"
+                                           ng-model="ctrl.mail.receiverName" ng-disabled="ctrl.isMobileReceive">
+                                    <div ng-messages="receiveMailForm.receiverName.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                        <div ng-message="maxlength">{{lang.error_max_length.change({length: 100})}}
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                                <!-- Received Date -->
+                                <md-input-container flex>
+                                    <label for="receivedDate">{{lang.lbl_date}}</label>
+                                    <md-datepicker ng-model="ctrl.mail.receivedDate"
+                                                   required
+                                                   md-min-date="ctrl.mail.sentDate"
+                                                   name="receivedDate" id="receivedDate"
+                                                   md-open-on-focus></md-datepicker>
+                                    <div ng-messages="receiveMailForm.receivedDate.$error">
+                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <!-- Receiver Notes -->
+                                <md-input-container flex>
+                                    <label for="receiverName">{{lang.lbl_notes}}</label>
+                                    <input name="receiverName" id="receiverNotes"
+                                           md-maxlength="500" maxlength="500"
+                                           ng-model="ctrl.mail.receiverNotes">
+                                    <div ng-messages="receiveMailForm.receiverNotes.$error">
+                                        <div ng-message="md-maxlength">{{lang.error_max_length.change({length: 500})}}
+                                        </div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                    <md-tab label="{{lang[ctrl.tabsToShow.collectedItems.key]}}"
+                            ng-if="ctrl.showTab(ctrl.tabsToShow.collectedItems)"
+                            md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.collectedItems, $event)">
+                        <md-content layout-padding>
+                            <div layout="row">
+                                <delivery-required-list-directive mail="ctrl.mail"
+                                                                  is-mobile-receive="true"></delivery-required-list-directive>
+                            </div>
+                        </md-content>
+                    </md-tab>
+                </md-tabs>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised"
+                   ng-disabled="receiveMailForm.$invalid"
+                   ng-click="ctrl.receive($event)">
+            {{lang.btn_receive}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closePopup($event)">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

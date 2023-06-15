@@ -1,0 +1,22 @@
+module.exports = function (app) {
+    require('./employeePopCtrl')(app);
+    require('./entityPopCtrl')(app);
+    require('./entityTypePopCtrl')(app);
+    require('./mailFormContainerPopCtrl')(app);
+    require('./linkOutgoingToIncomingPopCtrl')(app);
+    require('./sendMailPopCtrl')(app);
+    require('./sendMailsBulkPopCtrl')(app);
+    require('./receiveMailPopCtrl')(app);
+    require('./receiveMailsBulkPopCtrl')(app);
+    require('./filterGridContainerPopCtrl')(app);
+    require('./trackingSheetPopCtrl')(app);
+    require('./actionLogPopCtrl')(app);
+    require('./barcodeScannerPopCtrl')(app);
+    require('./changePasswordPopCtrl')(app);
+    require('./workItemBarcodePopCtrl')(app);
+    require('./connectedPersonPopCtrl')(app);
+    require('./packageItemPopCtrl')(app);
+    require('./deliveryRequiredItemPopCtrl')(app);
+    require('./barcodePopCtrl')(app);
+    require('./integrationSystemPopCtrl')(app);
+};

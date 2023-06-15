@@ -1,0 +1,142 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_send}}">
+    <popup-toolbar-directive header-text="{{lang.lbl_send}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div class="md-dialog-content mr-dialog-content">
+            <div scroll-directive>
+                <form name="senderSelectorsForm" autocomplete="off">
+                    <div layout="row">
+                        <!-- Sender For All -->
+                        <md-input-container flex>
+                            <label for="senderEmployeeAll">{{lang.lbl_sender}}</label>
+                            <md-select id="senderEmployeeAll" name="senderEmployeeAll"
+                                       ng-model="ctrl.senderEmployee"
+                                       ng-change="ctrl.setSenderBulk('senderEmployee')">
+                                <md-option ng-repeat="option in ctrl.senders track by $index"
+                                           ng-value="option.getEmployeeId()">{{option.getTranslatedName()}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <!-- Sent Date Sender For All-->
+                        <md-input-container flex>
+                            <label for="sentDateAll">{{lang.lbl_date}}</label>
+                            <md-datepicker ng-model="ctrl.sentDate"
+                                           name="sentDateAll" id="sentDateAll"
+                                           md-open-on-focus
+                                           ng-change="ctrl.setSenderBulk('sentDate')"></md-datepicker>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="column" flex>
+                        <!--  Grid -->
+                        <md-card md-whiteframe="3" layout="column" class="card-overlay">
+                            <md-table-container>
+                                <div flex scroll-directive>
+                                    <table md-table ng-model="ctrl.grid.selectedRecords">
+                                        <!--md-row-select multiple-->
+                                        <thead md-head>
+                                        <tr md-row>
+                                            <th md-column
+                                                md-order="">
+                                                <span>{{lang[ctrl.grid.columns.referenceNo.langKey]}}</span>
+                                            </th>
+                                            <th md-column
+                                                md-order-by="">
+                                                <span>{{lang[ctrl.grid.columns.sender.langKey]}}</span>
+                                            </th>
+                                            <th md-column
+                                                md-order-by="">
+                                                <span>{{lang[ctrl.grid.columns.sentDate.langKey]}}</span>
+                                            </th>
+                                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions, true)"
+                                                md-column>
+                                                <span>{{lang[ctrl.grid.columns.gridActions.langKey]}}</span>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody md-body>
+                                        <tr md-row
+                                            ng-repeat="mail in (ctrl.mails | limitTo: ctrl.grid.limit: ((ctrl.grid.page - 1) * ctrl.grid.limit)) track by $index"
+                                            md-select="item">
+                                            <td md-cell>
+                                                <span>{{mail.referenceNo}}</span>
+                                            </td>
+                                            <td md-cell>
+                                                <!-- Sender -->
+                                                <md-input-container flex>
+                                                    <label for="senderEmployee">{{lang.lbl_sender}}</label>
+                                                    <md-select id="senderEmployee" name="senderEmployee"
+                                                               required
+                                                               ng-model="mail.senderEmployee"
+                                                               flex>
+                                                        <md-option
+                                                                ng-repeat="option in ctrl.senders track by $index"
+                                                                ng-value="option.getEmployeeId()">
+                                                            {{option.getTranslatedName()}}
+                                                        </md-option>
+                                                    </md-select>
+                                                    <div ng-messages="senderSelectorsForm.senderEmployee.$error">
+                                                        <div ng-message="required">{{lang.error_field_required}}
+                                                        </div>
+                                                    </div>
+                                                </md-input-container>
+                                            </td>
+                                            <td md-cell>
+                                                <!-- Sent Date Sender-->
+                                                <md-input-container flex>
+                                                    <label for="sentDate">{{lang.lbl_date}}</label>
+                                                    <md-datepicker ng-model="mail.sentDate"
+                                                                   required
+                                                                   name="sentDate" id="sentDate"
+                                                                   md-open-on-focus
+                                                                   md-min-date="mail.registerDate"></md-datepicker>
+                                                    <div ng-messages="senderSelectorsForm.sentDate.$error">
+                                                        <div ng-message="required">{{lang.error_field_required}}</div>
+                                                    </div>
+                                                </md-input-container>
+                                            </td>
+                                            <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions)">
+                                                <div flex layout="row" layout-align="start center">
+                                                    <md-button class="md-icon-button" title="{{lang.btn_skip_mail}}"
+                                                               ng-click="ctrl.skipSelectedMail(mail, $event)">
+                                                        <md-icon md-svg-icon="window-close"></md-icon>
+                                                    </md-button>
+                                                </div>
+                                        </tr>
+                                        <tr md-row ng-if="!ctrl.mails.length">
+                                            <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                                class="red-text text-center">
+                                                {{lang.msg_no_items_found}}
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <md-table-pagination
+                                        md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                                        md-limit-options="ctrl.grid.limitOptions"
+                                        md-limit="ctrl.grid.limit"
+                                        md-page="ctrl.grid.page"
+                                        md-total="{{ctrl.mails.length}}" md-page-select>
+                                </md-table-pagination>
+                            </md-table-container>
+                        </md-card>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised"
+                   ng-disabled="senderSelectorsForm.$invalid || !ctrl.mails.length"
+                   ng-click="ctrl.send($event)">
+            {{lang.btn_send}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closePopup($event)">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

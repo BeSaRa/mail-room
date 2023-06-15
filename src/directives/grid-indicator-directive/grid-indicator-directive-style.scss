@@ -1,0 +1,51 @@
+
+.indicator-td span.indicator-content {
+  min-width: 18px;
+  min-height: 18px;
+  height: 18px;
+  width: 18px;
+}
+
+/*.indicator-badge {
+  margin: 2px !important;
+  width: 60px !important;
+}*/
+
+.indicator {
+  min-width: 18px;
+  min-height: 18px;
+  height: 18px;
+  width: 18px;
+  &.green {
+    color: #32CD32;
+  }
+  &.yellow {
+    color: #FFFF00;
+  }
+  &.red {
+    color: #FF0000;
+  }
+  &.badge {
+    padding: 1px 8px;
+    border-radius: 7px;
+    font-size: 10px;
+    background: #FF0000;
+    color: #ffffff;
+  }
+}
+
+.indicator-td {
+  min-width: 45px;
+  max-width: 45px;
+  padding-right: 0 !important;
+  &.span {
+    width: 50%;
+  }
+  &.text-right {
+    text-align: right !important;
+  }
+
+  .float-right {
+    float: right !important;
+  }
+}

@@ -1,0 +1,50 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_send}}">
+    <popup-toolbar-directive header-text="{{lang.lbl_send}} - {{ctrl.mail.getMailReferenceNo()}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div class="md-dialog-content mr-dialog-content">
+            <form name="sendMailForm" autocomplete="off">
+                <div layout="row">
+                    <!-- Sender -->
+                    <md-input-container flex>
+                        <label for="senderEmployee">{{lang.lbl_sender}}</label>
+                        <md-select id="senderEmployee" name="senderEmployee"
+                                   required
+                                   ng-model="ctrl.mail.senderEmployee">
+                            <md-option ng-repeat="option in ctrl.senders track by $index"
+                                       ng-value="option.getEmployeeId()">{{option.getTranslatedName()}}
+                            </md-option>
+                        </md-select>
+                        <div ng-messages="sendMailForm.senderEmployee.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                        </div>
+                    </md-input-container>
+                    <!-- Sent Date -->
+                    <md-input-container flex>
+                        <label for="sentDate">{{lang.lbl_date}}</label>
+                        <md-datepicker ng-model="ctrl.mail.sentDate"
+                                       required
+                                       md-min-date="ctrl.mail.registerDate"
+                                       name="sentDate" id="sentDate"
+                                       md-open-on-focus></md-datepicker>
+                        <div ng-messages="sendMailForm.sentDate.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </form>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised"
+                   ng-disabled="sendMailForm.$invalid"
+                   ng-click="ctrl.send($event)">
+            {{lang.btn_send}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closePopup($event)">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

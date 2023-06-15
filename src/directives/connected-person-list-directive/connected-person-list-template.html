@@ -1,0 +1,121 @@
+<div layout="column">
+    <div layout="row" layout-align="start center"
+         class="page-header small">
+        <md-button ng-click="ctrl.openAddConnectedPerson($event)"
+                   class="md-icon-button" ng-if="!ctrl.disableAll"
+                   tooltip="{{lang.lbl_add_connected_person}}">
+            <md-icon md-svg-icon="account-plus"></md-icon>
+        </md-button>
+        <span flex></span>
+        <grid-search-directive grid="ctrl.grid"></grid-search-directive>
+    </div>
+    <div>
+        <md-card md-whiteframe="3" layout="column" class="card-overlay">
+            <md-table-container>
+                <div flex scroll-directive>
+                    <table md-table ng-model="ctrl.grid.selectedRecords"
+                           md-progress="ctrl.grid.progress">
+                        <!--md-row-select multiple-->
+                        <thead md-head md-order="ctrl.grid.order"
+                               md-on-reorder="ctrl.grid.sortCallback">
+                        <tr md-row>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.personalId, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.personalId.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.personalId.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.fullName, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.fullName.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.fullName.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.address1, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.address1.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.address1.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.mobile1, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.mobile1.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.mobile1.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions, true)"
+                                md-column>
+                                <span>{{lang[ctrl.grid.columns.gridActions.langKey]}}</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row
+                            ng-repeat="item in (ctrl.connectedPersonList | limitTo: ctrl.grid.limit: ((ctrl.grid.page - 1) * ctrl.grid.limit)) track by $index"
+                            md-select="item">
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.personalId)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.personalId}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.fullName)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.fullName}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.address1)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.address1}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.mobile1)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.mobile1}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions)">
+                                <div flex layout="row" layout-align="start center">
+                                    <md-button class="md-icon-button" ng-if="!ctrl.disableAll"
+                                               title="{{lang.btn_delete}}"
+                                               ng-click="ctrl.removeConnectedPerson(item, $event)">
+                                        <md-icon md-svg-icon="delete"></md-icon>
+                                    </md-button>
+                                    <md-button class="md-icon-button" title="{{lang.btn_edit}}" ng-if="!ctrl.disableAll"
+                                               ng-click="ctrl.openEditConnectedPerson(item, $event)">
+                                        <md-icon md-svg-icon="pencil"></md-icon>
+                                    </md-button>
+                                    <md-button class="md-icon-button" title="{{lang.lbl_view}}" ng-if="ctrl.disableAll"
+                                               ng-click="ctrl.openEditConnectedPerson(item, $event)">
+                                        <md-icon md-svg-icon="eye"></md-icon>
+                                    </md-button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr md-row ng-if="!ctrl.connectedPersonListCopy.length">
+                            <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                class="red-text text-center">
+                                {{lang.msg_no_items_found}}
+                            </td>
+                        </tr>
+                        <tr md-row
+                            ng-if="ctrl.connectedPersonListCopy.length && !ctrl.connectedPersonList.length">
+                            <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                class="red-text text-center">
+                                {{lang.msg_no_items_found_matching_search}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <md-table-pagination
+                        md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                        md-limit-options="ctrl.grid.limitOptions"
+                        md-limit="ctrl.grid.limit"
+                        md-page="ctrl.grid.page"
+                        md-total="{{ctrl.connectedPersonList.length}}" md-page-select>
+                </md-table-pagination>
+            </md-table-container>
+        </md-card>
+    </div>
+</div>

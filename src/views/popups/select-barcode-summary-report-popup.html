@@ -1,0 +1,26 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.please_select}}">
+    <popup-toolbar-directive
+            header-text="{{ctrl.mail.getMailReferenceNo()}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div class="md-dialog-content mr-dialog-content">
+            <div layout="column" layout-margin="5px">
+                <span>{{lang.please_select}}</span>
+                <md-radio-group ng-model="ctrl.selectOption" layout-margin="10px" flex>
+                    <md-radio-button value="barcode" flex>{{lang.lbl_barcode}}</md-radio-button>
+                    <md-radio-button value="summary" flex>{{lang.summary_report}}</md-radio-button>
+                </md-radio-group>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button ng-click="ctrl.view($event)" class="md-raised">
+            {{lang.lbl_view}}
+        </md-button>
+        <span flex></span>
+        <md-button ng-click="ctrl.close($event)" class="md-raised">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

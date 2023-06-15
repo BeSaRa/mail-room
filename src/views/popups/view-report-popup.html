@@ -1,0 +1,21 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{ctrl.title}}">
+    <popup-toolbar-directive full-screen="ctrl.fullScreen"
+                             header-text="{{ctrl.title}} - {{ctrl.mail.getMailReferenceNo()}}"></popup-toolbar-directive>
+    <md-dialog-content class="stop-scroll">
+        <div class="md-dialog-content mr-dialog-content no-padding">
+            <div layout="row">
+                <iframe class="iframe-attachment-viewer"
+                        ng-if="ctrl.reportUrl"
+                        ng-src="{{ctrl.reportUrl}}"
+                        frameborder="0" flex></iframe>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button ng-click="ctrl.closeDialog($event)" class="md-raised">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,110 @@
+<md-content layout-padding>
+    <div layout="column">
+        <div layout="row" layout-align="start center">
+            <md-input-container flex>
+                <label for="scan">{{lang.lbl_barcode_scan}}</label>
+                <input name="scan" id="scan" ng-model="ctrl.referenceNo" md-auto-focus="true"
+                       ng-enter="ctrl.scanBarcode($event)">
+            </md-input-container>
+            <div>
+                <md-button ng-click="ctrl.scanBarcode($event)" class="md-raised">
+                    {{lang.btn_search}}
+                </md-button>
+            </div>
+        </div>
+
+
+        <div layout="column" flex>
+            <!--  Grid -->
+            <md-card md-whiteframe="3" layout="column" class="card-overlay">
+                <md-table-container>
+                    <div flex scroll-directive>
+                        <table md-table ng-model="ctrl.grid.selectedRecords"
+                               md-order="ctrl.grid.order"
+                               md-on-reorder="ctrl.grid.sortCallback">
+                            <!--md-row-select multiple-->
+                            <thead md-head>
+                            <tr md-row>
+                                <th md-column
+                                    md-order-by="{{ctrl.grid.columns.referenceNo.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.referenceNo.langKey]}}</span>
+                                </th>
+                                <th md-column
+                                    md-order-by="{{ctrl.grid.columns.senderEntity.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.senderEntity.langKey]}}</span>
+                                </th>
+                                <th md-column
+                                    md-order-by="{{ctrl.grid.columns.senderDepartment.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.senderDepartment.langKey]}}</span>
+                                </th>
+                                <th md-column
+                                    md-order-by="{{ctrl.grid.columns.receiverEntity.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.receiverEntity.langKey]}}</span>
+                                </th>
+                                <th md-column
+                                    md-order-by="{{ctrl.grid.columns.receiverDepartment.sortKey()}}">
+                                    <span>{{lang[ctrl.grid.columns.receiverDepartment.langKey]}}</span>
+                                </th>
+                                <th md-column ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions)">
+                                    <span>{{lang[ctrl.grid.columns.gridActions.langKey]}}</span>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody md-body>
+                            <tr md-row
+                                ng-repeat="mail in (ctrl.mails | limitTo: ctrl.grid.limit: ((ctrl.grid.page - 1) * ctrl.grid.limit)) track by $index">
+                                <td md-cell>
+                                    <span>{{mail.referenceNo}}</span>
+                                </td>
+                                <td md-cell>
+                                    <!-- Sender Entity-->
+                                    {{mail.senderEntity}}
+                                </td>
+                                <td md-cell>
+                                    <!-- Sender Department-->
+                                    {{mail.senderDep}}
+                                </td>
+                                <td md-cell>
+                                    <!-- Receiver Entity-->
+                                    {{mail.receiverEntity}}
+                                </td>
+                                <td md-cell>
+                                    <!-- Receiver Department-->
+                                    {{mail.receiverDep}}
+                                </td>
+                                <td md-cell ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions)">
+                                    <div flex layout="row" layout-align="start center">
+                                        <md-button class="md-icon-button" title="{{lang.btn_skip_mail}}"
+                                                   ng-click="ctrl.skipSelectedMail(mail, $event)">
+                                            <md-icon md-svg-icon="window-close"></md-icon>
+                                        </md-button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr md-row ng-if="!ctrl.mails.length">
+                                <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                    class="red-text text-center">
+                                    {{lang.msg_no_items_found}}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <md-table-pagination
+                            md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                            md-limit-options="ctrl.grid.limitOptions"
+                            md-limit="ctrl.grid.limit"
+                            md-page="ctrl.grid.page"
+                            md-total="{{ctrl.mails.length}}" md-page-select>
+                    </md-table-pagination>
+                </md-table-container>
+            </md-card>
+
+        </div>
+        <div ng-repeat="mail in ctrl.mails track by $index">{{mail}}</div>
+    </div>
+</md-content>
+
+
+
+

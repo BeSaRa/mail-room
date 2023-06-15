@@ -1,0 +1,77 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{lang.lbl_delivery_required_item}}">
+    <popup-toolbar-directive ng-if="!ctrl.editMode"
+                             header-text="{{lang.lbl_delivery_required_item}}"
+                             close-callback="ctrl.closeDialog"></popup-toolbar-directive>
+    <popup-toolbar-directive ng-if="ctrl.editMode"
+                             header-text="{{ctrl.disableAll ? lang.lbl_view: lang.lbl_edit}} {{lang.lbl_delivery_required_item}}"
+                             close-callback="ctrl.closeDialog"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <form name="deliveryRequiredForm" autocomplete="off" novalidate>
+            <div class="md-dialog-content mr-dialog-content">
+                <div layout="row">
+                    <!-- label En-->
+                    <md-input-container flex>
+                        <label for="labelEn">{{lang.lbl_english_name}}</label>
+                        <input name="labelEn" id="labelEn" ng-required="!ctrl.deliveryRequiredItem.labelAr"
+                               ng-model="ctrl.deliveryRequiredItem.labelEn"
+                               ng-disabled="ctrl.formDisabled()"
+                               custom-validate-directive="E1NS">
+                        <div ng-messages="deliveryRequiredForm.labelEn.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                            <div ng-message="E1NS">{{lang.error_at_least_one_english_number}}</div>
+                        </div>
+                    </md-input-container>
+                    <!-- label Ar -->
+                    <md-input-container flex>
+                        <label for="labelAr">{{lang.lbl_arabic_name}}</label>
+                        <input name="labelAr" id="labelAr" ng-required="!ctrl.deliveryRequiredItem.labelEn"
+                               ng-model="ctrl.deliveryRequiredItem.labelAr"
+                               ng-disabled="ctrl.formDisabled()"
+                               custom-validate-directive="A1NS">
+                        <div ng-messages="deliveryRequiredForm.labelAr.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                            <div ng-message="A1NS">{{lang.error_at_least_one_arabic_number}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+                <div layout="row" flex>
+                    <!-- keyStr -->
+                    <md-input-container flex>
+                        <label for="keyStr">{{lang.lbl_code}}</label>
+                        <input name="keyStr" id="keyStr" required
+                               ng-model="ctrl.deliveryRequiredItem.keyStr"
+                               custom-validate-directive="EN_"
+                               ng-disabled="ctrl.formDisabled()"
+                               no-space-directive>
+                        <div ng-messages="deliveryRequiredForm.keyStr.$error">
+                            <div ng-message="required">{{lang.error_field_required}}</div>
+                        </div>
+                    </md-input-container>
+                </div>
+            </div>
+        </form>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <md-button class="md-raised" ng-if="!ctrl.editMode && !ctrl.disableAll"
+                   ng-disabled="deliveryRequiredForm.$invalid"
+                   ng-click="ctrl.addDeliveryRequiredItem($event)">
+            {{lang.btn_ok}}
+        </md-button>
+        <md-button class="md-raised" ng-if="ctrl.editMode && !ctrl.disableAll"
+                   ng-disabled="deliveryRequiredForm.$invalid"
+                   ng-click="ctrl.saveDeliveryRequiredItem($event)">
+            {{lang.btn_ok}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.resetDeliveryRequiredForm(deliveryRequiredForm, $event)"
+                   ng-if="!ctrl.disableAll">
+            {{lang.btn_reset}}
+        </md-button>
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closeDialog()">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

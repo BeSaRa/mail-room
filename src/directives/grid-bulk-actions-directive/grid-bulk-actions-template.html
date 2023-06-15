@@ -1,0 +1,24 @@
+<span ng-repeat="action in ctrl.grid.bulkActions">
+    <!-- If Action doesn't have submenu-->
+    <md-button ng-if="!ctrl.hasSubMenu(action) && ctrl.isShowAction(action)"
+               class="md-icon-button"
+               tooltip="{{ctrl.getActionText(action)}}"
+               ng-click="ctrl.processMenu(action, $event)">
+        <md-icon md-svg-icon="{{action.icon}}" class="action-green"></md-icon>
+    </md-button>
+    <!-- If Action has submenu-->
+    <md-menu ng-if="ctrl.hasSubMenu(action) && ctrl.isShowAction(action)">
+        <md-button aria-label="{{lang[action.text]}}" class="md-icon-button"
+                   ng-click="ctrl.openBulkActionMenu($mdMenu, $event)"
+                   tooltip="{{ctrl.getActionText(action)}}">
+            <md-icon md-menu-origin md-svg-icon="{{action.icon}}"></md-icon>
+        </md-button>
+        <md-menu-content width="4" ng-mouseleave="$mdMenu.close()">
+            <md-menu-item ng-repeat="subAction in action.subMenu">
+                <md-button ng-click="ctrl.processMenu(subAction, $event)">
+                    {{ctrl.getActionText(subAction)}}
+                </md-button>
+            </md-menu-item>
+        </md-menu-content>
+    </md-menu>
+</span>

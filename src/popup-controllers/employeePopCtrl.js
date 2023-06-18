@@ -123,7 +123,6 @@ module.exports = function (app) {
                 })
                 .validate()
                 .then(function () {
-                    debugger
                     employeeService.addEmployee(self.employeePermission)
                         .then(function (result) {
                             dialog.hide(result);

@@ -1562,5 +1562,21 @@
   "header_integration_system_dialog": {
     "ar": "تحميل معلومات البريد",
     "en": "Load Mail Information"
+  },
+  "error_not_linked_to_entity_contact_admin": {
+    "ar": "User is not linked to any entity. Please contact administrator",
+    "en": "User is not linked to any entity. Please contact administrator"
+  },
+  "internal_server_error": {
+    "ar": "Internal Server Error",
+    "en": "Internal Server Error"
+  },
+  "msg_record_has_related_records": {
+    "ar": "يرجى التحقق من وجود بعض السجلات المرتبطة",
+    "en": "Kindly check there are some linked records"
+  },
+  "error_inactive_or_not_existing_user": {
+    "ar": "المستخدم غير موجود او غير مفعل، برجاء التواصل مع مدير النظام",
+    "en": "User is not exists or not active, Please contact system admin"
   }
 }

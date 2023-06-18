@@ -18,6 +18,10 @@ module.exports = function (app) {
                 return this.shouldChange;
             };
 
+            LoginResponse.prototype.hasCurrentEntity = function () {
+                return !!this.currentEntity;
+            };
+
             MailRoomModelInterceptor.runEvent('LoginResponse', 'init', this);
 
         }

@@ -16,12 +16,13 @@ module.exports = function (app) {
                 newPass: self.password.newPassword
             };
 
-            return authenticationService.changePassword(newPasswordCredentials, adminChange).then(function (isSuccess) {
-                dialog.hide(isSuccess);
-            }).catch(function () {
-                //if forced login then return cancelFailUpdatePassword
-                (adminChange && !withOldPass) ? dialog.cancel('cancelFailUpdatePassword') : dialog.cancel('error_update_password');
-            });
+            return authenticationService.changePassword(newPasswordCredentials, adminChange)
+                .then(function (isSuccess) {
+                    dialog.hide(isSuccess);
+                }).catch(function () {
+                    //if forced login then return cancelFailUpdatePassword
+                    (adminChange && !withOldPass) ? dialog.cancel('cancelFailUpdatePassword') : dialog.cancel('error_update_password');
+                });
         };
 
         self.validatePassword = function () {

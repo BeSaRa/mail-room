@@ -93,8 +93,7 @@ module.exports = function (app) {
                         });
 
                         response.entityPermissions = currentEntityPermissions ? currentEntityPermissions.permissions : [];
-                    }
-                    else {
+                    } else {
                         // we have current entity permissions only
                     }
                 }
@@ -129,8 +128,7 @@ module.exports = function (app) {
                             self.currentEntity = result;
                             return self;
                         });
-                }
-                else {
+                } else {
                     self.currentEntity = currentEntity;
                     return $q.resolve(self);
                 }
@@ -151,9 +149,10 @@ module.exports = function (app) {
              * @return {boolean}
              */
             CurrentUser.prototype.hasPermissionTo = function (permissionKey, debug) {
-                if (debug)
-                    debugger;
+                if (debug) {
                     //console.log(permissionKey);
+                }
+
                 return this._checkPermission(permissionKey);
             };
 

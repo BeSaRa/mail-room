@@ -34,11 +34,11 @@ module.exports = function (app) {
         });
 
         exception.addGeneralExceptionHandler(500, function (xhr) {
-            var url = xhr.config.url;
+            /*var url = xhr.config.url;
             if (url === urlService.login) {
                 dialog
                     .errorMessage(langService.get('internal_server_error'))
-            }
+            }*/
         });
 
         exception.addGeneralExceptionHandler(500, function (xhr) {

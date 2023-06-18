@@ -43,6 +43,9 @@ module.exports = function (app) {
             return $http.post(urlService.login, credentials)
                 .then(function (result) {
                     result.data = generator.interceptReceivedInstance('LoginResponse', new LoginResponse(result.data));
+                    if (!result.data.hasCurrentEntity()) {
+                        return $q.reject('missingDefaultEntity');
+                    }
                     var resultCopy = angular.copy(result.data);
                     resultCopy.employee.password = credentials.password;
                     if (result.data.shouldChangePassword()) {
@@ -50,19 +53,20 @@ module.exports = function (app) {
                             tokenService.setToken(result.data.token);
                         }
                         //open popup and set new password and then finalize authenticate and return result.data
-                        return self.openChangePasswordPopup(resultCopy, true, false).then(function (cpResult) {
-                            if (!cpResult) {
-                                tokenService.destroy();
-                                return false;
-                            } else {
-                                _finalizeAuthenticate(result, credentials);
-                                return result.data;
-                            }
+                        return self.openChangePasswordPopup(resultCopy, true, false)
+                            .then(function (cpResult) {
+                                if (!cpResult) {
+                                    tokenService.destroy();
+                                    return false;
+                                } else {
+                                    _finalizeAuthenticate(result, credentials);
+                                    return result.data;
+                                }
 
-                        }).catch(function (error) {
-                            tokenService.destroy();
-                            return $q.reject(error);
-                        })
+                            }).catch(function (error) {
+                                tokenService.destroy();
+                                return $q.reject(error);
+                            })
                     } else {
                         _finalizeAuthenticate(result, credentials);
                         return result.data;

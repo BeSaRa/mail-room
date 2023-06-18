@@ -18,7 +18,7 @@ module.exports = function (app) {
 
         provider.setPrivateBuildNumber = function (number) {
             privateBuildNumber = number;
-            app.$_privateBuildNumber = versionNumber + '---' + privateBuildNumber;
+            app.$_privateBuildNumber = versionNumber + (privateBuildNumber ? ('---' + privateBuildNumber) : '');
             return provider;
         };
 

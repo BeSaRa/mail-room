@@ -71,21 +71,27 @@ module.exports = function (app) {
             self.loginStatus = true;
             authenticationService.authenticate(self.credentials)
                 .then(function (result) {
-                    if (!result)
+                    if (!result) {
                         dialog.errorMessage(langService.get('error_update_password_to_complete_login'));
-
-                    else {
+                    } else {
                         _hideFixOverlay();
                         _completeLogin(callback, result);
                     }
                 })
                 .catch(function (error) {
                     self.loginStatus = false;
-                    if (error === 'cancelFailUpdatePassword') {
-                        dialog.errorMessage(langService.get('error_update_password_to_complete_login'))
+                    if (angular.isObject(error) && error.hasOwnProperty('data')) {
+                        if (error.data.message === 'USER_IS_NOT_ACTIVE') {
+                            return dialog.errorMessage(langService.get('error_inactive_or_not_existing_user'));
+                        }
+                    } else {
+                        if (error === 'missingDefaultEntity') {
+                            return dialog.errorMessage(langService.get('error_not_linked_to_entity_contact_admin'))
+                        } else if (error === 'cancelFailUpdatePassword') {
+                            return dialog.errorMessage(langService.get('error_update_password_to_complete_login'))
+                        }
                     }
-                    else
-                        dialog.errorMessage(langService.get('error_unauthorized'))
+                    dialog.errorMessage(langService.get('error_unauthorized'))
                 });
         };
         /**

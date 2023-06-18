@@ -14,6 +14,7 @@ module.exports = function (app) {
                                                   $cookies,
                                                   $http,
                                                   mailRoomTemplate,
+                                                  versionService,
                                                   $mdMedia,
                                                   $scope) {
         'ngInject';
@@ -77,6 +78,7 @@ module.exports = function (app) {
             dialog.hide();
         });
 
-        $scope.bundleVersion = '1.4.0';
+        $scope.bundleVersion = versionService.getVersionNumber();
+        $scope.buildNumber = ' ' + versionService.getBuildNumber();
     });
 };

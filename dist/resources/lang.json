@@ -1564,7 +1564,7 @@
     "en": "Load Mail Information"
   },
   "error_not_linked_to_entity_contact_admin": {
-    "ar": "User is not linked to any entity. Please contact administrator",
+    "ar": "المستخدم غير مرتبط بأي جهة. يرجى الإتصال بمسؤول النظام",
     "en": "User is not linked to any entity. Please contact administrator"
   },
   "internal_server_error": {

@@ -10,6 +10,7 @@ module.exports = function (app) {
                     menu_item_internal: ['totalInternal'],
                     lbl_outgoing_new_mails: ['newOutgoing'],
                     lbl_outgoing_sent_mails: ['sendOutgoing'],
+                    lbl_outgoing_not_delivered_mails: ['notDeliveredOutgoing'],
                     lbl_incoming_expected_mails: ['expectedIncoming'],
                     lbl_incoming_new_mails: ['newIncoming'],
                     lbl_incoming_sent_mails: ['sendIncoming'],
@@ -21,6 +22,7 @@ module.exports = function (app) {
             self.newIncoming = 0;
             self.newInternal = 0;
             self.newOutgoing = 0;
+            self.notDeliveredOutgoing = 0;
             self.sendIncoming = 0;
             self.sendInternal = 0;
             self.sendOutgoing = 0;

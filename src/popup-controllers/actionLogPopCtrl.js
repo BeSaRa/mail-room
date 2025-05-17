@@ -7,6 +7,7 @@ module.exports = function (app) {
                                                  actionLogService,
                                                  langService,
                                                  _,
+                                                 mailService,
                                                  printService) {
         'ngInject';
         var self = this;
@@ -126,6 +127,15 @@ module.exports = function (app) {
          */
         self.print = function ($event) {
             printService.printActionLog(self.mail, self.actionLogs, self.grid, $event);
+        };
+
+        /**
+         * @description Show Comment
+         * @param actionLog
+         * @param $event
+         */
+        self.showActionDetails = function (actionLog, $event) {
+            mailService.openShowCommentDialog(actionLog.actionDetails, $event);
         };
 
         /**

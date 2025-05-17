@@ -76,6 +76,7 @@
                 .addToAllWithBase('summaryReport',"/report/summeryReport/")
                 .addToAllWithBase('deliveryReport',"/report/deliveryReport/")
                 .addToAllWithBase('mobileRecieve','/inbox/mobileReceive')
+                .addToAllWithBase('attachment','/inbox/attachment')
             //department statical operation report
             //    .addToAllWithBase('departmentStaticalOperationReport', '/reports/department-statical-operation')
             ;

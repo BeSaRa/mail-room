@@ -45,4 +45,5 @@ module.exports = function (app) {
     require('./connected-person-list-directive/01-index')(app);
     require('./package-item-list-directive/01-index')(app);
     require('./delivery-required-list-directive/01-index')(app);
+    require('./attachment-list-directive/01-index')(app);
 };

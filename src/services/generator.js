@@ -687,6 +687,11 @@ module.exports = function (app) {
             self.convertBinaryDataToURL = function (arrayOfData) {
                 return $sce.trustAsResourceUrl('data:image/png;base64,' + arrayOfData);
             }
+
+
+            self.convertBinaryDataPDFToURL = function (arrayOfData) {
+                return $sce.trustAsResourceUrl('data:application/pdf;base64,' + arrayOfData);
+            }
         }
     )
 };

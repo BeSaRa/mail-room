@@ -76,7 +76,7 @@ module.exports = function (app) {
                     },
                     entryType: {
                         header: langService.get('lbl_entry_type'),
-                        value: mail.entryTypeLookup.getTranslatedName()
+                        value: mail.entryTypeLookup ? mail.entryTypeLookup.getTranslatedName() : ''
                     },
                     mailType: {
                         header: langService.get('lbl_mail_type'),

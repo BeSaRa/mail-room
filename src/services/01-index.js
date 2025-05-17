@@ -32,5 +32,6 @@ module.exports = function (app) {
     require('./counterService')(app);
     require('./reportService')(app);
     require('./printService')(app);
+    require('./attachmentService')(app);
 
 };

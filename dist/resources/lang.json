@@ -531,6 +531,14 @@
     "ar": "الاسم باللغة العربية",
     "en": "Arabic Name"
   },
+  "lbl_attachments": {
+    "ar": "المرفقات",
+    "en": "Attachments"
+  },
+  "lbl_attachment": {
+    "ar": "المرفق",
+    "en": "Attachment"
+  },
   "lbl_attachment_no": {
     "ar": "رقم المرفق",
     "en": "Attachment No"
@@ -834,6 +842,10 @@
   "lbl_outgoing_sent_mails": {
     "ar": "مرسل",
     "en": "Sent"
+  },
+  "lbl_outgoing_not_delivered_mails": {
+    "ar": "لم يتم التسليم",
+    "en": "Not Delivered"
   },
   "lbl_page": {
     "ar": "صفحة:",
@@ -1578,5 +1590,17 @@
   "error_inactive_or_not_existing_user": {
     "ar": "المستخدم غير موجود او غير مفعل، برجاء التواصل مع مدير النظام",
     "en": "User is not exists or not active, Please contact system admin"
+  },
+  "lbl_comment": {
+    "ar": "التعليق",
+    "en": "Comment"
+  },
+  "msg_content_not_found": {
+    "ar": "لم يتم العثور على محتوى",
+    "en": "Content not found"
+  },
+  "show_comment": {
+    "ar": "عرض التعليق",
+    "en": "Show Comment"
   }
 }

@@ -19,4 +19,5 @@ module.exports = function (app) {
     require('./deliveryRequiredItemPopCtrl')(app);
     require('./barcodePopCtrl')(app);
     require('./integrationSystemPopCtrl')(app);
+    require('./contentViewerPopCtrl')(app);
 };

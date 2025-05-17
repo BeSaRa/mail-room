@@ -74,7 +74,14 @@
                                 <td md-cell>{{action.actionLogType.getTranslatedName()}}</td>
                                 <td md-cell>{{action.actionDateFormatted}}</td>
                                 <td md-cell>{{action.user.getTranslatedName()}}</td>
-                                <td md-cell>{{action.actionDetails}}</td>
+                                <td md-cell>
+                                    <span ng-if="!action.isNotDeliveredActionLogType()">{{action.actionDetails}}</span>
+                                    <md-button ng-if="action.isNotDeliveredActionLogType()"
+                                               class="md-icon-button" title="{{lang.lbl_view}}"
+                                               ng-click="ctrl.showActionDetails(action, $event)">
+                                        <md-icon md-svg-icon="eye"></md-icon>
+                                    </md-button>
+                                </td>
                             </tr>
                             </tbody>
                         </table>

@@ -31,6 +31,11 @@ module.exports = function (app) {
             deliveryRequiredItems: {
                 name: 'deliveryRequiredItems',
                 key: 'lbl_delivery_required_items'
+            },
+            attachments: {
+                name: 'attachments',
+                key: 'lbl_attachments',
+                hide: true // hide by default and show after form load
             }
         };
         self.selectedTabName = self.tabsToShow.mailInfo.name;
@@ -52,10 +57,6 @@ module.exports = function (app) {
                 }
             });
         };
-
-        $timeout(function () {
-            self.model = angular.copy(self.mail);
-        });
 
         self.validateMailLabels = {
             priority: 'lbl_priority',
@@ -161,6 +162,13 @@ module.exports = function (app) {
             $timeout(function () {
                 self.reset = false;
             })
+        };
+
+        self.$onInit = function () {
+            $timeout(function () {
+                self.model = angular.copy(self.mail);
+                self.tabsToShow.attachments.hide = !(self.model.isOutgoingMail() && self.model.isReceivedMailStatus());
+            });
         };
 
         /**

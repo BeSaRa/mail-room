@@ -113,7 +113,8 @@ module.exports = function (app) {
                                 senderDep: null,
                                 receiverEntity: _.find(entityService.entities, {'id': Number(authenticationService.getLastLoginEntityId())}),
                                 receiverDep: null
-                            }
+                            },
+                            attachments: []
                         }
                     })
             },
@@ -149,7 +150,8 @@ module.exports = function (app) {
                             mail: mailToUpdate,
                             grid: grid,
                             editMode: true,
-                            disableAll: viewMode
+                            disableAll: viewMode,
+                            attachments: []
                         }
                     })
             },

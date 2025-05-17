@@ -173,6 +173,10 @@ module.exports = function (app) {
                 return this.statusType === lookupService.getLookupByKeyName(lookupService.statusTypes, lookupService.statusTypesKeys.received).getTypeId();
             };
 
+            MailInbox.prototype.isNotDeliveredMailStatus = function () {
+                return this.statusType === lookupService.getLookupByKeyName(lookupService.statusTypes, lookupService.statusTypesKeys.notDelivered).getTypeId();
+            };
+
             MailInbox.prototype.isExpectedMailStatus = function () {
                 return this.statusType === lookupService.getLookupByKeyName(lookupService.statusTypes, lookupService.statusTypesKeys.expected).getTypeId();
             };

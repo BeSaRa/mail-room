@@ -34,7 +34,7 @@
                             <md-tab label="{{lang[ctrl.tabsToShow.result.key]}}"
                                     md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.result, $event)"
                                     ng-disabled="!ctrl.timelineRecords">
-                                <md-content class="white-bg">
+                                <md-content class="transparent-bg">
                                     <div ng-if="!ctrl.timelineRecords.length" layout="row" layout-padding layout-align="start center">{{lang.msg_no_items_found_matching_search}}</div>
                                     <div ng-if="ctrl.timelineRecords.length">
                                         <timeline-directive mail="ctrl.mail"

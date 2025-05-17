@@ -24,6 +24,7 @@ module.exports = function (app) {
         self.newMails = [];
         self.sentMails = [];
         self.receivedMails = [];
+        self.notDeliveredMails = [];
 
         /**
          * @description Contains the grid maps by mail status
@@ -35,6 +36,7 @@ module.exports = function (app) {
             _gridsByStatus[lookupService.statusTypesKeys.new] = self.grid.newMails;
             _gridsByStatus[lookupService.statusTypesKeys.received] = self.grid.receivedMails;
             _gridsByStatus[lookupService.statusTypesKeys.sent] = self.grid.sentMails;
+            _gridsByStatus[lookupService.statusTypesKeys.notDelivered] = self.grid.notDeliveredMails;
         };
 
         self.tabsToShow = {
@@ -49,6 +51,10 @@ module.exports = function (app) {
             receivedMails: {
                 name: 'receivedMails',
                 key: 'lbl_outgoing_received_mails'
+            },
+            notDeliveredMails: {
+                name: 'notDeliveredMails',
+                key: 'lbl_outgoing_not_delivered_mails'
             }
         };
         self.showTab = function (tab) {
@@ -268,6 +274,10 @@ module.exports = function (app) {
                     self.sentMails = mailService.categorizeMailsByStatusType(mails, statusType);
                     if (!skipOverrideCopy)
                         self.sentMailsCopy = generator.shallowCopyArray(self.sentMails);
+                } else if (statusType === lookupService.statusTypesKeys.notDelivered) {
+                    self.notDeliveredMails = mailService.categorizeMailsByStatusType(mails, statusType);
+                    if (!skipOverrideCopy)
+                        self.notDeliveredMailsCopy = generator.shallowCopyArray(self.notDeliveredMails);
                 }
             }
         };
@@ -1762,10 +1772,496 @@ module.exports = function (app) {
                         ]
                     }
                 ]
+            },
+            // Not Received Mails
+            notDeliveredMails: {
+                name: 'notDeliveredMails',
+                progress: null,
+                selectedRecords: [],
+                limit: 5, // default limit
+                page: 1, // first page
+                order: '-registerDate', // default sorting column with order(- for desc),
+                limitOptions: gridService.getGridLimitOptions(self.notDeliveredMails),
+                columns: {
+                    referenceNo: {
+                        langKey: 'header_reference_no',
+                        searchKey: function () {
+                            return 'referenceNo'
+                        },
+                        sortKey: function () {
+                            return 'referenceNo';
+                        }
+                    },
+                    postType: {
+                        langKey: 'header_post_type',
+                        searchKey: function () {
+                            return self.getSortingKey('postTypeLookup', 'Lookup');
+                        },
+                        sortKey: function () {
+                            if (gridService.isGridServerScope(self.grid.notDeliveredMails.sortScope)) {
+                                return 'postType' + 'Embedded.' + (langService.current + 'Name');
+                            }
+                            return self.getSortingKey('postTypeLookup', 'Lookup');
+                        }
+                    },
+                    registerDate: {
+                        langKey: 'header_register_date',
+                        searchKey: function () {
+                            return 'registerDateFormatted';
+                        },
+                        sortKey: function () {
+                            return 'registerDate';
+                        }
+                    },
+                    senderDepartment: {
+                        langKey: 'header_sender_department',
+                        searchKey: function () {
+                            return self.getSortingKey('senderDep', 'Entity');
+                        },
+                        sortKey: function () {
+                            if (gridService.isGridServerScope(self.grid.notDeliveredMails.sortScope)) {
+                                // if english language, concat "En" at last, otherwise nothing
+                                return 'senderDep' + 'Embedded.entityName' + (langService.current === 'en' ? 'En' : '');
+                            }
+                            return self.getSortingKey('senderDep', 'Entity');
+                        }
+                    },
+                    sender: {
+                        langKey: 'header_sender',
+                        searchKey: function () {
+                            return self.getSortingKey('senderEmployeeEmpPermission', 'EmployeePermission');
+                        },
+                        sortKey: function () {
+                            if (gridService.isGridServerScope(self.grid.notDeliveredMails.sortScope)) {
+                                // if english language, concat "En" at last, otherwise nothing
+                                return 'senderEmployee' + 'Embedded.employeeName' + (langService.current === 'en' ? 'En' : '');
+                            }
+                            return self.getSortingKey('senderEmployeeEmpPermission', 'EmployeePermission');
+                        }
+                    },
+                    sentDate: {
+                        langKey: 'header_sent_date',
+                        searchKey: function () {
+                            return 'sentDateFormatted';
+                        },
+                        sortKey: function () {
+                            return 'sentDate';
+                        }
+                    },
+                    entryType: {
+                        langKey: 'header_entry_type',
+                        searchKey: function () {
+                            return self.getSortingKey('entryTypeLookup', 'Lookup');
+                        },
+                        sortKey: function () {
+                            if (gridService.isGridServerScope(self.grid.notDeliveredMails.sortScope)) {
+                                return 'entryType' + 'Embedded.' + (langService.current + 'Name');
+                            }
+                            return self.getSortingKey('entryTypeLookup', 'Lookup');
+                        },
+                        hide: true
+                    },
+                    integratedSystem: {
+                        langKey: 'lbl_integrated_system',
+                        searchKey: function () {
+                            return self.getSortingKey('integratedSystemInfo', 'Lookup');
+                        },
+                        sortKey: function () {
+                            if (gridService.isGridServerScope(self.grid.notDeliveredMails.sortScope)) {
+                                return 'integratedSystem' + 'Embedded.' + (langService.current + 'Name');
+                            }
+                            return self.getSortingKey('integratedSystemInfo', 'Lookup');
+                        }
+                    },
+                    priority: {
+                        langKey: 'header_priority',
+                        searchKey: function () {
+                            return self.getSortingKey('priorityTypeLookup', 'Lookup');
+                        },
+                        sortKey: function () {
+                            if (gridService.isGridServerScope(self.grid.notDeliveredMails.sortScope)) {
+                                return 'priorityType' + 'Embedded.' + (langService.current + 'Name');
+                            }
+                            return self.getSortingKey('priorityTypeLookup', 'Lookup');
+                        },
+                        hide: true
+                    },
+                    addedBy: {
+                        langKey: 'header_entered_by',
+                        searchKey: function () {
+                            return self.getSortingKey('addedBy', 'EmployeePermission');
+                        },
+                        sortKey: function () {
+                            if (gridService.isGridServerScope(self.grid.notDeliveredMails.sortScope)) {
+                                // if english language, concat "En" at last, otherwise nothing
+                                return 'addedBy' + 'Embedded.employeeName' + (langService.current === 'en' ? 'En' : '');
+                            }
+                            return self.getSortingKey('addedBy', 'EmployeePermission');
+                        }
+                    },
+                    numberOfDays: {
+                        langKey: 'header_number_of_days',
+                        searchKey: function () {
+                            return 'numberOfDays'
+                        },
+                        sortKey: function () {
+                            if (gridService.isGridServerScope(self.grid.notDeliveredMails.sortScope)) {
+                                // number of days is difference between received date and now.
+                                return '';
+                            }
+                            return 'numberOfDays';
+                        },
+                        hide: true
+                    },
+                    gridActions: {
+                        langKey: 'header_actions',
+                        hide: function () {
+                            return !self.notDeliveredMails.length;
+                        }
+                    }
+                },
+                columnsCount: function (includeHidden) {
+                    return gridService.getColumnsCount(self.grid.notDeliveredMails, includeHidden);
+                },
+                colSpan: function () {
+                    return gridService.getColSpan(self.grid.notDeliveredMails);
+                },
+                showColumn: function (column, isHeader) {
+                    return gridService.isShowColumn(self.grid.notDeliveredMails, column, isHeader);
+                },
+                sortScope: gridService.gridScope.server,
+                sortCallback: function (sortKey) {
+                    if (gridService.isGridServerScope(self.grid.notDeliveredMails.sortScope)) {
+                        // if grid is already filtered, call the _filterCallback function from service, search again in case user has searched before sort and resolve the progress
+                        // otherwise, call the reload method of grid and search again in case user has searched before sort
+                        if (self.grid.notDeliveredMails.filterGridCriteria.criteria) {
+                            var defer = $q.defer();
+                            self.grid.notDeliveredMails.progress = defer.promise;
+                            outgoingMailService._filterCallback(self.grid.notDeliveredMails, lookupService.statusTypesKeys.notDelivered)
+                                .then(function (result) {
+                                    self.grid.notDeliveredMails.selectedRecords = [];
+                                    // result will contain only records with this status but to assign to variable, call setMailsByStatusType method
+                                    self.setMailsByStatusType(lookupService.statusTypesKeys.notDelivered, result);
+                                    self.grid.notDeliveredMails.searchCallback();
+                                    defer.resolve(true);
+                                });
+                        } else {
+                            self.grid.notDeliveredMails.reload(self.grid.notDeliveredMails.page)
+                                .then(function () {
+                                    self.grid.notDeliveredMails.searchCallback();
+                                });
+                        }
+                    } else {
+                        self.notDeliveredMails = gridService.sortGridData(self.grid.notDeliveredMails, self.notDeliveredMails);
+                    }
+                },
+                searchText: '',
+                searchCallback: function () {
+                    if (!self.grid.notDeliveredMails.searchText)
+                        self.grid.notDeliveredMails.reload();
+
+                    var searchedRecords = mailService.searchMailGridData(self.grid.notDeliveredMails, self.notDeliveredMailsCopy, outgoingMailService.totalRecords);
+                    self.setMailsByStatusType(lookupService.statusTypesKeys.notDelivered, searchedRecords, true);
+                },
+                filterGridCriteria: {reset: false, showReset: false, filterScope: gridService.gridScope.server},
+                filterGridCallback: function ($event) {
+                    var defer = $q.defer();
+                    self.grid.notDeliveredMails.page = 1;
+                    outgoingMailService.controllerMethod.filterGridDialog(lookupService.statusTypesKeys.notDelivered, self.grid.notDeliveredMails, $event)
+                        .then(function (result) {
+                            counterService.loadCounters();
+                            self.grid.notDeliveredMails.selectedRecords = [];
+                            // result will contain only records with this status but to assign to variable, call setMailsByStatusType method
+                            self.setMailsByStatusType(lookupService.statusTypesKeys.notDelivered, result);
+                            gridService.resetSearchText(self.grid.notDeliveredMails);
+                            self.grid.notDeliveredMails.progress = defer.promise;
+                            defer.resolve(true);
+                        }).catch(function (error) {
+                        return [];
+                    });
+                },
+                printFilterCallback: function ($event) {
+                    printService.printSearchGrid(self.notDeliveredMailsCopy, self.grid.notDeliveredMails, $event);
+                },
+                pagingScope: gridService.gridScope.server,
+                pagingCallback: function (pageNumber, limit) {
+                    if (gridService.isGridServerScope(self.grid.notDeliveredMails.pagingScope) && self.isTabSelected(self.tabsToShow.notDeliveredMails)) {
+                        // if grid is filtered, call the filterCallback function
+                        // otherwise, call the reload method of grid
+                        if (self.grid.notDeliveredMails.filterGridCriteria.criteria) {
+                            var defer = $q.defer();
+                            self.grid.notDeliveredMails.progress = defer.promise;
+                            outgoingMailService._filterCallback(self.grid.notDeliveredMails, lookupService.statusTypesKeys.notDelivered)
+                                .then(function (result) {
+                                    self.grid.notDeliveredMails.selectedRecords = [];
+                                    // result will contain only records with this status but to assign to variable, call setMailsByStatusType method
+                                    self.setMailsByStatusType(lookupService.statusTypesKeys.notDelivered, result);
+                                    defer.resolve(true);
+                                });
+                        } else if (!self.grid.notDeliveredMails.searchText) {
+                            self.grid.notDeliveredMails.reload(pageNumber);
+                        }
+                    } else {
+                        // do nothing
+                    }
+                },
+                ScanCallback: function ($event) {
+                    //open scan dialog
+                    var statusTypesKey = lookupService.getLookupTypeId(lookupService.statusTypesKeys.notDelivered, lookupService.statusTypes);
+                    mailService.openScanMailsDialog(self.grid.notDeliveredMails, statusTypesKey, $event).then(function () {
+                        self.reloadGrid($event);
+                    });
+                },
+                reload: function (pageNumber, $event) {
+                    var defer = $q.defer(), loadDefer = $q.defer();
+                    self.grid.notDeliveredMails.progress = defer.promise;
+                    if (self.isHardReload) {
+                        gridService.resetSorting(self.grid.notDeliveredMails, '-registerDate');
+                        gridService.resetSearchText(self.grid.notDeliveredMails);
+                    }
+                    if (pageNumber)
+                        self.grid.notDeliveredMails.page = pageNumber;
+
+                    if (self.grid.notDeliveredMails.filterGridCriteria.criteria) {
+                        outgoingMailService._filterCallback(self.grid.notDeliveredMails, lookupService.statusTypesKeys.notDelivered, $event)
+                            .then(function (result) {
+                                loadDefer.resolve(result);
+                            })
+                            .catch(function (error) {
+                                loadDefer.reject(error);
+                            });
+                    } else {
+                        outgoingMailService.loadMails(lookupService.statusTypesKeys.notDelivered, self.grid.notDeliveredMails, $event)
+                            .then(function (result) {
+                                loadDefer.resolve(result);
+                            })
+                            .catch(function (error) {
+                                loadDefer.reject(error);
+                            });
+                    }
+                    return loadDefer.promise.then(function (result) {
+                        counterService.loadCounters();
+                        self.grid.notDeliveredMails.progress = defer.promise;
+                        self.grid.notDeliveredMails.selectedRecords = [];
+
+                        // result will contain only records with this status but to assign to variable, call setMailsByStatusType method
+                        self.setMailsByStatusType(lookupService.statusTypesKeys.notDelivered, result);
+                        defer.resolve(true);
+                        self.isHardReload = false;
+                        return result;
+                    }).catch(function (error) {
+                        defer.resolve(true);
+                        return [];
+                    })
+
+                },
+                actions: [
+                    // Mail Information Text
+                    {
+                        type: 'text',
+                        icon: 'information-variant',
+                        text: function (model) {
+                            return {
+                                shortcutText: model.getTranslatedName(),
+                                contextText: model.getTranslatedName()
+                            };
+                        },
+                        shortcut: true,
+                        grid: function () {
+                            return self.grid.notDeliveredMails;
+                        },
+                        class: "action-green",
+                        checkShow: gridService.checkToShowAction
+                    },
+                    // view document
+                    {
+                        type: 'action',
+                        icon: 'book-open-page-variant',
+                        text: 'grid_action_view',
+                        callback: self.viewMail,
+                        grid: function () {
+                            return self.grid.notDeliveredMails;
+                        },
+                        class: "action-green",
+                        checkShow: gridService.checkToShowAction
+                    },
+                    // Separator
+                    {
+                        type: 'separator',
+                        checkShow: gridService.checkToShowAction,
+                        showInView: false
+                    },
+                    // Edit
+                    {
+                        type: 'action',
+                        icon: 'pencil',
+                        text: 'grid_action_edit',
+                        shortcut: true,
+                        callback: self.openEditMailDialog,
+                        permissionKey: 'SYS_UPDATE_MAIL',
+                        grid: function () {
+                            return self.grid.notDeliveredMails;
+                        },
+                        class: "action-green",
+                        checkShow: function (action, model) {
+                            // edit only if receiver entity is not using system
+                            return gridService.checkToShowAction(action, model) && !model.getReceiverEntity().checkIsUseSystem();
+                        }
+                    },
+                    // Return
+                    {
+                        type: 'action',
+                        icon: 'reply',
+                        text: 'grid_action_return',
+                        shortcut: true,
+                        class: "action-green",
+                        /*checkShow: function (action, model) {
+                            // return only if receiver entity is not using system
+                            // if receiver entity is already using system, they can accept from expected and it will be automatically marked as received
+                            return gridService.checkToShowAction(action, model) && !model.getReceiverEntity().checkIsUseSystem();
+                        },*/
+                        checkShow: gridService.checkToShowAction,
+                        subMenu: [
+                            // Return to New
+                            {
+                                type: 'action',
+                                icon: 'reply',
+                                text: 'grid_action_return_to_new',
+                                shortcut: true,
+                                callback: self.changeMailStatus,
+                                grid: function () {
+                                    return self.grid.notDeliveredMails;
+                                },
+                                params: lookupService.statusTypesKeys.new,
+                                class: "action-green",
+                                checkShow: gridService.checkToShowAction
+                            },
+                            // Return to Sent
+                            {
+                                type: 'action',
+                                icon: 'reply',
+                                text: 'grid_action_return_to_sent',
+                                shortcut: true,
+                                callback: self.changeMailStatus,
+                                grid: function () {
+                                    return self.grid.notDeliveredMails;
+                                },
+                                params: lookupService.statusTypesKeys.sent,
+                                class: "action-green",
+                                checkShow: gridService.checkToShowAction
+                            }
+                        ]
+                    },
+                    // Show Barcode
+                    {
+                        type: 'action',
+                        icon: 'barcode',
+                        text: 'grid_action_show_barcode',
+                        shortcut: true,
+                        callback: self.showBarcode,
+                        grid: function () {
+                            return self.grid.notDeliveredMails;
+                        },
+                        class: "action-green",
+                        checkShow: gridService.checkToShowAction
+                    },
+                    // Show Tracking History
+                    {
+                        type: 'action',
+                        icon: 'history',
+                        text: 'grid_action_tracking',
+                        shortcut: true,
+                        hide: true,
+                        callback: self.showTrackingSheet,
+                        grid: function () {
+                            return self.grid.notDeliveredMails;
+                        },
+                        class: "action-green",
+                        checkShow: gridService.checkToShowAction
+                    },
+                    // Show Actions
+                    {
+                        type: 'action',
+                        icon: 'history',
+                        text: 'grid_action_action_logs',
+                        shortcut: true,
+                        callback: self.showActionLogs,
+                        grid: function () {
+                            return self.grid.notDeliveredMails;
+                        },
+                        class: "action-green",
+                        checkShow: gridService.checkToShowAction
+                    },
+                    // Show Timeline
+                    {
+                        type: 'action',
+                        icon: 'timeline-text-outline',
+                        text: 'grid_action_timeline',
+                        shortcut: true,
+                        callback: self.showTimeline,
+                        grid: function () {
+                            return self.grid.notDeliveredMails;
+                        },
+                        class: "action-green",
+                        checkShow: gridService.checkToShowAction
+                    }
+                ],
+                bulkActions: [
+                    // Return
+                    {
+                        type: 'action',
+                        icon: 'reply',
+                        text: 'grid_action_return',
+                        shortcut: true,
+                        class: "action-green",
+                        grid: function () {
+                            return self.grid.notDeliveredMails;
+                        },
+                        /*checkShow: function () {
+                            // return only if receiver entity of all selected mails is not using system
+                            // if receiver entity is already using system, they can accept from expected and it will be automatically marked as received
+                            if (this.grid().selectedRecords.length) {
+                                return self.checkBulkEntitiesNotUseSystem(this.grid().selectedRecords)
+                            }
+                            return true;
+                        },*/
+                        checkShow: function () {
+                            return this.grid().selectedRecords && this.grid().selectedRecords.length > 0;
+                        },
+                        subMenu: [
+                            // Return to New
+                            {
+                                type: 'action',
+                                icon: 'reply',
+                                text: 'grid_action_return_to_new',
+                                shortcut: true,
+                                callback: self.changeMailStatusBulk,
+                                grid: function () {
+                                    return self.grid.notDeliveredMails;
+                                },
+                                params: lookupService.statusTypesKeys.new,
+                                class: "action-green",
+                                checkShow: gridService.checkToShowAction
+                            },
+                            // Return to Sent
+                            {
+                                type: 'action',
+                                icon: 'reply',
+                                text: 'grid_action_return_to_sent',
+                                shortcut: true,
+                                callback: self.changeMailStatusBulk,
+                                grid: function () {
+                                    return self.grid.notDeliveredMails;
+                                },
+                                params: lookupService.statusTypesKeys.sent,
+                                class: "action-green",
+                                checkShow: gridService.checkToShowAction
+                            }
+                        ]
+                    }
+                ]
             }
         };
-
-        _updateGridByStatusMap();
 
         /**
          * @description Reloads the grid for current selected tab
@@ -1779,7 +2275,13 @@ module.exports = function (app) {
                 self.grid.receivedMails.reload(self.grid.receivedMails.page, $event);
             } else if (self.isTabSelected(self.tabsToShow.sentMails)) {
                 self.grid.sentMails.reload(self.grid.sentMails.page, $event);
+            } else if (self.isTabSelected(self.tabsToShow.notDeliveredMails)) {
+                self.grid.notDeliveredMails.reload(self.grid.notDeliveredMails.page, $event);
             }
+        };
+
+        self.$onInit = function () {
+            _updateGridByStatusMap();
         };
     });
 };

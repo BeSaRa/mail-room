@@ -198,7 +198,8 @@ module.exports = function (app) {
                                 senderDep: null,
                                 receiverEntity: null,
                                 receiverDep: null
-                            }
+                            },
+                            attachments: []
                         }
                     })
             },
@@ -235,6 +236,12 @@ module.exports = function (app) {
                             grid: grid,
                             editMode: true,
                             disableAll: viewMode
+                        },
+                        resolve: {
+                            attachments: function (attachmentService) {
+                                'ngInject';
+                                return attachmentService.loadAttachmentsByMailId(mailToUpdate.getMailId());
+                            }
                         }
                     })
             },

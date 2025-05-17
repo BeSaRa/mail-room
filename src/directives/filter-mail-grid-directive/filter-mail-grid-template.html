@@ -60,7 +60,7 @@
         </md-input-container>
     </div>
 
-    <div layout="row" ng-if="!ctrl.criteria.isInternalMail()">
+    <div layout="row" ng-if="!ctrl.criteria.isInternalMail() && !ctrl.criteria.isNotDeliveredMailStatus()">
         <!-- Receiver Entity -->
         <md-input-container flex>
             <label for="receiverEntity">{{lang.lbl_receiver_entity}}</label>

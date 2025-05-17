@@ -1,0 +1,20 @@
+<md-dialog class="dialog-extend"
+           ng-class="{'mr-dialog-full-screen':ctrl.fullScreen}"
+           ng-attr-aria-label="{{ctrl.heading}}">
+    <popup-toolbar-directive header-text="{{ctrl.heading}}"></popup-toolbar-directive>
+    <md-dialog-content scroll-directive>
+        <div class="md-dialog-content mr-dialog-content">
+            <div layout="row" layout-align="center center">
+                <!--<embed src="{{ctrl.contentUrl}}" width="200px" height="200px" />-->
+                <img ng-src="{{ctrl.contentUrl}}" width="200px" height="200px"/>
+            </div>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="mr-dialog-actions">
+        <span flex></span>
+        <md-button class="md-raised" ng-click="ctrl.closeDialog($event)"
+                   tabindex="20">
+            {{lang.btn_close}}
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

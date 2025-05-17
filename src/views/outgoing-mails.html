@@ -26,6 +26,9 @@
             <grid-search-directive ng-if="ctrl.isTabSelected(ctrl.tabsToShow.receivedMails)"
                                    filter="true"
                                    grid="ctrl.grid.receivedMails"></grid-search-directive>
+            <grid-search-directive ng-if="ctrl.isTabSelected(ctrl.tabsToShow.notDeliveredMails)"
+                                   filter="true"
+                                   grid="ctrl.grid.notDeliveredMails"></grid-search-directive>
         </div>
         <!-- end page-header -->
         <div layout="column" flex>
@@ -63,6 +66,17 @@
                                     <outgoing-mails-grid-directive
                                             records="ctrl.receivedMails"
                                             grid="ctrl.grid.receivedMails"
+                                            total-records="ctrl.totalRecords">
+                                    </outgoing-mails-grid-directive>
+                                </md-content>
+                            </md-tab>
+                            <!-- Not Delivered Mails -->
+                            <md-tab md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.notDeliveredMails, $event)"
+                                    label="{{lang[ctrl.tabsToShow.notDeliveredMails.key]}} ({{ctrl.counterService.counter.getCount(ctrl.tabsToShow.notDeliveredMails.key)}})">
+                                <md-content class="white-bg">
+                                    <outgoing-mails-grid-directive
+                                            records="ctrl.notDeliveredMails"
+                                            grid="ctrl.grid.notDeliveredMails"
                                             total-records="ctrl.totalRecords">
                                     </outgoing-mails-grid-directive>
                                 </md-content>

@@ -1,0 +1,85 @@
+<div layout="column">
+    <div layout="row" layout-align="start center"
+         class="page-header small">
+        <span flex></span>
+        <grid-search-directive grid="ctrl.grid"></grid-search-directive>
+    </div>
+    <div>
+        <md-card md-whiteframe="3" layout="column" class="card-overlay">
+            <md-table-container>
+                <div flex scroll-directive>
+                    <table md-table ng-model="ctrl.grid.selectedRecords"
+                           md-progress="ctrl.grid.progress">
+                        <!--md-row-select multiple-->
+                        <thead md-head md-order="ctrl.grid.order"
+                               md-on-reorder="ctrl.grid.sortCallback">
+                        <tr md-row>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.nameAr, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.nameAr.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.nameAr.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.nameEn, true)"
+                                md-column
+                                md-order-by="{{ctrl.grid.columns.nameEn.sortKey()}}">
+                                <span>{{lang[ctrl.grid.columns.nameEn.langKey]}}</span>
+                            </th>
+                            <th ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions, true)"
+                                md-column>
+                                <span>{{lang[ctrl.grid.columns.gridActions.langKey]}}</span>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody md-body>
+                        <tr md-row
+                            ng-repeat="item in (ctrl.attachmentList | limitTo: ctrl.grid.limit: ((ctrl.grid.page - 1) * ctrl.grid.limit)) track by $index"
+                            md-select="item">
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.nameAr)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.nameAr}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.nameEn)"
+                                md-highlight-text="ctrl.grid.searchText"
+                                md-highlight-flags="i">
+                                {{item.nameEn}}
+                            </td>
+                            <td md-cell
+                                ng-if="ctrl.grid.showColumn(ctrl.grid.columns.gridActions)">
+                                <div flex layout="row" layout-align="start center">
+                                    <md-button class="md-icon-button" title="{{lang.lbl_view}}" ng-if="ctrl.disableAll"
+                                               ng-click="ctrl.openAttachment(item, $event)">
+                                        <md-icon md-svg-icon="eye"></md-icon>
+                                    </md-button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr md-row ng-if="!ctrl.attachmentListCopy.length">
+                            <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                class="red-text text-center">
+                                {{lang.msg_no_items_found}}
+                            </td>
+                        </tr>
+                        <tr md-row
+                            ng-if="ctrl.attachmentListCopy.length && !ctrl.attachmentList.length">
+                            <td md-cell colspan="{{ctrl.grid.colSpan()}}"
+                                class="red-text text-center">
+                                {{lang.msg_no_items_found_matching_search}}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <md-table-pagination
+                        md-label="{page: '{{lang.lbl_page}}', rowsPerPage: '{{lang.lbl_page_rows_per_page}}', of: '{{lang.lbl_page_count_of}}'}"
+                        md-limit-options="ctrl.grid.limitOptions"
+                        md-limit="ctrl.grid.limit"
+                        md-page="ctrl.grid.page"
+                        md-total="{{ctrl.attachmentList.length}}" md-page-select>
+                </md-table-pagination>
+            </md-table-container>
+        </md-card>
+    </div>
+</div>

@@ -288,7 +288,7 @@ module.exports = function (app) {
                 if (mail.isExpectedMailStatus()) {
                     successMsgKey = 'msg_add_mail_success';
                     confirmMsg = 'lbl_confirm_accept_mail';
-                } else if (mail.isSentMailStatus() || mail.isReceivedMailStatus()) {
+                } else if (mail.isSentMailStatus() || mail.isReceivedMailStatus() || mail.isNotDeliveredMailStatus()) {
                     successMsgKey = 'msg_return_success';
                     confirmMsg = 'lbl_confirm_return_mail';
                 }
@@ -330,7 +330,7 @@ module.exports = function (app) {
                         .catch(function (error) {
                             defer.reject(error);
                         });
-                } else if (mail.isReceivedMailStatus()) {
+                } else if (mail.isReceivedMailStatus() || mail.isNotDeliveredMailStatus()) {
                     successMsgKey = 'msg_return_success';
                     confirmMsg = 'lbl_confirm_return_mail';
 
@@ -444,7 +444,7 @@ module.exports = function (app) {
                 if (checkMail.isExpectedMailStatus()) {
                     successMsgKey = 'msg_add_mail_success';
                     confirmMsg = 'lbl_confirm_accept_mail';
-                } else if (checkMail.isSentMailStatus() || checkMail.isReceivedMailStatus()) {
+                } else if (checkMail.isSentMailStatus() || checkMail.isReceivedMailStatus() || checkMail.isNotDeliveredMailStatus()) {
                     successMsgKey = 'msg_return_success';
                     confirmMsg = 'lbl_confirm_return_mail';
                 }
@@ -486,7 +486,7 @@ module.exports = function (app) {
                         .catch(function (error) {
                             defer.reject(error);
                         });
-                } else if (checkMail.isReceivedMailStatus()) {
+                } else if (checkMail.isReceivedMailStatus() || checkMail.isNotDeliveredMailStatus()) {
                     successMsgKey = 'msg_return_success';
                     confirmMsg = 'lbl_confirm_return_mail';
 
@@ -650,7 +650,6 @@ module.exports = function (app) {
                     controller: function (dialog, $element, $timeout, printService) {
                         'ngInject';
                         var self = this;
-
                         self.print = function ($event) {
                             printService.printTimeline(self.mail, self.timelineRecords, $event)
                         };
@@ -671,6 +670,27 @@ module.exports = function (app) {
                         }
                     }
                 })
+        };
+
+        self.openShowCommentDialog = function (commentText, $event) {
+            return dialog
+                .showDialog({
+                    targetEvent: $event,
+                    template: mailRoomTemplate.getPopup('display-comment'),
+                    controller: function (dialog) {
+                        'ngInject';
+                        var self = this;
+
+                        self.closeDialog = function ($event) {
+                            dialog.cancel();
+                        };
+                    },
+                    controllerAs: 'ctrl',
+                    bindToController: true,
+                    locals: {
+                        comment: commentText
+                    }
+                });
         };
 
         /**

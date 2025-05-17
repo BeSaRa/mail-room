@@ -62,6 +62,22 @@
                     </div>
                 </md-content>
             </md-tab>
+            <!-- Attachments -->
+            <md-tab ng-if="ctrl.showTab(ctrl.tabsToShow.attachments)"
+                    label="{{lang[ctrl.tabsToShow.attachments.key]}}"
+                    md-on-select="ctrl.setCurrentTab(ctrl.tabsToShow.attachments, $event)">
+                <md-content layout-padding>
+                    <div class="md-dialog-content mr-dialog-content">
+                        <attachment-list-directive
+                                mail="ctrl.mail"
+                                mail-updated="ctrl.mailUpdated"
+                                attachment-list="ctrl.attachments"
+                                reset-form="ctrl.reset"
+                                disable-all="true"
+                                edit-mode="ctrl.editMode"></attachment-list-directive>
+                    </div>
+                </md-content>
+            </md-tab>
         </md-tabs>
     </md-dialog-content>
     <md-dialog-actions class="mr-dialog-actions">

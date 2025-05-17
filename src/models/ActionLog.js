@@ -31,6 +31,10 @@ module.exports = function (app) {
                 return 'color-' + this.actionLogType.getTypeId();
             };
 
+            ActionLog.prototype.isNotDeliveredActionLogType = function () {
+                return this.actionLogType.getTypeId() === 5;
+            };
+
             MailRoomModelInterceptor.runEvent('ActionLog', 'init', this);
 
         }

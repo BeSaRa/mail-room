@@ -4,6 +4,7 @@ $sentStatusColor: orange; /*#6575CD*/
 $receivedStatusColor: green; /*#919EE2*/
 $expectedStatusColor: yellow; /*#0D1D72*/
 $returnedStatusColor: #989EBB;
+$notDeliveredStatusColor: #d3485c;
 $bodyBackground: #ffffff;
 $headerTextColor: #ffffff;
 
@@ -51,7 +52,7 @@ $headerTextColor: #ffffff;
 
 .timeline_box {
   position: relative;
-  padding-left: 120px;
+  padding-left: 170px;
   padding-right: 0;
 }
 
@@ -85,6 +86,10 @@ $headerTextColor: #ffffff;
 
 .timeline_box.color-4:before {
   background-color: $returnedStatusColor !important;
+}
+
+.timeline_box.color-8:before {
+  background-color: $notDeliveredStatusColor !important;
 }
 
 .timeline_box:not(:last-of-type) {
@@ -122,6 +127,9 @@ $headerTextColor: #ffffff;
   &.color-7 {
     background-color: $returnedStatusColor !important;
   }
+  &.color-8 {
+    background-color: $notDeliveredStatusColor !important;
+  }
 }
 
 .timeline_header_content {
@@ -158,6 +166,10 @@ $headerTextColor: #ffffff;
     border-left: 3px solid $returnedStatusColor !important;
     border-right: 3px solid $returnedStatusColor !important;
   }
+  &.color-8 {
+    border-left: 3px solid $notDeliveredStatusColor !important;
+    border-right: 3px solid $notDeliveredStatusColor !important;
+  }
 }
 
 html.rtl {
@@ -178,6 +190,6 @@ html.rtl {
 
   .timeline_box {
     padding-left: 0;
-    padding-right: 120px;
+    padding-right: 170px;
   }
 }

@@ -36,7 +36,8 @@ module.exports = function (app) {
             sent: 'sent',
             received: 'received',
             mobile_received: 'mobileReceived',
-            expected: 'expected'
+            expected: 'expected',
+            notDelivered: 'not_received'
         };
         self.priorityTypes = 'priorityTypes';
         self.priorityTypesKeys = {

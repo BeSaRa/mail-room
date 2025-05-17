@@ -4,14 +4,8 @@
         .config(function (urlServiceProvider) {
             'ngInject';
             urlServiceProvider
-                .setEnvironment('newStage')
-                .setBaseUrl('dev', 'http://100.100.3.176:9082/mailRoom/api')
-                .setBaseUrl('stage', 'http://100.100.3.176:9081/mailRoom/api')
-                .setBaseUrl('newStage', 'http://100.100.3.176:9081/main-web-start/api')
-                .setBaseUrl('azure','http://100.100.3.176:8072/mailRoomV2/api');
-
-            urlServiceProvider
-                .addSegment('ismailStage', 'http://100.100.3.176:8080');
+                .setEnvironment('dev')
+                .setBaseUrl('dev', 'http://192.168.56.4:5003/mailingRoomUI/api');
 
         });
 

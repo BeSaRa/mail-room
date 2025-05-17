@@ -16,3 +16,4 @@ Status Types (Status):
 2. Received
 3. Sent
 4. Expected
+5. Not Delivered

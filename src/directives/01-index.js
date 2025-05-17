@@ -46,4 +46,5 @@ module.exports = function (app) {
     require('./package-item-list-directive/01-index')(app);
     require('./delivery-required-list-directive/01-index')(app);
     require('./attachment-list-directive/01-index')(app);
+    require('./overlay-scroll-bar-directive/overlay-scroll-bar-directive')(app);
 };
